@@ -14,8 +14,12 @@ const getCurrentUser = () => {
 
 }
 
-const login = () => {
-      
+const login = (username, password) => {
+    return fetch(`${API_ROOT}/auth`,{
+        method: "POST",
+        headers: headers(),
+        body: JSON.stringify({ auth: {username, password}})
+    }).then(res => res.json())    
 }
 
 const signup = (username, email, password) => {
