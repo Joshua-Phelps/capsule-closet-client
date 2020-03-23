@@ -27,7 +27,6 @@ const userReducer = (state, action) => {
   }
   
   const itemsReducer = (state, action) => {
-    console.log(state)
     switch (action.type) {
       case GET_ITEMS:
         return [...action.payload]

@@ -5,7 +5,10 @@ import { api } from './services/api';
 import { userReducer, itemsReducer } from './reducers/Reducers'
 import './App.css';
 
-export const Context = createContext()
+export const StateContext = createContext()
+export const MethodContext = createContext()
+export const DispatchContext = createContext()
+
 
 const initialState = {
   user: {
@@ -41,28 +44,34 @@ function App() {
   const login = (username, password) => {
     api.auth.login(username, password)
     .then(data => {
-      const { user } = data.user
       localStorage.setItem("token", data.jwt)
-      userDispatch({type: GET_USER, payload: user})
-      itemsDispatch({type: GET_ITEMS, payload: user.items})
+      userDispatch({type: GET_USER, payload: data.user})
+      itemsDispatch({type: GET_ITEMS, payload: data.user.items})
     }).catch(error => userDispatch({type: FETCH_ERROR})) 
   }
 
-  const addItem = () => {
-    const item = {category: 'some category', sub_category: 'sub', color: 'red', size: 'small', brand: 'nike', user_id: 5, image: 'image'}
+  const addItem = (item) => {
     api.items.addItem(item)
     .then(item => !item.error && itemsDispatch({type: ADD_ITEM, payload: item}))
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const context =  { user, userDispatch, items, itemsDispatch, addItem }
+  const state =  { user, items }
+  const dispatch = { userDispatch, itemsDispatch }
+  const method = { addItem, login }
+
   return (
     <div className="App">
-      <button onClick={addItem}>addItem</button>
-      <Context.Provider value={context}>
-        {/* <SignUp /> */}
-        <Login onLogin={login} />
-      </Context.Provider>
+      <StateContext.Provider value={state}>
+        <MethodContext.Provider value={method}>
+          <DispatchContext.Provider value={dispatch}>
+
+            {/* <SignUp /> */}
+            <Login />
+
+          </DispatchContext.Provider>
+        </MethodContext.Provider>
+      </StateContext.Provider>
     </div>
   );
 }
