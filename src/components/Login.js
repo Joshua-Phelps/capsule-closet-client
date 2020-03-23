@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StateContext } from '../App'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { 
   Avatar, 
@@ -62,6 +63,10 @@ export default function Login(props) {
   const classes = useStyles();
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
+  const { user, items } = useContext(StateContext)
+  console.log(user)
+  console.log(items)
+
 
 
   const handleSubmit = e => {
