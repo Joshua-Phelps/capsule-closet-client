@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StateContext } from '../App'
+import { Context } from '../App'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { 
   Avatar, 
@@ -63,11 +63,9 @@ export default function Login(props) {
   const classes = useStyles();
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
-  const { user, items } = useContext(StateContext)
+  const { user, items, itemsDispatch, addItem } = useContext(Context)
   console.log(user)
   console.log(items)
-
-
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -81,6 +79,7 @@ export default function Login(props) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
+            <button onClick={() => addItem()}></button>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
