@@ -13,7 +13,8 @@ import {
   Box, 
   Grid, 
   Typography, 
-  makeStyles } from '@material-ui/core';
+  makeStyles 
+} from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -79,7 +80,6 @@ export default function Login(props) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <button onClick={() => addItem()}></button>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
