@@ -13,7 +13,8 @@ import {
     Box, 
     Grid, 
     Typography,
-    makeStyles } from '@material-ui/core';
+    makeStyles 
+} from '@material-ui/core';
 
 function Copyright() {
   return (

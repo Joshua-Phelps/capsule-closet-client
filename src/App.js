@@ -1,16 +1,21 @@
-import React, { useEffect, useReducer, createContext } from 'react';
+import React, { useEffect, useReducer, createContext } from 'react'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import { api } from './services/api';
+import ClosetContainer from './containers/ClosetContainer'
+import { api } from './services/api'
 import { userReducer, itemsReducer } from './reducers/Reducers'
-import './App.css';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import './App.css'
+import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
 
 export const StateContext = createContext()
 export const MethodContext = createContext()
 export const DispatchContext = createContext()
+const FETCH_ERROR = 'FETCH_ERROR'
+const GET_USER = 'GET_USER'
+const GET_ITEMS = 'GET'
+const ADD_ITEM = 'ADD_ITEM'
 
 
 const initialState = {
@@ -28,11 +33,7 @@ const initialState = {
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
-  const FETCH_ERROR = 'FETCH_ERROR'
-  const GET_USER = 'GET_USER'
-  const GET_ITEMS = 'GET'
-  const ADD_ITEM = 'ADD_ITEM'
-
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,7 +41,7 @@ function App() {
           api.auth.getCurrentUser().then(user => {
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
-          }).catch(error => userDispatch({type: FETCH_ERROR}))
+          }).catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
         } 
   }, [])
 
@@ -50,12 +51,12 @@ function App() {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
-    }).catch(error => userDispatch({type: FETCH_ERROR})) 
+    }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
   }
 
   const addItem = (item) => {
     api.items.addItem(item)
-    .then(item => !item.error && itemsDispatch({type: ADD_ITEM, payload: item}))
+    .then(item => itemsDispatch({type: ADD_ITEM, payload: item}))
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
@@ -92,13 +93,13 @@ function App() {
               exact
               path="/guide"
               render={props => <GuideContainer {...props} />}
-            />
+            /> */}
             <Route
               exact
               path="/closet"
               render={props => <ClosetContainer {...props} />}
             />
-            <Route
+            {/* <Route
               exact
               path="/create-item"
               render={props => <ItemForm {...props} />}

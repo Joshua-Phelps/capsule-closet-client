@@ -11,7 +11,6 @@ const userReducer = (state, action) => {
     switch (action.type) {
       case GET_USER:
         return {
-          ...state,
           id: id,
           username: username,
           email: email
@@ -24,7 +23,7 @@ const userReducer = (state, action) => {
       default: 
         return state
     }
-  }
+}
   
   const itemsReducer = (state, action) => {
     switch (action.type) {
@@ -35,7 +34,7 @@ const userReducer = (state, action) => {
       case EDIT_ITEM:
       return {
         // not finished 
-      }
+        }
       case DESTROY_ITEM: 
       return {
         // not finished
@@ -43,4 +42,4 @@ const userReducer = (state, action) => {
       default: 
         return state
     }
-  }
+}
