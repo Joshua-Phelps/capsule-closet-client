@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createContext } from 'react'
+import React, { useState, useEffect, useReducer, createContext } from 'react'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import ClosetContainer from './containers/ClosetContainer'
@@ -8,6 +8,7 @@ import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
+
 
 export const StateContext = createContext()
 export const MethodContext = createContext()
@@ -33,6 +34,7 @@ const initialState = {
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
+  const [editMode, setEditMode] = useState(false)
   
 
   useEffect(() => {
@@ -60,9 +62,9 @@ function App() {
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const state =  { user, items }
+  const state =  { user, items, editMode }
   const dispatch = { userDispatch, itemsDispatch }
-  const method = { addItem, login }
+  const method = { addItem, login, setEditMode }
 
   return (
     <Router>

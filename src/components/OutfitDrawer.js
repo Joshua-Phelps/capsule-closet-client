@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StateContext, MethodContext } from '../App'
 import ItemCard from './ItemCard'
 import clsx from 'clsx';
 import { 
@@ -15,6 +16,10 @@ import {
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
+import AppBar from '@material-ui/core/AppBar';
+import MenuIcon from '@material-ui/icons/Menu';
+import Typography from '@material-ui/core/Typography';
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
@@ -22,6 +27,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   appBar: {
+    marginTop: '60px',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -77,22 +83,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function OutfitDrawer() {
+
+  const {editMode} = useContext(StateContext)
+  const {setEditMode} = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setEditMode(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setEditMode(false);
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline /> 
-        <Toolbar>
+        {/* <Toolbar>
           <Button
             color="primary"
             backgroundColor='primary'
@@ -102,14 +111,53 @@ export default function OutfitDrawer() {
             variant='outlined'
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            Add Outfit
+            Create Outfit
+        </Button> 
+        </Toolbar> */}
+
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: editMode,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, editMode && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Persistent drawer
+          </Typography>
+      
+          <Button
+            color="primary"
+            backgroundColor='primary'
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            variant='outlined'
+            className={clsx(classes.menuButton, editMode && classes.hide)}
+          >
+            Create Outfit
         </Button> 
         </Toolbar>
+
+      </AppBar>
+
+
+
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={editMode}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -135,3 +183,4 @@ export default function OutfitDrawer() {
     </div>
   );
 }
+
