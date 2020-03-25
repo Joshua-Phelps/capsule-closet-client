@@ -26,9 +26,11 @@ export default function NavBar() {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <Tab label="Page One" />
-          <Tab label="Page Two" />
-          <Tab label="Page Three" />
+          <Tab label="Guide" />
+          <Tab label="Closet" />
+          <Tab label="Outifts" />
+          <Tab label="Boards" />
+          {/* create hamburger menu item for Signout, My Account (edit) */}
         </Tabs>
       </AppBar>
     </div>
