@@ -2,8 +2,9 @@ import React, { useState, useEffect, useReducer, createContext } from 'react'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import ClosetContainer from './containers/ClosetContainer'
+import OutfitsContainer from './containers/OutfitsContainer'
 import { api } from './services/api'
-import { userReducer, itemsReducer } from './reducers/Reducers'
+import { userReducer, itemsReducer, outfitsReducer } from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -17,6 +18,7 @@ const FETCH_ERROR = 'FETCH_ERROR'
 const GET_USER = 'GET_USER'
 const GET_ITEMS = 'GET'
 const ADD_ITEM = 'ADD_ITEM'
+const GET_OUTFITS = 'GET_OUTFITS'
 
 
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
+  const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
   const [editMode, setEditMode] = useState(false)
   
 
@@ -43,6 +46,7 @@ function App() {
           api.auth.getCurrentUser().then(user => {
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
+            outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
           }).catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
         } 
   }, [])
@@ -53,6 +57,7 @@ function App() {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
+      outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
     }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
   }
 
@@ -62,8 +67,8 @@ function App() {
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const state =  { user, items, editMode }
-  const dispatch = { userDispatch, itemsDispatch }
+  const state =  { user, items, outfits, editMode }
+  const dispatch = { userDispatch, itemsDispatch, outfitsDispatch }
   const method = { addItem, login, setEditMode }
 
   return (
@@ -110,13 +115,13 @@ function App() {
               exact
               path="/edit-item/:id"
               render={props => <ItemForm {...props} />}
-            />
+            /> */}
             <Route
               exact
               path="/outfits"
               render={props => <OutfitsContainer {...props} />}
             /> 
-            <Route
+            {/* <Route
               exact
               path="/create-outfit"
               render={props => <OufitForm {...props} />}
