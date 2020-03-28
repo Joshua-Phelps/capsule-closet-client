@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StateContext, MethodContext } from '../App'
-import ItemCard from './ItemCard'
+import DrawerContainer from '../containers/DrawerContainer'
 import clsx from 'clsx';
 import { 
     makeStyles,
@@ -84,8 +84,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function OutfitDrawer() {
 
-  const {editMode} = useContext(StateContext)
-  const {setEditMode} = useContext(MethodContext)
+  const { editMode, selectedOutfit } = useContext(StateContext)
+  const { setEditMode } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
   // const [open, setOpen] = useState(true);
@@ -137,7 +137,7 @@ export default function OutfitDrawer() {
       
           <Button
             color="primary"
-            backgroundColor='primary'
+            // backgroundColor='primary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -168,7 +168,9 @@ export default function OutfitDrawer() {
           </IconButton>
         </div>
         <Divider />
-        <List>
+
+        <DrawerContainer />
+        {/* <List>
           <ItemCard />
         </List>
         <Divider />
@@ -178,7 +180,7 @@ export default function OutfitDrawer() {
         <Divider />
         <List>
           <ItemCard />
-        </List>
+        </List> */}
       </Drawer>
     </div>
   );

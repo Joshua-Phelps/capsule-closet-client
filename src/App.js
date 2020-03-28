@@ -4,7 +4,7 @@ import Login from './components/Login'
 import ClosetContainer from './containers/ClosetContainer'
 import OutfitsContainer from './containers/OutfitsContainer'
 import { api } from './services/api'
-import { userReducer, itemsReducer, outfitsReducer } from './reducers/Reducers'
+import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer } from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -30,13 +30,20 @@ const initialState = {
   items: [],
   outfits: [],
   boards: [],
-  editMode: false 
+  editMode: false, 
+  selectedOutfit: {
+    id: null,
+    name: '',
+    times_worn: null,
+    items: []
+  }
 }
 
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
+  const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
   const [editMode, setEditMode] = useState(false)
   
 
@@ -67,9 +74,14 @@ function App() {
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const state =  { user, items, outfits, editMode }
-  const dispatch = { userDispatch, itemsDispatch, outfitsDispatch }
-  const method = { addItem, login, setEditMode }
+  const filterItemsByOutfit = (outfit) => {
+    return items.filter(item => outfit.items.includes(item.id))
+  }
+
+
+  const state =  { user, items, outfits, editMode, selectedOutfit }
+  const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, }
 
   return (
     <Router>

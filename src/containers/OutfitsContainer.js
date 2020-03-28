@@ -1,67 +1,63 @@
 import React, { useContext } from 'react'
-import { StateContext } from '../App'
-import { Grid, makeStyles } from '@material-ui/core';
+import { StateContext, MethodContext, DispatchContext } from '../App'
+import { Grid, makeStyles, Paper, Fab, Typography } from '@material-ui/core';
 import OutfitCard from '../components/OutfitCard';
+import EditIcon from '@material-ui/icons/Edit';
 
-
-
-const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
-
   root: {
       flexGrow: 1,
+      paddingLeft: theme.spacing(8),
+      paddingRight: theme.spacing(8),
+      paddingTop: theme.spacing(3)
     }, 
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-    marginTop: '120px', 
-    textAlign: 'left',
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
+  paper: {
+    padding: theme.spacing(1),
   },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
+  extendedIconRight: {
+    marginRight: '-90%',
   },
-  drawerHeader: {
-    display: 'block',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+  extendedIcon: {
+    marginTop: theme.spacing(1),
+    width: '100%',
+  },
+  iconText: {
+    position: 'absolute'
   }
 }))
 
-export default function ClosetContainer(){
-  const classes = useStyles()
+export default function OutfitContainer({ history }){
+  const { paper, root, extendedIcon, iconText, extendedIconRight } = useStyles()
   const { outfits } = useContext(StateContext)
+  const { selectedOutfitDispatch } = useContext(DispatchContext)
+  const { setEditMode } = useContext(MethodContext)
+
+  const handleEdit = (outfit) => {
+    setEditMode(true)
+    selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})
+    history.push('/closet')
+  }
 
   const renderOufits = () => {
     return outfits.map(outfit => {
-      return <OutfitCard />
+      return (
+        <Grid className={root} item xs={4} >
+          <Paper className={paper}>
+            <OutfitCard outfit={outfit} key={outfit.id} />
+            <Fab onClick={() => handleEdit(outfit)} className={extendedIcon} variant="extended" color="secondary" aria-label="edit">
+              {/* <EditIcon className={extendedIconRight} /> */}
+                <Typography className={iconText}>Edit Outfit</Typography>
+            </Fab>
+          </Paper>
+        </Grid>
+      )
     })
   }
 
   return (
-    <div className={classes.root}>
+    <div className={root}>
         <Grid container spacing={3}>
-              <Grid item xs={6} >
-        
-              </Grid>                                
+                {renderOufits()}                            
         </Grid>                       
     </div>
   )
