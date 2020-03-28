@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StateContext, MethodContext } from '../App'
+import { StateContext, MethodContext, DispatchContext } from '../App'
 import DrawerContainer from '../containers/DrawerContainer'
 import clsx from 'clsx';
 import { 
@@ -11,7 +11,8 @@ import {
     List, 
     Divider, 
     Toolbar,
-    IconButton
+    IconButton,
+    TextField
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -80,14 +81,19 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  itemDisplay: {
+    marginLeft: '-64px',
+    marginRight: '-64px'
+  }
 }));
 
 export default function OutfitDrawer() {
-
   const { editMode, selectedOutfit } = useContext(StateContext)
+  const { selectedOutfitDispatch } = useContext(DispatchContext)
   const { setEditMode } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
+  const { name } = selectedOutfit
   // const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -97,6 +103,10 @@ export default function OutfitDrawer() {
   const handleDrawerClose = () => {
     setEditMode(false);
   };
+
+  const handleChangeName = ({target: {value} }) => {
+    selectedOutfitDispatch({type: 'EDIT_NAME', payload: value})
+  }
 
   return (
     <div className={classes.root}>
@@ -163,13 +173,22 @@ export default function OutfitDrawer() {
         }}
       >
         <div className={classes.drawerHeader}>
+          {/* <Typography className={classes.title}>{name}</Typography> */}
+          <form noValidate autoComplete="off">
+            <TextField 
+            id="standard-basic" 
+            label='Edit Outfit Name' 
+            value={name}
+            onChange={handleChangeName}  />
+          </form>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-
-        <DrawerContainer />
+        <div className={classes.itemDisplay}>
+          <DrawerContainer />
+        </div>
         {/* <List>
           <ItemCard />
         </List>

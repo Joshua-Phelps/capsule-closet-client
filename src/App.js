@@ -31,11 +31,17 @@ const initialState = {
   outfits: [],
   boards: [],
   editMode: false, 
+  // selectedOutfit: {
+  //   id: null,
+  //   name: '',
+  //   times_worn: null,
+  //   items: []
+  // }
   selectedOutfit: {
-    id: null,
-    name: '',
-    times_worn: null,
-    items: []
+    id: 2,
+    name: 'Create New Outfit',
+    times_worn: 0,
+    items: [15,16,17,14,2,13]
   }
 }
 
@@ -78,10 +84,13 @@ function App() {
     return items.filter(item => outfit.items.includes(item.id))
   }
 
+  const removeItem = itemId => {
+    selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
+  }
 
   const state =  { user, items, outfits, editMode, selectedOutfit }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem}
 
   return (
     <Router>

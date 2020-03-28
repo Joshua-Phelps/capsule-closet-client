@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {
     marginTop: theme.spacing(1),
     width: '100%',
+    height: '3vh'
   },
   iconText: {
     position: 'absolute'
@@ -44,9 +45,14 @@ export default function OutfitContainer({ history }){
         <Grid className={root} item xs={4} >
           <Paper className={paper}>
             <OutfitCard outfit={outfit} key={outfit.id} />
-            <Fab onClick={() => handleEdit(outfit)} className={extendedIcon} variant="extended" color="secondary" aria-label="edit">
+            <Fab 
+            onClick={() => handleEdit(outfit)} 
+            className={extendedIcon} 
+            variant="extended" 
+            color="secondary" 
+            aria-label="edit">
               {/* <EditIcon className={extendedIconRight} /> */}
-                <Typography className={iconText}>Edit Outfit</Typography>
+              <Typography className={iconText}>Edit {outfit.name}</Typography>
             </Fab>
           </Paper>
         </Grid>
@@ -57,7 +63,7 @@ export default function OutfitContainer({ history }){
   return (
     <div className={root}>
         <Grid container spacing={3}>
-                {renderOufits()}                            
+          {renderOufits()}                            
         </Grid>                       
     </div>
   )

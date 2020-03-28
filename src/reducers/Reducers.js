@@ -9,6 +9,8 @@ const ADD_OUTFIT = 'ADD_OUTFIT'
 const EDIT_OUTFIT = 'EDIT_OUTFIT'
 const DESTROY_OUTFIT = 'DESTROY_OUTFIT'
 const SET_OUTFIT = 'SET_OUTFIT'
+const EDIT_NAME = 'EDIT_NAME'
+const REMOVE_ITEM = "REMOVE_ITEM"
 
 const userReducer = (state, action) => {
   const { id, username, email } = action.payload  
@@ -71,6 +73,10 @@ const selectedOutfitReducer = (state, action) => {
   switch (action.type) {
     case SET_OUTFIT:
     return action.payload
+    case EDIT_NAME:
+    return {...state, name: action.payload}
+    case REMOVE_ITEM:
+    return {...state, items: state.items.filter(itemId => itemId !== action.payload)}
     default: 
     return state
   }
