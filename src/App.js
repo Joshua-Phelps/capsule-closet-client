@@ -3,6 +3,7 @@ import SignUp from './components/SignUp'
 import Login from './components/Login'
 import ClosetContainer from './containers/ClosetContainer'
 import OutfitsContainer from './containers/OutfitsContainer'
+import ItemForm from './components/ItemForm'
 import { api } from './services/api'
 import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer } from './reducers/Reducers'
 import './App.css'
@@ -140,7 +141,7 @@ function App() {
                 path="/closet"
                 render={props => <ClosetContainer {...props} />}
               />
-              {/* <Route
+              <Route
                 exact
                 path="/create-item"
                 render={props => <ItemForm {...props} />}
@@ -155,7 +156,7 @@ function App() {
                 path="/outfits"
                 render={props => <OutfitsContainer {...props} />}
               /> 
-              <Route
+              {/* <Route
                 exact
                 path="/create-outfit"
                 render={props => <OufitForm {...props} />}

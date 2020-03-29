@@ -36,9 +36,6 @@ export default function OutfitContainer({ history }){
   const handleEdit = (outfit) => {
     setEditMode(true)
     selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})
-
-    // selectedOutfitDispatch({type: 'SET_OUTFIT', payload: {...outfit, items: filterItemsByOutfit(outfit)}})
-    // setSelectedOutfit(outfit)
     history.push('/closet')
   }
 

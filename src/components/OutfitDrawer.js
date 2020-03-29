@@ -226,17 +226,6 @@ export default function OutfitDrawer() {
         <div className={classes.itemDisplay}>
           <DrawerContainer />
         </div>
-        {/* <List>
-          <ItemCard />
-        </List>
-        <Divider />
-        <List>
-          <ItemCard />
-        </List>
-        <Divider />
-        <List>
-          <ItemCard />
-        </List>
         <List>
           <Button
             variant="outlined" 
