@@ -97,7 +97,7 @@ function App() {
     api.outfits.removeItem(itemId, selectedOutfit.id)
     .then(outfit => {
       outfitsDispatch({type: 'REMOVE_ITEM', payload: outfit})
-      selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})  
+      selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: outfit})  
     })
   }
 

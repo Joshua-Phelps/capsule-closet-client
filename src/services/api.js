@@ -41,7 +41,6 @@ const createItem = item => {
 }
 
 const removeItem = (item_id, outfit_id) => {
-  console.log(item_id, outfit_id)
   return fetch(`${API_ROOT}/item_outfits/${0}`, {
     method: 'DELETE',
     headers: headers(),

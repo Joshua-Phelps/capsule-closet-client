@@ -94,11 +94,11 @@ const useStyles = makeStyles(theme => ({
     height: 48,
     padding: '0 30px',
     margin: '4px'
+  },
+  itemDisplay: {
+    marginLeft: '-64px',
+    marginRight: '-64px'
   }
-  // itemDisplay: {
-  //   marginLeft: '-64px',
-  //   marginRight: '-64px'
-  // }
 }));
 
 export default function OutfitDrawer() {

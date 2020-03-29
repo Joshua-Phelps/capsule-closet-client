@@ -75,7 +75,8 @@ const selectedOutfitReducer = (state, action) => {
     case EDIT_NAME:
       return {...state, name: action.payload}
     case REMOVE_ITEM:
-      return {...state, items: state.items.filter(itemId => itemId !== action.payload)}
+      console.log(state)
+      return {...state, items: state.items.filter(itemId => action.payload.items.includes(itemId))}
     case UPDATE_OUTFIT:
       return {
       // not finished 
