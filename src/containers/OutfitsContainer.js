@@ -30,21 +30,24 @@ const useStyles = makeStyles(theme => ({
 export default function OutfitContainer({ history }){
   const { paper, root, extendedIcon, iconText, extendedIconRight } = useStyles()
   const { outfits } = useContext(StateContext)
+  const { setEditMode, setSelectedOutfit, filterItemsByOutfit } = useContext(MethodContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
-  const { setEditMode } = useContext(MethodContext)
 
   const handleEdit = (outfit) => {
     setEditMode(true)
     selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})
+
+    // selectedOutfitDispatch({type: 'SET_OUTFIT', payload: {...outfit, items: filterItemsByOutfit(outfit)}})
+    // setSelectedOutfit(outfit)
     history.push('/closet')
   }
 
   const renderOufits = () => {
     return outfits.map(outfit => {
       return (
-        <Grid className={root} item xs={4} >
+        <Grid className={root} key={outfit.id} item xs={4} >
           <Paper className={paper}>
-            <OutfitCard outfit={outfit} key={outfit.id} />
+            <OutfitCard outfit={outfit} />
             <Fab 
             onClick={() => handleEdit(outfit)} 
             className={extendedIcon} 

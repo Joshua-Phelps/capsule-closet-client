@@ -17,7 +17,7 @@ export const DispatchContext = createContext()
 const FETCH_ERROR = 'FETCH_ERROR'
 const GET_USER = 'GET_USER'
 const GET_ITEMS = 'GET'
-const ADD_ITEM = 'ADD_ITEM'
+const CREATE_ITEM = 'CREATE_ITEM'
 const GET_OUTFITS = 'GET_OUTFITS'
 
 
@@ -31,17 +31,12 @@ const initialState = {
   outfits: [],
   boards: [],
   editMode: false, 
-  // selectedOutfit: {
-  //   id: null,
-  //   name: '',
-  //   times_worn: null,
-  //   items: []
-  // }
+  loading: true,
   selectedOutfit: {
-    id: 2,
-    name: 'Create New Outfit',
-    times_worn: 0,
-    items: [15,16,17,14,2,13]
+    id: null,
+    name: '',
+    times_worn: null,
+    items: [{id: null, category: '', sub_category: '', color: '', image: '', brand: '', size: '' }]
   }
 }
 
@@ -50,16 +45,19 @@ function App() {
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
-  const [editMode, setEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(initialState.editMode)
+  const [loading, setLoading] = useState(initialState.loading)
   
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+          setLoading(true)
           api.auth.getCurrentUser().then(user => {
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
             outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
+            setLoading(false)
           }).catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
         } 
   }, [])
@@ -76,21 +74,25 @@ function App() {
 
   const addItem = (item) => {
     api.items.addItem(item)
-    .then(item => itemsDispatch({type: ADD_ITEM, payload: item}))
+    .then(item => itemsDispatch({type: CREATE_ITEM, payload: item}))
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const filterItemsByOutfit = (outfit) => {
+  const filterItemsByOutfit = (outfit) => { 
     return items.filter(item => outfit.items.includes(item.id))
   }
 
   const removeItem = itemId => {
-    selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
+    api.outfits.removeItem(itemId, selectedOutfit.id)
+    .then(outfit => {
+      outfitsDispatch({type: 'REMOVE_ITEM', payload: outfit})
+      selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})  
+    })
   }
 
-  const state =  { user, items, outfits, editMode, selectedOutfit }
+  const state =  { user, items, outfits, editMode, loading, selectedOutfit }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem}
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading }
 
   return (
     <Router>

@@ -35,7 +35,7 @@ export default function OutfitCard({ outfit }) {
           <ListSubheader component="div">{name}</ListSubheader>
         </GridListTile>
         {items.map(item => (
-          <GridListTile key={item}>
+          <GridListTile key={item.id}>
             <img src={item.image} alt={item.category} />
             <GridListTileBar
               title={item.category}

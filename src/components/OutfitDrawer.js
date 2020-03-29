@@ -88,13 +88,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function OutfitDrawer() {
-  const { editMode, selectedOutfit } = useContext(StateContext)
-  const { selectedOutfitDispatch } = useContext(DispatchContext)
+  const { editMode, selectedOutfit, outfits } = useContext(StateContext)
+  const { selectedOutfitDispatch, outfitDispatch } = useContext(DispatchContext)
   const { setEditMode } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
   const { name } = selectedOutfit
   // const [open, setOpen] = useState(true);
+
+
 
   const handleDrawerOpen = () => {
     setEditMode(true);
@@ -107,6 +109,12 @@ export default function OutfitDrawer() {
   const handleChangeName = ({target: {value} }) => {
     selectedOutfitDispatch({type: 'EDIT_NAME', payload: value})
   }
+
+  const handleUpdate = e => {
+    e.preventdefault()
+    outfitDispatch({type: 'UPDATE_OUTFIT', payload: selectedOutfit})
+  }
+
 
   return (
     <div className={classes.root}>
@@ -173,8 +181,9 @@ export default function OutfitDrawer() {
         }}
       >
         <div className={classes.drawerHeader}>
+          {/* <Button></Button> */}
           {/* <Typography className={classes.title}>{name}</Typography> */}
-          <form noValidate autoComplete="off">
+          <form onSubmit={handleUpdate} noValidate autoComplete="off">
             <TextField 
             id="standard-basic" 
             label='Edit Outfit Name' 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { Grid, makeStyles, Divider } from '@material-ui/core';
 import ItemCard from '../components/ItemCard';
@@ -17,9 +17,10 @@ export default function DrawerContainer(){
   const { selectedOutfit } = useContext(StateContext)
   const { filterItemsByOutfit, removeItem } = useContext(MethodContext)
   const items = filterItemsByOutfit(selectedOutfit)
+  
 
   const renderItems = () => {
-    return items.map(item => {
+    return items.map(item => {       
       return <Grid key={item.id} item xs={12}><ItemCard handleClick={removeItem} item={item} /><Divider /></Grid>
     })
   }
@@ -27,7 +28,7 @@ export default function DrawerContainer(){
   return (
     <div className={root}>
         <Grid container spacing={1}>                   
-            {renderItems()}    
+          {renderItems()}    
         </Grid>                       
     </div>
   )

@@ -53,7 +53,7 @@ content: {
 export default function ClosetContainer(){
     const [open, setOpen] = useState(true)
     const classes = useStyles()
-    const {editMode} = useContext(StateContext)
+    const {editMode, items} = useContext(StateContext)
     
 
     return (
@@ -69,7 +69,7 @@ export default function ClosetContainer(){
                 
                 <Grid container spacing={4}>
                     <Grid item xs={6} >
-                        <ItemCard/>
+                        {/* <ItemCard item={items[0]}/> */}
                     </Grid>
                     
                     <Grid item xs={6} ><Paper className={classes.paper}>xs=12</Paper></Grid>

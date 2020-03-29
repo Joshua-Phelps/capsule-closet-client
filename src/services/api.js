@@ -32,7 +32,7 @@ const signup = (username, email, password) => {
     }).then(res => res.json())
 }
 
-const addItem = item => {
+const createItem = item => {
   return fetch(`${API_ROOT}/items`, {
     method: 'POST',
     headers: headers(),
@@ -40,6 +40,14 @@ const addItem = item => {
   }).then(res => res.json())
 }
 
+const removeItem = (item_id, outfit_id) => {
+  console.log(item_id, outfit_id)
+  return fetch(`${API_ROOT}/item_outfits/${0}`, {
+    method: 'DELETE',
+    headers: headers(),
+    body: JSON.stringify({item_outfit: {item_id, outfit_id}})
+  }).then(res => res.json())
+}
 
 export const api = {
   auth: {
@@ -48,6 +56,9 @@ export const api = {
       signup
   },
   items: {
-    addItem
+    createItem,
+  },
+  outfits: {
+    removeItem
   }
 }
