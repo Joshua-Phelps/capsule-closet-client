@@ -85,7 +85,7 @@ const everyItem = () => {
 export default function ClosetContainer(){
     const [open, setOpen] = useState(true)
     const classes = useStyles()
-    const {editMode} = useContext(StateContext)
+    const {editMode, items} = useContext(StateContext)
     
 
     return (
@@ -102,23 +102,9 @@ export default function ClosetContainer(){
                 <CategoryFilter/>
                 
                 <Grid container spacing={4}>
-                
-                    <Grid item xs={3} >
-                        <ItemCard/>
-                    </Grid>
-
-                    <Grid item xs={3} >
-                        <ItemCard/>
-                    </Grid>
-                    
-                    <Grid item xs={3} >
-                        <ItemCard/>
-                    </Grid>
-                    <Grid item xs={3} >
-                        <ItemCard/>
-                    </Grid>
-                    
-                
+                    <Grid item xs={6} >
+                        {/* <ItemCard item={items[0]}/> */}
+                    </Grid>                                    
                 </Grid>
                 </main>
                     

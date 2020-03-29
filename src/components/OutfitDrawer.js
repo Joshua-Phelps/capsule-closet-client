@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { StateContext, MethodContext } from '../App'
-import ItemCard from './ItemCard'
+
+import React, { useContext } from 'react';
 import AddItemModal from './AddItemModal'
+import { StateContext, MethodContext, DispatchContext } from '../App'
+import DrawerContainer from '../containers/DrawerContainer'
 import clsx from 'clsx';
 import { 
     makeStyles,
@@ -12,7 +13,8 @@ import {
     List, 
     Divider, 
     Toolbar,
-    IconButton
+    IconButton,
+    TextField
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -93,15 +95,22 @@ const useStyles = makeStyles(theme => ({
     padding: '0 30px',
     margin: '4px'
   }
+  // itemDisplay: {
+  //   marginLeft: '-64px',
+  //   marginRight: '-64px'
+  // }
 }));
 
 export default function OutfitDrawer() {
-
-  const {editMode} = useContext(StateContext)
-  const {setEditMode} = useContext(MethodContext)
+  const { editMode, selectedOutfit, outfits } = useContext(StateContext)
+  const { selectedOutfitDispatch, outfitDispatch } = useContext(DispatchContext)
+  const { setEditMode } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
+  const { name } = selectedOutfit
   // const [open, setOpen] = useState(true);
+
+
 
   const handleDrawerOpen = () => {
     setEditMode(true);
@@ -110,6 +119,16 @@ export default function OutfitDrawer() {
   const handleDrawerClose = () => {
     setEditMode(false);
   };
+
+  const handleChangeName = ({target: {value} }) => {
+    selectedOutfitDispatch({type: 'EDIT_NAME', payload: value})
+  }
+
+  const handleUpdate = e => {
+    e.preventdefault()
+    outfitDispatch({type: 'UPDATE_OUTFIT', payload: selectedOutfit})
+  }
+
 
   return (
     <div className={classes.root}>
@@ -162,7 +181,7 @@ export default function OutfitDrawer() {
       
           {/* <Button
             color="primary"
-            backgroundColor='primary'
+            // backgroundColor='primary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -190,13 +209,24 @@ export default function OutfitDrawer() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <p>Build an Outfit below by adding pieces from your Closet</p>
+          {/* <Button></Button> */}
+          {/* <Typography className={classes.title}>{name}</Typography> */}
+          <form onSubmit={handleUpdate} noValidate autoComplete="off">
+            <TextField 
+            id="standard-basic" 
+            label='Edit Outfit Name' 
+            value={name}
+            onChange={handleChangeName}  />
+          </form>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <div className={classes.itemDisplay}>
+          <DrawerContainer />
+        </div>
+        {/* <List>
           <ItemCard />
         </List>
         <Divider />

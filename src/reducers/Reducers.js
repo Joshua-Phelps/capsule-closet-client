@@ -1,45 +1,92 @@
-export { userReducer, itemsReducer }
 const FETCH_ERROR = 'FETCH_ERROR'
 const GET_USER = 'GET_USER'
 const GET_ITEMS = 'GET'
-const ADD_ITEM = 'ADD_ITEM'
+const CREATE_ITEM = 'CREATE_ITEM'
 const EDIT_ITEM = 'EDIT_ITEM'
 const DESTROY_ITEM = 'DESTROY_ITEM'
+const GET_OUTFITS = 'GET_OUTFITS'
+const CREATE_OUTFIT = 'CREATE_OUTFIT'
+const UPDATE_OUTFIT = 'UPDATE_OUTFIT'
+const DESTROY_OUTFIT = 'DESTROY_OUTFIT'
+const SET_OUTFIT = 'SET_OUTFIT'
+const EDIT_NAME = 'EDIT_NAME'
+const REMOVE_ITEM = "REMOVE_ITEM"
 
 const userReducer = (state, action) => {
-    const { id, username, email } = action.payload  
-    switch (action.type) {
-      case GET_USER:
-        return {
-          id: id,
-          username: username,
-          email: email
-        }
-      case FETCH_ERROR: 
+  const { id, username, email } = action.payload  
+  switch (action.type) {
+    case GET_USER:
+      return {
+        id: id,
+        username: username,
+        email: email
+      }
+    case FETCH_ERROR: 
       return {
         ...state,
         error: action.payload
       } 
-      default: 
-        return state
+    default: 
+      return state
     }
-}
+  }
   
   const itemsReducer = (state, action) => {
     switch (action.type) {
       case GET_ITEMS:
         return [...action.payload]
-      case ADD_ITEM:
+      case CREATE_ITEM:
         return [...state, action.payload]
       case EDIT_ITEM:
-      return {
-        // not finished 
-        }
-      case DESTROY_ITEM: 
-      return {
-        // not finished
-      } 
-      default: 
-        return state
+        return {
+      // not finished 
     }
+    case DESTROY_ITEM: 
+      return {
+      // not finished
+    } 
+      default: 
+    return state
+  }
 }
+
+const outfitsReducer = (state, action) => {
+  switch (action.type) {
+    case GET_OUTFITS:
+      return [...action.payload]
+    case REMOVE_ITEM:
+      // const updatedState = state.filter(outfit => {
+      //   if (outfit.id === action.payload.id) return null
+      //   return outfit
+      // })
+      const updatedState = state.filter(outfit => outfit.id !== action.payload.id)
+      return [...updatedState, action.payload]
+    case CREATE_OUTFIT:
+      return // not finsihed 
+    case DESTROY_OUTFIT: 
+      return {
+      // not finished
+    } 
+    default: 
+      return state
+  }                 
+}
+      
+const selectedOutfitReducer = (state, action) => {
+  switch (action.type) {
+    case SET_OUTFIT:
+      return action.payload
+    case EDIT_NAME:
+      return {...state, name: action.payload}
+    case REMOVE_ITEM:
+      return {...state, items: state.items.filter(itemId => itemId !== action.payload)}
+    case UPDATE_OUTFIT:
+      return {
+      // not finished 
+    }
+    default: 
+      return state
+  }
+}
+        
+export { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer }

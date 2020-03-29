@@ -2,8 +2,9 @@ import React, { useState, useEffect, useReducer, createContext } from 'react'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import ClosetContainer from './containers/ClosetContainer'
+import OutfitsContainer from './containers/OutfitsContainer'
 import { api } from './services/api'
-import { userReducer, itemsReducer } from './reducers/Reducers'
+import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer } from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -17,7 +18,8 @@ export const DispatchContext = createContext()
 const FETCH_ERROR = 'FETCH_ERROR'
 const GET_USER = 'GET_USER'
 const GET_ITEMS = 'GET'
-const ADD_ITEM = 'ADD_ITEM'
+const CREATE_ITEM = 'CREATE_ITEM'
+const GET_OUTFITS = 'GET_OUTFITS'
 
 
 const initialState = {
@@ -29,7 +31,14 @@ const initialState = {
   items: [],
   outfits: [],
   boards: [],
-  editMode: false 
+  editMode: false, 
+  loading: true,
+  selectedOutfit: {
+    id: null,
+    name: '',
+    times_worn: null,
+    items: [{id: null, category: '', sub_category: '', color: '', image: '', brand: '', size: '' }]
+  }
 }
 
 //can change Material UI's default theme colors with this function:
@@ -44,15 +53,21 @@ const theme = createMuiTheme({
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
-  const [editMode, setEditMode] = useState(false)
+  const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
+  const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
+  const [editMode, setEditMode] = useState(initialState.editMode)
+  const [loading, setLoading] = useState(initialState.loading)
   
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+          setLoading(true)
           api.auth.getCurrentUser().then(user => {
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
+            outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
+            setLoading(false)
           }).catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
         } 
   }, [])
@@ -63,18 +78,31 @@ function App() {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
+      outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
     }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
   }
 
   const addItem = (item) => {
     api.items.addItem(item)
-    .then(item => itemsDispatch({type: ADD_ITEM, payload: item}))
+    .then(item => itemsDispatch({type: CREATE_ITEM, payload: item}))
     .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
   }
 
-  const state =  { user, items, editMode }
-  const dispatch = { userDispatch, itemsDispatch }
-  const method = { addItem, login, setEditMode }
+  const filterItemsByOutfit = (outfit) => { 
+    return items.filter(item => outfit.items.includes(item.id))
+  }
+
+  const removeItem = itemId => {
+    api.outfits.removeItem(itemId, selectedOutfit.id)
+    .then(outfit => {
+      outfitsDispatch({type: 'REMOVE_ITEM', payload: outfit})
+      selectedOutfitDispatch({type: 'SET_OUTFIT', payload: outfit})  
+    })
+  }
+
+  const state =  { user, items, outfits, editMode, loading, selectedOutfit }
+  const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading }
 
   return (
     <MuiThemeProvider theme={theme}>
