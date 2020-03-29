@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, MethodContext } from '../App'
 import ItemCard from './ItemCard'
+import AddItemModal from './AddItemModal'
 import clsx from 'clsx';
 import { 
     makeStyles,
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   appBar: {
-    marginTop: '60px',
+    marginTop: '48px',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -53,8 +54,9 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    marginTop: '60px',
-    height: 'calc(100vh - 60px)'
+    marginTop: '48px',
+    height: 'calc(100vh - 48px)',
+    position: 'absolute'
   },
   drawerHeader: {
     display: 'flex',
@@ -80,6 +82,17 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+
+  buttonstyle: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    margin: '4px'
+  }
 }));
 
 export default function OutfitDrawer() {
@@ -116,26 +129,38 @@ export default function OutfitDrawer() {
         </Toolbar> */}
 
       <AppBar
-        position="fixed"
+        position="absolute"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: editMode,
         })}
       >
         <Toolbar>
-          <IconButton
+          <Button
+            
             color="inherit"
+            variant="outlined" 
+            backgroundColor='secondary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, editMode && classes.hide)}
+            className={classes.buttonstyle}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Persistent drawer
-          </Typography>
+            Create Outfit
+          </Button>
+          {/* <Button 
+            variant="outlined" 
+            color="inherit"
+            backgroundColor='secondary'
+            className={classes.buttonstyle}
+            >
+            Add Item to Closet
+          </Button> */}
+          {/* <Typography variant="h6" noWrap>
+            Create an Outfit
+          </Typography> */}
       
-          <Button
+          {/* <Button
             color="primary"
             backgroundColor='primary'
             aria-label="open drawer"
@@ -144,8 +169,10 @@ export default function OutfitDrawer() {
             variant='outlined'
             className={clsx(classes.menuButton, editMode && classes.hide)}
           >
-            Create Outfit
-        </Button> 
+          
+          
+        </Button>  */}
+        <AddItemModal/>
         </Toolbar>
 
       </AppBar>
@@ -163,6 +190,7 @@ export default function OutfitDrawer() {
         }}
       >
         <div className={classes.drawerHeader}>
+          <p>Build an Outfit below by adding pieces from your Closet</p>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -178,6 +206,13 @@ export default function OutfitDrawer() {
         <Divider />
         <List>
           <ItemCard />
+        </List>
+        <List>
+          <Button
+            variant="outlined" 
+            >
+            Add Outfit to Collection
+          </Button>
         </List>
       </Drawer>
     </div>

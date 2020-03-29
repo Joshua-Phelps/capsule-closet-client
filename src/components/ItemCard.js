@@ -49,7 +49,7 @@ export default function ItemCard() {
       />
       </CardContent>
       <CardActions className={classes.centered}>
-        <Button size="small">Remove from Outfit</Button>
+        <Button size="small">Add to Outfit</Button>
       </CardActions>
     </Card>
   );

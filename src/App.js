@@ -8,6 +8,7 @@ import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 
 export const StateContext = createContext()
@@ -30,6 +31,15 @@ const initialState = {
   boards: [],
   editMode: false 
 }
+
+//can change Material UI's default theme colors with this function:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#E33E7F'
+    }
+  }
+})
 
 function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
@@ -67,91 +77,93 @@ function App() {
   const method = { addItem, login, setEditMode }
 
   return (
-    <Router>
-    <div className="App">
-      <StateContext.Provider value={state}>
-        <MethodContext.Provider value={method}>
-          <DispatchContext.Provider value={dispatch}>
-            <Route
-              path="/"
-              render={props => <NavBar {...props} />}
-            />
-            <Route
-              exact
-              path="/"
-              render={props => <Homepage {...props} />}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={props => <SignUp {...props} />}
-            />
-            <Route
-              exact
-              path="/login"
-              render={props => <Login {...props} />}
-            />
-            {/* <Route
-              exact
-              path="/guide"
-              render={props => <GuideContainer {...props} />}
-            /> */}
-            <Route
-              exact
-              path="/closet"
-              render={props => <ClosetContainer {...props} />}
-            />
-            {/* <Route
-              exact
-              path="/create-item"
-              render={props => <ItemForm {...props} />}
-            />
-            <Route
-              exact
-              path="/edit-item/:id"
-              render={props => <ItemForm {...props} />}
-            />
-            <Route
-              exact
-              path="/outfits"
-              render={props => <OutfitsContainer {...props} />}
-            /> 
-            <Route
-              exact
-              path="/create-outfit"
-              render={props => <OufitForm {...props} />}
-            />
-            <Route
-              exact
-              path="/edit-oufit/:id"
-              render={props => <OutfitForm {...props} />}
-            />
-            <Route
-              exact
-              path="/boards"
-              render={props => <BoardsContainer {...props} />}
-            />
-            <Route
-              exact
-              path="/create-board"
-              render={props => <BoardForm {...props} />}
-            />
-            <Route
-              exact
-              path="/edit-board/:id"
-              render={props => <BoardForm {...props} />}
-            />
-            <Route
-              exact
-              path="/edit-account/:id"
-              render={props => <AccountForm {...props} />}
-            />             */}
+    <MuiThemeProvider theme={theme}>
+      <Router>
+      <div className="App">
+        <StateContext.Provider value={state}>
+          <MethodContext.Provider value={method}>
+            <DispatchContext.Provider value={dispatch}>
+              <Route
+                path="/"
+                render={props => <NavBar {...props} />}
+              />
+              <Route
+                exact
+                path="/"
+                render={props => <Homepage {...props} />}
+              />
+              <Route
+                exact
+                path="/signup"
+                render={props => <SignUp {...props} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={props => <Login {...props} />}
+              />
+              {/* <Route
+                exact
+                path="/guide"
+                render={props => <GuideContainer {...props} />}
+              /> */}
+              <Route
+                exact
+                path="/closet"
+                render={props => <ClosetContainer {...props} />}
+              />
+              {/* <Route
+                exact
+                path="/create-item"
+                render={props => <ItemForm {...props} />}
+              />
+              <Route
+                exact
+                path="/edit-item/:id"
+                render={props => <ItemForm {...props} />}
+              />
+              <Route
+                exact
+                path="/outfits"
+                render={props => <OutfitsContainer {...props} />}
+              /> 
+              <Route
+                exact
+                path="/create-outfit"
+                render={props => <OufitForm {...props} />}
+              />
+              <Route
+                exact
+                path="/edit-oufit/:id"
+                render={props => <OutfitForm {...props} />}
+              />
+              <Route
+                exact
+                path="/boards"
+                render={props => <BoardsContainer {...props} />}
+              />
+              <Route
+                exact
+                path="/create-board"
+                render={props => <BoardForm {...props} />}
+              />
+              <Route
+                exact
+                path="/edit-board/:id"
+                render={props => <BoardForm {...props} />}
+              />
+              <Route
+                exact
+                path="/edit-account/:id"
+                render={props => <AccountForm {...props} />}
+              />             */}
 
-          </DispatchContext.Provider>
-        </MethodContext.Provider>
-      </StateContext.Provider>
-    </div>
-    </Router>
+            </DispatchContext.Provider>
+          </MethodContext.Provider>
+        </StateContext.Provider>
+      </div>
+      </Router>
+    </MuiThemeProvider>
   );
 }
 
