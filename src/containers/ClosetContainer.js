@@ -1,13 +1,16 @@
 import React, {useState, useContext} from 'react'
 import { StateContext } from '../App'
-import { Container, Grid, Drawer, makeStyles } from '@material-ui/core';
-import OutfitDrawer from '../components/OutfitDrawer';
+import { Container, Grid, Drawer, Button, makeStyles } from '@material-ui/core'
+import OutfitDrawer from '../components/OutfitDrawer'
+import CategoryFilter from '../components/CategoryFilter'
 import ItemCard from '../components/ItemCard'
-import clsx from 'clsx';
+import AddItemModal from '../components/AddItemModal'
+import clsx from 'clsx'
 
 import Paper from '@material-ui/core/Paper';
+import ItemForm from '../components/ItemForm'
 
-
+const itemsURL = "http://localhost:3000/items"
 
 const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
@@ -50,6 +53,35 @@ content: {
   }
 }))
 
+
+//get this user's closet items
+//need to fix URL to get user's items
+const getItems = () => {
+    fetch(itemsURL)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    // send to everyItem function
+}
+
+//post an item to this user's closet items (action comes from modal)
+const postItem = (item) => {
+    fetch(itemsURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+           
+        })
+    })
+}
+
+//iterate over all items for this specific user and create an ItemCard for them
+const everyItem = () => {
+
+}
+
 export default function ClosetContainer(){
     const [open, setOpen] = useState(true)
     const classes = useStyles()
@@ -66,33 +98,34 @@ export default function ClosetContainer(){
                 [classes.contentShift]: editMode,
                 })}
             >
+               
+                <CategoryFilter/>
                 
                 <Grid container spacing={4}>
-                    <Grid item xs={6} >
+                
+                    <Grid item xs={3} >
+                        <ItemCard/>
+                    </Grid>
+
+                    <Grid item xs={3} >
                         <ItemCard/>
                     </Grid>
                     
-                    <Grid item xs={6} ><Paper className={classes.paper}>xs=12</Paper></Grid>
-
-                    <Grid item xs ><Paper className={classes.paper}>xs=12</Paper></Grid>
+                    <Grid item xs={3} >
+                        <ItemCard/>
                     </Grid>
+                    <Grid item xs={3} >
+                        <ItemCard/>
+                    </Grid>
+                    
+                
+                </Grid>
                 </main>
                     
                  </Grid>
+                 
 
-           
-                
-
-        {/* <Grid container spacing={3}>
-            
-                <Grid item xs={1} style={{marginTop: '120px', textAlign: 'left', border: 'solid 1px black'}}> <Paper className={classes.paper}>xs=12</Paper>
-                </Grid>
-                
-                <Grid item xs={1} style={{marginTop: '120px', textAlign: 'left', border: 'solid 1px black'}}> <Paper className={classes.paper}>xs=12</Paper></Grid>
-
-                <Grid item xs={1} style={{marginTop: '120px', textAlign: 'left', border: 'solid 1px black'}}> <Paper className={classes.paper}>xs=12</Paper></Grid>
-            
-        </Grid> */}
+        
     </div>
     )
 } 
