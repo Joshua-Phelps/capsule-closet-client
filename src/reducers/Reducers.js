@@ -55,10 +55,6 @@ const outfitsReducer = (state, action) => {
     case GET_OUTFITS:
       return [...action.payload]
     case REMOVE_ITEM:
-      // const updatedState = state.filter(outfit => {
-      //   if (outfit.id === action.payload.id) return null
-      //   return outfit
-      // })
       const updatedState = state.filter(outfit => outfit.id !== action.payload.id)
       return [...updatedState, action.payload]
     case CREATE_OUTFIT:
