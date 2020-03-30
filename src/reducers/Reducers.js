@@ -4,11 +4,12 @@ const GET_ITEMS = 'GET'
 const CREATE_ITEM = 'CREATE_ITEM'
 const EDIT_ITEM = 'EDIT_ITEM'
 const DESTROY_ITEM = 'DESTROY_ITEM'
+const ADD_ITEM = "ADD_ITEM"
 const GET_OUTFITS = 'GET_OUTFITS'
 const CREATE_OUTFIT = 'CREATE_OUTFIT'
 const UPDATE_OUTFIT = 'UPDATE_OUTFIT'
 const DESTROY_OUTFIT = 'DESTROY_OUTFIT'
-const SET_OUTFIT = 'SET_OUTFIT'
+const SELECT_OUTFIT = 'SELECT_OUTFIT'
 const EDIT_NAME = 'EDIT_NAME'
 const REMOVE_ITEM = "REMOVE_ITEM"
 
@@ -54,11 +55,11 @@ const outfitsReducer = (state, action) => {
   switch (action.type) {
     case GET_OUTFITS:
       return [...action.payload]
-    case REMOVE_ITEM:
-      const updatedState = state.filter(outfit => outfit.id !== action.payload.id)
-      return [...updatedState, action.payload]
     case CREATE_OUTFIT:
       return // not finsihed 
+    case UPDATE_OUTFIT:
+      const updatedState = state.filter(outfit => outfit.id !== action.payload.id)
+      return [...updatedState, action.payload] 
     case DESTROY_OUTFIT: 
       return {
       // not finished
@@ -70,17 +71,14 @@ const outfitsReducer = (state, action) => {
       
 const selectedOutfitReducer = (state, action) => {
   switch (action.type) {
-    case SET_OUTFIT:
+    case SELECT_OUTFIT:
       return action.payload
     case EDIT_NAME:
       return {...state, name: action.payload}
     case REMOVE_ITEM:
-      console.log(state)
-      return {...state, items: state.items.filter(itemId => action.payload.items.includes(itemId))}
-    case UPDATE_OUTFIT:
-      return {
-      // not finished 
-    }
+      return {...state, items: [...state.items.filter(itemId => itemId !== action.payload)]}
+    case ADD_ITEM: 
+      return [action.payload, ...state]
     default: 
       return state
   }

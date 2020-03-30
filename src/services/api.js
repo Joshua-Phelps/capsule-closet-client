@@ -48,6 +48,22 @@ const removeItem = (item_id, outfit_id) => {
   }).then(res => res.json())
 }
 
+const createOutfit = outfit => {
+  return fetch(`${API_ROOT}/outfits`, {
+    method: 'POST',
+    headers: headers(),
+    body: JSON.stringify(outfit)
+  }).then(res => res.json())
+}
+
+const updateOutfit = (outfit) => {
+  return fetch(`${API_ROOT}/outfits/${outfit.id}`, {
+    method: 'PATCH',
+    headers: headers(),
+    body: JSON.stringify(outfit)
+  }).then(res => res.json())
+}
+
 export const api = {
   auth: {
       getCurrentUser,
@@ -58,6 +74,8 @@ export const api = {
     createItem,
   },
   outfits: {
-    removeItem
+    removeItem,
+    createOutfit,
+    updateOutfit
   }
 }

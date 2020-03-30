@@ -81,25 +81,15 @@ function App() {
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
     }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
-  }
-
-  const addItem = (item) => {
-    api.items.addItem(item)
-    .then(item => itemsDispatch({type: CREATE_ITEM, payload: item}))
-    .catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
-  }
+  } 
 
   const filterItemsByOutfit = (outfit) => { 
     return items.filter(item => outfit.items.includes(item.id))
   }
 
-  const removeItem = itemId => {
-    api.outfits.removeItem(itemId, selectedOutfit.id)
-    .then(outfit => {
-      outfitsDispatch({type: 'REMOVE_ITEM', payload: outfit})
-      selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: outfit})  
-    })
-  }
+  const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
+
+  const addItem = itemId => selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
 
   const state =  { user, items, outfits, editMode, loading, selectedOutfit }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }

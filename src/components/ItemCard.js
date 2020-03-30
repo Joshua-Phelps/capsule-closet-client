@@ -26,9 +26,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({item, handleClick}) {
+export default function ItemCard({item, handleClick, buttonText}) {
   const classes = useStyles();
-  const { loading } = useContext(StateContext)
   const { image, id, category } = item 
  
   return (
@@ -44,7 +43,7 @@ export default function ItemCard({item, handleClick}) {
         />
         </CardContent>
         <CardActions className={classes.centered}>
-          <Button onClick={() => handleClick(id)} size="small">Remove from Outfit</Button>
+          <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
         </CardActions>
       </Card>    
     </>

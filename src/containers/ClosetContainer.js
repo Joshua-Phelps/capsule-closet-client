@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import { StateContext } from '../App'
+import { StateContext, MethodContext } from '../App'
 import { Container, Grid, Drawer, Button, makeStyles } from '@material-ui/core'
 import OutfitDrawer from '../components/OutfitDrawer'
 import CategoryFilter from '../components/CategoryFilter'
@@ -30,7 +30,7 @@ content: {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    // marginLeft: -drawerWidth,
     marginTop: '120px', 
     textAlign: 'left',
     paddingLeft: theme.spacing(6),
@@ -41,7 +41,7 @@ content: {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: drawerWidth,
   },
   drawerHeader: {
     display: 'block',
@@ -83,36 +83,40 @@ const everyItem = () => {
 }
 
 export default function ClosetContainer(){
-    const [open, setOpen] = useState(true)
     const classes = useStyles()
     const {editMode, items} = useContext(StateContext)
-    
+    const { addItem } = useContext(MethodContext)
+    const {contentShift} = classes
 
+    const renderItems = () => {
+      return items.map(item => {
+        return <Grid item xs={3} >
+             <ItemCard />
+        </Grid>              
+      })
+    }
+    
     return (
     <div className={classes.root}>
-       <Grid container spacing={3}>
-            <OutfitDrawer />
-            
-            <main
-                className={clsx(classes.content, {
-                [classes.contentShift]: editMode,
-                })}
+       <Grid container spacing={3}>           
+          <main
+            className={clsx(classes.content, {
+              [classes.contentShift]: editMode,
+            })}
             >
-               
-                <CategoryFilter/>
+            <OutfitDrawer />
+               {/* <div className={ editMode ? clsx(classes.content, contentShift) : classes.content}> */}
+            <CategoryFilter/>
                 
-                <Grid container spacing={4}>
-                    <Grid item xs={6} >
-                        {/* <ItemCard item={items[0]}/> */}
-                    </Grid>                                    
-                </Grid>
-                </main>
-                    
-                 </Grid>
-                 
-
-        
+            <Grid container spacing={4}>
+              {items.map(item => {
+                return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+              })}                                                                      
+            </Grid>         
+                {/* </div> */}
+          </main>                    
+       </Grid>          
     </div>
-    )
+  )
 } 
 

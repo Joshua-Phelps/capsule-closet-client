@@ -74,7 +74,8 @@ export default function SimpleModal() {
         onClick={handleOpen}
         variant="outlined" 
         color="inherit"
-        backgroundColor='secondary'>
+        // backgroundColor='secondary'
+        >
         Add Item to Closet
       </Button>
       <Modal

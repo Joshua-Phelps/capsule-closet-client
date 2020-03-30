@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext, DispatchContext } from '../App'
+import { api } from '../services/api'
 import DrawerContainer from '../containers/DrawerContainer'
 import clsx from 'clsx';
 import { 
@@ -98,19 +99,23 @@ const useStyles = makeStyles(theme => ({
   itemDisplay: {
     marginLeft: '-64px',
     marginRight: '-64px'
-  }
+  }, 
+  form: {
+    textAlignLast: 'center'
+  },
+  button: {
+    width: '100%',
+    padding: '10px'  
+  },
 }));
 
 export default function OutfitDrawer() {
-  const { editMode, selectedOutfit, outfits } = useContext(StateContext)
-  const { selectedOutfitDispatch, outfitDispatch } = useContext(DispatchContext)
-  const { setEditMode } = useContext(MethodContext)
+  const { editMode, selectedOutfit, outfits, user } = useContext(StateContext)
+  const { selectedOutfitDispatch, outfitsDispatch } = useContext(DispatchContext)
+  const { setEditMode, updateOutfit, createOutfit } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
-  const { name } = selectedOutfit
-  // const [open, setOpen] = useState(true);
-
-
+  const { name, id } = selectedOutfit
 
   const handleDrawerOpen = () => {
     setEditMode(true);
@@ -124,29 +129,26 @@ export default function OutfitDrawer() {
     selectedOutfitDispatch({type: 'EDIT_NAME', payload: value})
   }
 
-  const handleUpdate = e => {
-    e.preventdefault()
-    outfitDispatch({type: 'UPDATE_OUTFIT', payload: selectedOutfit})
+  const handleCreateOutfit = () => {
+    const newOutfit = {...selectedOutfit, user_id: user.id}
+    api.outfits.createOutfit(newOutfit)
+    .then(outfit => outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit}))
+  }
+
+  const handleUpdate = () => {
+    api.outfits.updateOutfit(selectedOutfit)
+    .then(outfit => outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit}))
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    id ? handleUpdate() : handleCreateOutfit()
   }
 
 
   return (
     <div className={classes.root}>
       <CssBaseline /> 
-        {/* <Toolbar>
-          <Button
-            color="primary"
-            backgroundColor='primary'
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            variant='outlined'
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            Create Outfit
-        </Button> 
-        </Toolbar> */}
-
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, {
@@ -154,11 +156,11 @@ export default function OutfitDrawer() {
         })}
       >
         <Toolbar>
-          <Button
-            
+          
+          <Button            
             color="inherit"
             variant="outlined" 
-            backgroundColor='secondary'
+            // backgroundColor='secondary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -167,30 +169,6 @@ export default function OutfitDrawer() {
           >
             Create Outfit
           </Button>
-          {/* <Button 
-            variant="outlined" 
-            color="inherit"
-            backgroundColor='secondary'
-            className={classes.buttonstyle}
-            >
-            Add Item to Closet
-          </Button> */}
-          {/* <Typography variant="h6" noWrap>
-            Create an Outfit
-          </Typography> */}
-      
-          {/* <Button
-            color="primary"
-            // backgroundColor='primary'
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            variant='outlined'
-            className={clsx(classes.menuButton, editMode && classes.hide)}
-          >
-          
-          
-        </Button>  */}
         <AddItemModal/>
         </Toolbar>
 
@@ -209,29 +187,43 @@ export default function OutfitDrawer() {
         }}
       >
         <div className={classes.drawerHeader}>
-          {/* <Button></Button> */}
           {/* <Typography className={classes.title}>{name}</Typography> */}
-          <form onSubmit={handleUpdate} noValidate autoComplete="off">
+          {/* <form onSubmit={id ? handleUpdate : handleCreateOutfit} noValidate autoComplete="off">
             <TextField 
             id="standard-basic" 
             label='Edit Outfit Name' 
             value={name}
             onChange={handleChangeName}  />
-          </form>
+          </form> */}
+          <Button
+          className={classes.button}
+          variant="outlined" 
+          onClick={id ? handleUpdate : handleCreateOutfit}
+            >
+              <div className={classes.buttonText}>{id ? 'Update Outfit' : 'Add Outfit to Collection'}</div>
+          </Button>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
+        <form className={classes.form} onSubmit={handleSubmit} noValidate autoComplete="off">
+            <TextField 
+            id="standard-basic" 
+            label='Edit Outfit Name' 
+            value={name}
+            onChange={handleChangeName}  />
+        </form>
+          {/* <Button
+          variant="outlined" 
+          onClick={id ? handleUpdate : handleCreateOutfit}
+            >
+              {id ? 'Update Outfit' : 'Add Outfit to Collection'}
+          </Button> */}
         <div className={classes.itemDisplay}>
           <DrawerContainer />
         </div>
         <List>
-          <Button
-            variant="outlined" 
-            >
-            Add Outfit to Collection
-          </Button>
         </List>
       </Drawer>
     </div>

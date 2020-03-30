@@ -21,7 +21,7 @@ export default function DrawerContainer(){
 
   const renderItems = () => {
     return items.map(item => {       
-      return <Grid key={item.id} item xs={12}><ItemCard handleClick={removeItem} item={item} /><Divider /></Grid>
+      return <Grid key={item.id} item xs={12}><ItemCard buttonText={'Remove From Outfit'} handleClick={removeItem} item={item} /><Divider /></Grid>
     })
   }
 
