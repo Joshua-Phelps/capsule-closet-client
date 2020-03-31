@@ -1,7 +1,8 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext, DispatchContext } from '../App'
+import {useScrollPosition} from '../hooks/useScrollPosition'
 import { api } from '../services/api'
 import DrawerContainer from '../containers/DrawerContainer'
 import clsx from 'clsx';
@@ -15,7 +16,8 @@ import {
     Divider, 
     Toolbar,
     IconButton,
-    TextField
+    TextField,
+    Grid
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -24,7 +26,7 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 
-const drawerWidth = 300;
+const drawerWidth = 300; 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,8 +60,14 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
     marginTop: '48px',
-    height: 'calc(100vh - 48px)',
+    // height: 'calc(100vh - 48px)',
+    height: '100vh',
     position: 'absolute'
+  },
+  drawerPaperShift: {
+    position: 'fixed',
+    marginTop: 0,
+    height: '100vh'
   },
   drawerHeader: {
     display: 'flex',
@@ -76,7 +84,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -97,25 +105,34 @@ const useStyles = makeStyles(theme => ({
     margin: '4px'
   },
   itemDisplay: {
-    marginLeft: '-64px',
-    marginRight: '-64px'
+    width: '300px',
+    overflowX: 'hidden'
   }, 
   form: {
     textAlignLast: 'center'
   },
   button: {
-    width: '100%',
-    padding: '10px'  
-  },
+    marginTop: '5px'
+  }
 }));
 
 export default function OutfitDrawer() {
   const { editMode, selectedOutfit, outfits, user } = useContext(StateContext)
   const { selectedOutfitDispatch, outfitsDispatch } = useContext(DispatchContext)
-  const { setEditMode, updateOutfit, createOutfit } = useContext(MethodContext)
+  const { setEditMode, createOutfit, updateOutfit, deleteOutfit, clearSelectedOutfit } = useContext(MethodContext)
   const classes = useStyles();
   const theme = useTheme();
   const { name, id } = selectedOutfit
+  
+  const [hideNavBar, setHideNavBar] = useState(false)
+  const [positionY, setPositionY] = useState(0)
+
+  useScrollPosition(({ prevPos, currPos }) => {
+    const isShow = currPos.y < (-48)
+    if (isShow !== hideNavBar) setHideNavBar(isShow)
+  }, [hideNavBar])
+  
+  
 
   const handleDrawerOpen = () => {
     setEditMode(true);
@@ -129,22 +146,10 @@ export default function OutfitDrawer() {
     selectedOutfitDispatch({type: 'EDIT_NAME', payload: value})
   }
 
-  const handleCreateOutfit = () => {
-    const newOutfit = {...selectedOutfit, user_id: user.id}
-    api.outfits.createOutfit(newOutfit)
-    .then(outfit => outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit}))
-  }
-
-  const handleUpdate = () => {
-    api.outfits.updateOutfit(selectedOutfit)
-    .then(outfit => outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit}))
-  }
-
   const handleSubmit = e => {
     e.preventDefault()
-    id ? handleUpdate() : handleCreateOutfit()
+    id ? updateOutfit() : createOutfit()
   }
-
 
   return (
     <div className={classes.root}>
@@ -164,8 +169,11 @@ export default function OutfitDrawer() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, editMode && classes.hide)}
-            className={classes.buttonstyle}
+            className={clsx(classes.buttonstyle, classes.menuButton, {[classes.hide]: editMode})}
+            style={{}}
+            // className={clsx(classes.menuButton, classes.buttonstyle)}
+
+            // className={classes.buttonstyle}
           >
             Create Outfit
           </Button>
@@ -183,46 +191,39 @@ export default function OutfitDrawer() {
         anchor="left"
         open={editMode}
         classes={{
-          paper: classes.drawerPaper,
+          // paper: classes.drawerPaper,
+          paper: clsx(classes.drawerPaper, {[classes.drawerPaperShift]: hideNavBar}),
         }}
+        
       >
         <div className={classes.drawerHeader}>
           {/* <Typography className={classes.title}>{name}</Typography> */}
-          {/* <form onSubmit={id ? handleUpdate : handleCreateOutfit} noValidate autoComplete="off">
+          <form className={classes.form} onSubmit={handleSubmit} noValidate autoComplete="off">
             <TextField 
             id="standard-basic" 
             label='Edit Outfit Name' 
             value={name}
             onChange={handleChangeName}  />
-          </form> */}
-          <Button
-          className={classes.button}
-          variant="outlined" 
-          onClick={id ? handleUpdate : handleCreateOutfit}
-            >
-              <div className={classes.buttonText}>{id ? 'Update Outfit' : 'Add Outfit to Collection'}</div>
-          </Button>
+          </form>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-        <form className={classes.form} onSubmit={handleSubmit} noValidate autoComplete="off">
-            <TextField 
-            id="standard-basic" 
-            label='Edit Outfit Name' 
-            value={name}
-            onChange={handleChangeName}  />
-        </form>
-          {/* <Button
-          variant="outlined" 
-          onClick={id ? handleUpdate : handleCreateOutfit}
-            >
-              {id ? 'Update Outfit' : 'Add Outfit to Collection'}
-          </Button> */}
         <div className={classes.itemDisplay}>
           <DrawerContainer />
-        </div>
+        </div>          
+          <Button variant='contained' onClick={clearSelectedOutfit}>
+              Clear Outfit
+          </Button>         
+          <Button variant='contained' className={classes.button}onClick={handleSubmit}>
+            {id ? 'Update Outfit' : 'Add Outfit to Collection'}
+          </Button>
+          {id && 
+            <Button className={classes.button} variant='contained' onClick={deleteOutfit}>
+              Delete Outfit
+            </Button> 
+          }
         <List>
         </List>
       </Drawer>

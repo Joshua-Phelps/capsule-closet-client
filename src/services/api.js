@@ -40,14 +40,6 @@ const createItem = item => {
   }).then(res => res.json())
 }
 
-const removeItem = (item_id, outfit_id) => {
-  return fetch(`${API_ROOT}/item_outfits/${0}`, {
-    method: 'DELETE',
-    headers: headers(),
-    body: JSON.stringify({item_outfit: {item_id, outfit_id}})
-  }).then(res => res.json())
-}
-
 const createOutfit = outfit => {
   return fetch(`${API_ROOT}/outfits`, {
     method: 'POST',
@@ -56,11 +48,19 @@ const createOutfit = outfit => {
   }).then(res => res.json())
 }
 
-const updateOutfit = (outfit) => {
+const updateOutfit = outfit => {
   return fetch(`${API_ROOT}/outfits/${outfit.id}`, {
     method: 'PATCH',
     headers: headers(),
     body: JSON.stringify(outfit)
+  }).then(res => res.json())
+}
+
+const deleteOutfit = id => {
+  return fetch(`${API_ROOT}/outfits/${id}`, {
+    method: 'DELETE',
+    headers: headers(),
+    body: JSON.stringify({outfit:{id}})
   }).then(res => res.json())
 }
 
@@ -74,8 +74,8 @@ export const api = {
     createItem,
   },
   outfits: {
-    removeItem,
     createOutfit,
-    updateOutfit
+    updateOutfit,
+    deleteOutfit
   }
 }

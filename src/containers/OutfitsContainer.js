@@ -30,12 +30,13 @@ const useStyles = makeStyles(theme => ({
 export default function OutfitContainer({ history }){
   const { paper, root, extendedIcon, iconText, extendedIconRight } = useStyles()
   const { outfits } = useContext(StateContext)
-  const { setEditMode, setSelectedOutfit, filterItemsByOutfit } = useContext(MethodContext)
+  const { setEditMode } = useContext(MethodContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
 
-  const handleEdit = (outfit) => {
+  const handleEdit = outfit => {
     setEditMode(true)
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: outfit})
+    window.scrollTo(0, 0)
     history.push('/closet')
   }
 
@@ -52,7 +53,7 @@ export default function OutfitContainer({ history }){
             color="secondary" 
             aria-label="edit">
               {/* <EditIcon className={extendedIconRight} /> */}
-              <Typography className={iconText}>Edit {outfit.name}</Typography>
+              <Typography className={iconText}>Edit</Typography>
             </Fab>
           </Paper>
         </Grid>

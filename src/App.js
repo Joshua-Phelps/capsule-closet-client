@@ -38,7 +38,7 @@ const initialState = {
     id: null,
     name: '',
     times_worn: null,
-    items: [{id: null, category: '', sub_category: '', color: '', image: '', brand: '', size: '' }]
+    items: []
   }
 }
 
@@ -83,17 +83,55 @@ function App() {
     }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
   } 
 
-  const filterItemsByOutfit = (outfit) => { 
-    return items.filter(item => outfit.items.includes(item.id))
-  }
+  const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
-  const addItem = itemId => selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
+  const addItem = itemId => {
+    setEditMode(true)
+    selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
+  }
 
-  const state =  { user, items, outfits, editMode, loading, selectedOutfit }
+  const clearSelectedOutfit = () => {
+    selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: initialState.selectedOutfit})
+  }
+
+  const createOutfit = () => {
+    console.log('createing')
+    const newOutfit = {...selectedOutfit, user_id: user.id}
+    api.outfits.createOutfit(newOutfit)
+    .then(outfit => {
+      outfitsDispatch({type: 'CREATE_OUTFIT', payload: outfit})
+      setEditMode(false)
+    })
+  }
+
+  const updateOutfit = () => {
+    api.outfits.updateOutfit(selectedOutfit)
+    .then(outfit => {
+      outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit})
+      setEditMode(false)
+    })
+  }
+  
+  const deleteOutfit = () => {
+    api.outfits.deleteOutfit(selectedOutfit.id)
+    .then(() => {
+      outfitsDispatch({type: 'DELETE_OUTFIT', payload: selectedOutfit.id})
+      clearSelectedOutfit()
+      setEditMode(false)
+    })
+  }
+
+  const categories = (() =>  {
+    const all = items.map(item => item.category)
+    const unique = [...new Set(all)]
+    return unique.sort()
+  })()
+
+  const state =  { user, items, outfits, editMode, loading, selectedOutfit, categories }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit }
 
   return (
     <MuiThemeProvider theme={theme}>
