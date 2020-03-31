@@ -106,12 +106,19 @@ const useStyles = makeStyles(theme => ({
   },
   itemDisplay: {
     width: '300px',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    height: '100%'
   }, 
+  itemDisplayShift: {
+    height: '100%'
+  },
   form: {
     textAlignLast: 'center'
   },
   button: {
+    marginTop: '5px'
+  },
+  spacer: {
     marginTop: '5px'
   }
 }));
@@ -210,7 +217,8 @@ export default function OutfitDrawer() {
           </IconButton>
         </div>
         <Divider />
-        <div className={classes.itemDisplay}>
+        {/* <div className={clsx(classes.itemDisplay, {[classes.itemDisplayShift]: hideNavBar})}> */}
+        <div className={classes.itemDisplay} >
           <DrawerContainer />
         </div>          
           <Button variant='contained' onClick={clearSelectedOutfit}>
@@ -224,8 +232,7 @@ export default function OutfitDrawer() {
               Delete Outfit
             </Button> 
           }
-        <List>
-        </List>
+          <div className={classes.spacer}></div>
       </Drawer>
     </div>
   );
