@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import GuideContainer from './containers/GuideContainer'
 
 
 export const StateContext = createContext()
@@ -131,11 +132,11 @@ function App() {
                 path="/login"
                 render={props => <Login {...props} />}
               />
-              {/* <Route
+              <Route
                 exact
                 path="/guide"
                 render={props => <GuideContainer {...props} />}
-              /> */}
+              />
               <Route
                 exact
                 path="/closet"
