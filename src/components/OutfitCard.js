@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 export default function OutfitCard({ outfit }) {
   const classes = useStyles()
   const { filterItemsByOutfit } = useContext(MethodContext)
-  const {id, times_worn, name } = outfit 
+  const { name } = outfit 
   const items = filterItemsByOutfit(outfit)
 
 

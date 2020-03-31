@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { StateContext } from '../App'
 import { 
     makeStyles, 
     Card, 
@@ -29,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 export default function ItemCard({item, handleClick, buttonText}) {
   const classes = useStyles();
   const { image, id, category } = item 
- 
+
   return (
     <>     
       <Card className={classes.root} variant="outlined">

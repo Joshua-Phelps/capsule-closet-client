@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {  MethodContext } from '../App'
 import { Grid, makeStyles } from '@material-ui/core';
 import DrawerCategory from '../components/DrawerCategory';
+import DrawerAppBar from '../components/DrawerAppBar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,12 +13,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerContainer(){
   const { root } = useStyles()
-  const { getCategories } = useContext(MethodContext)
+  const { categories } = useContext(MethodContext)
 
   const renderCategoriesAndItems = () => {
-    return getCategories.map(category => {
+    return categories.map(category => {
       return (
-        <DrawerCategory category={category} />
+        <DrawerCategory key={category} category={category} />
       )
     })
   }

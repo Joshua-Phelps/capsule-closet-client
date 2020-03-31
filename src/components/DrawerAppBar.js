@@ -46,8 +46,10 @@ export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
   const { setEditMode } = useContext(MethodContext)
   const classes = useStyles();
+
     
   const handleDrawerOpen = () => {
+    window.scrollTo(0, 48)
     setEditMode(true);
   };
   return(

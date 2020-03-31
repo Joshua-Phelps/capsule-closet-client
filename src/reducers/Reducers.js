@@ -58,13 +58,7 @@ const outfitsReducer = (state, action) => {
     case CREATE_OUTFIT:
       return [...state, action.payload]
     case UPDATE_OUTFIT:
-      return state.map(outfit => {
-        if (outfit.id === action.payload.id){
-          return action.payload
-        } else {
-          return outfit
-        }
-      })
+      return state.map(outfit => (outfit.id !== action.payload.id) ? outfit : action.payload )
     case DELETE_OUTFIT: 
       return state.filter(outfit => outfit.id !== action.payload)
     default: 

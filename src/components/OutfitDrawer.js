@@ -1,33 +1,13 @@
 
 import React, { useContext, useState } from 'react';
-import AddItemModal from './AddItemModal'
-import { StateContext, MethodContext, DispatchContext } from '../App'
+import { StateContext } from '../App'
 import {useScrollPosition} from '../hooks/useScrollPosition'
-import { api } from '../services/api'
 import DrawerItemsContainer from '../containers/DrawerItemsContainer'
 import DrawerButtons from './DrawerButtons'
 import DrawerHeader from './DrawerHeader'
 import DrawerAppBar from './DrawerAppBar'
 import clsx from 'clsx';
-import { 
-    makeStyles,
-    useTheme,
-    Button, 
-    Drawer, 
-    CssBaseline, 
-    List, 
-    Divider, 
-    Toolbar,
-    IconButton,
-    TextField,
-    Grid
-} from '@material-ui/core'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import AppBar from '@material-ui/core/AppBar';
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, Drawer, CssBaseline, Divider, } from '@material-ui/core'
 
 const drawerWidth = 300; 
 

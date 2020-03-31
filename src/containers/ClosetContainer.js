@@ -85,10 +85,8 @@ const everyItem = () => {
 export default function ClosetContainer(){
     const classes = useStyles()
     const {editMode, items, selectedOutfit} = useContext(StateContext)
-    const { addItem } = useContext(MethodContext)
-    const {contentShift} = classes
-    const unSelectedItems = items.filter(item => !selectedOutfit.items.includes(item.id))
-
+    const { addItem, removeItem } = useContext(MethodContext)
+    
     const renderItems = () => {
       return items.map(item => {
         return <Grid item xs={3} >
@@ -110,8 +108,12 @@ export default function ClosetContainer(){
             <CategoryFilter/>
                 
             <Grid container spacing={4}>
-              {unSelectedItems.map(item => {
-                return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+              {items.map(item => {
+                if (!selectedOutfit.items.includes(item.id)){
+                  return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+                } else {
+                  return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Remove from Outfit' handleClick={removeItem} /></Grid>
+                }
               })}                                                                      
             </Grid>         
                 {/* </div> */}

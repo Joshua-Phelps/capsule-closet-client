@@ -58,6 +58,7 @@ function App() {
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
+  const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
   
 
   useEffect(() => {
@@ -69,7 +70,7 @@ function App() {
             itemsDispatch({type: GET_ITEMS, payload: user.items})
             outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
             setLoading(false)
-          }).catch(error => userDispatch({type: FETCH_ERROR, payload: error}))
+          }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error}))
         } 
   }, [])
 
@@ -80,7 +81,7 @@ function App() {
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
-    }).catch(error => userDispatch({type: FETCH_ERROR, payload: error})) 
+    }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
   const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
@@ -89,6 +90,7 @@ function App() {
 
   const addItem = itemId => {
     setEditMode(true)
+    setNewOutfitItemCategory(categoryByItemId(itemId))
     selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
   }
 
@@ -96,13 +98,18 @@ function App() {
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: initialState.selectedOutfit})
   }
 
+  const categoryByItemId = itemId => {
+    const item = items.filter(item => item.id === itemId)[0]   
+    return item.category
+  }
+
   const createOutfit = () => {
-    console.log('createing')
     const newOutfit = {...selectedOutfit, user_id: user.id}
     api.outfits.createOutfit(newOutfit)
     .then(outfit => {
       outfitsDispatch({type: 'CREATE_OUTFIT', payload: outfit})
       setEditMode(false)
+      clearSelectedOutfit()
     })
   }
 
@@ -111,6 +118,7 @@ function App() {
     .then(outfit => {
       outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit})
       setEditMode(false)
+      clearSelectedOutfit()
     })
   }
   
@@ -123,15 +131,11 @@ function App() {
     })
   }
 
-  const getCategories = (() =>  {
-    const all = items.map(item => item.category)
-    const unique = [...new Set(all)]
-    return unique.sort()
-  })()
+  const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
 
-  const state =  { user, items, outfits, editMode, loading, selectedOutfit, getCategories }
+  const state =  { user, items, outfits, editMode, loading, selectedOutfit, newOutfitItemCategory }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, getCategories }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, categories }
 
   return (
     <MuiThemeProvider theme={theme}>
