@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function OutfitContainer({ history }){
-  const { paper, root, extendedIcon, iconText, extendedIconRight } = useStyles()
+  const { paper, root, extendedIcon, iconText } = useStyles()
   const { outfits } = useContext(StateContext)
   const { setEditMode } = useContext(MethodContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
@@ -43,7 +43,7 @@ export default function OutfitContainer({ history }){
   const renderOufits = () => {
     return outfits.map(outfit => {
       return (
-        <Grid className={root} key={outfit.id} item xs={4} >
+        <Grid className={root} key={outfit.id} item xs={3} >
           <Paper className={paper}>
             <OutfitCard outfit={outfit} />
             <Fab 

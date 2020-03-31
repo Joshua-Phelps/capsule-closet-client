@@ -123,15 +123,15 @@ function App() {
     })
   }
 
-  const categories = (() =>  {
+  const getCategories = (() =>  {
     const all = items.map(item => item.category)
     const unique = [...new Set(all)]
     return unique.sort()
   })()
 
-  const state =  { user, items, outfits, editMode, loading, selectedOutfit, categories }
+  const state =  { user, items, outfits, editMode, loading, selectedOutfit, getCategories }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit }
+  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, getCategories }
 
   return (
     <MuiThemeProvider theme={theme}>
