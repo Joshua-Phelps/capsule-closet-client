@@ -42,6 +42,7 @@ content: {
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: drawerWidth,
+    // width: `calc(100% - ${drawerWidth}`
   },
   drawerHeader: {
     display: 'block',
@@ -84,14 +85,17 @@ const everyItem = () => {
 
 export default function ClosetContainer(){
     const classes = useStyles()
-    const {editMode, items, selectedOutfit} = useContext(StateContext)
+    const {editMode, items, selectedOutfit, categoryNavBarValue} = useContext(StateContext)
     const { addItem, removeItem } = useContext(MethodContext)
+    const displayedItems = items.filter(item => item.category.includes(categoryNavBarValue)) 
     
     const renderItems = () => {
-      return items.map(item => {
-        return <Grid item xs={3} >
-             <ItemCard />
-        </Grid>              
+      return displayedItems.map(item => {
+        if (!selectedOutfit.items.includes(item.id)){
+          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+        } else {
+          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Remove from Outfit' handleClick={removeItem} /></Grid>
+        }
       })
     }
     
@@ -104,19 +108,10 @@ export default function ClosetContainer(){
             })}
             >
             <OutfitDrawer />
-               {/* <div className={ editMode ? clsx(classes.content, contentShift) : classes.content}> */}
-            <CategoryFilter/>
-                
+            <CategoryFilter/>                
             <Grid container spacing={4}>
-              {items.map(item => {
-                if (!selectedOutfit.items.includes(item.id)){
-                  return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
-                } else {
-                  return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Remove from Outfit' handleClick={removeItem} /></Grid>
-                }
-              })}                                                                      
+              {renderItems()}
             </Grid>         
-                {/* </div> */}
           </main>                    
        </Grid>          
     </div>

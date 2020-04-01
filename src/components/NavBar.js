@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from 'react'
+import { StateContext, MethodContext } from '../App'
 import { makeStyles, AppBar, Tabs, Tab } from "@material-ui/core/";
 
 
@@ -9,12 +10,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NavBar() {
+export default function NavBar({ history, location }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const { navBarValue} = useContext(StateContext)
+  const { setNavBarValue } = useContext(MethodContext)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setNavBarValue(newValue)
+    newValue === 0 && history.push('/guide')
+    newValue === 1 && history.push('/closet')
+    newValue === 2 && history.push('/outfits')
+    newValue === 3 && history.push('/boards')
   };
 
   return (
@@ -22,7 +28,7 @@ export default function NavBar() {
       <AppBar position="static">
         <Tabs
           variant="fullWidth"
-          value={value}
+          value={navBarValue}
           onChange={handleChange}
           aria-label="nav tabs example"
         >

@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 export default function DrawerHeader(){
   const { selectedOutfit } = useContext(StateContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
-  const { setEditMode } = useContext(MethodContext)
+  const { setEditModeAndWindow } = useContext(MethodContext)
 
   const classes = useStyles();
   const theme = useTheme();
@@ -34,7 +34,7 @@ export default function DrawerHeader(){
   }
 
   const handleDrawerClose = () => {
-    setEditMode(false);
+    setEditModeAndWindow(false);
   }
 
   return (

@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    // position: 'fixed'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -45,13 +44,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
-  const { setEditMode } = useContext(MethodContext)
+  const { setEditModeAndWindow } = useContext(MethodContext)
   const classes = useStyles();
 
     
   const handleDrawerOpen = () => {
     window.scrollTo(0, 48)
-    setEditMode(true);
+    setEditModeAndWindow(true)
+    // setEditMode(true);
+    // window.dispatchEvent(new CustomEvent('resize'))
   };
   return(
     <AppBar

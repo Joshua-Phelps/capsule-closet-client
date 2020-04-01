@@ -30,14 +30,16 @@ const useStyles = makeStyles(theme => ({
 export default function OutfitContainer({ history }){
   const { paper, root, extendedIcon, iconText } = useStyles()
   const { outfits } = useContext(StateContext)
-  const { setEditMode } = useContext(MethodContext)
+  const { setEditMode, setNavBarValue, setEditModeAndWindow } = useContext(MethodContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
 
   const handleEdit = outfit => {
     setEditMode(true)
+    // setEditModeAndWindow(true)
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: outfit})
     window.scrollTo(0, 48)
     history.push('/closet')
+    setNavBarValue(1)
   }
 
   const renderOufits = () => {

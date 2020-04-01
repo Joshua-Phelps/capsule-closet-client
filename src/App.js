@@ -47,8 +47,10 @@ const initialState = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#E33E7F'
-    }
+      main: '#E33E7F',
+      light: '#ff80ab',
+      gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+    },
   },
   props: {
     // Name of the component ⚛️
@@ -67,6 +69,8 @@ function App() {
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
+  const [navBarValue, setNavBarValue] = useState(false)
+  const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   
 
   useEffect(() => {
@@ -97,8 +101,14 @@ function App() {
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
-    setEditMode(true)
-    setNewOutfitItemCategory(categoryByItemId(itemId))
+    setEditModeAndWindow(true)
+    const category = categoryByItemId(itemId)
+    // sets state to category + '2' to rerender DrawerCategory
+    if (newOutfitItemCategory === category) {
+      setNewOutfitItemCategory(category + '2')
+    } else if (newOutfitItemCategory === category + '2') {
+      setNewOutfitItemCategory(category)
+    } else setNewOutfitItemCategory(category)
     selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
   }
 
@@ -117,6 +127,7 @@ function App() {
     .then(outfit => {
       outfitsDispatch({type: 'CREATE_OUTFIT', payload: outfit})
       setEditMode(false)
+      // setEditModeAndWindow(false)
       clearSelectedOutfit()
     })
   }
@@ -126,6 +137,7 @@ function App() {
     .then(outfit => {
       outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit})
       setEditMode(false)
+      // setEditModeAndWindow(false)
       clearSelectedOutfit()
     })
   }
@@ -136,21 +148,55 @@ function App() {
       outfitsDispatch({type: 'DELETE_OUTFIT', payload: selectedOutfit.id})
       clearSelectedOutfit()
       setEditMode(false)
+      // setEditModeAndWindow(false)
     })
+  }
+
+  const categoryItems = (category, items) => items.filter(item => item.category === category)
+
+  const setEditModeAndWindow = (boolean) => {
+    setEditMode(boolean)
+    window.dispatchEvent(new CustomEvent('resize'))
   }
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
 
-  const state =  { user, items, outfits, editMode, loading, selectedOutfit, newOutfitItemCategory }
   const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, categories }
+  const state =  { 
+    user, 
+    items, 
+    outfits, 
+    editMode, 
+    loading, 
+    selectedOutfit, 
+    newOutfitItemCategory, 
+    navBarValue, 
+    categoryNavBarValue 
+  }
+  const methods = { 
+    addItem, 
+    login, 
+    filterItemsByOutfit, 
+    setEditMode, 
+    removeItem, 
+    setLoading, 
+    clearSelectedOutfit, 
+    deleteOutfit, 
+    updateOutfit, 
+    createOutfit, 
+    categories, 
+    setNavBarValue,
+    categoryItems,
+    setEditModeAndWindow,
+    setCategoryNavBarValue 
+  }
 
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
       <div className="App">
         <StateContext.Provider value={state}>
-          <MethodContext.Provider value={method}>
+          <MethodContext.Provider value={methods}>
             <DispatchContext.Provider value={dispatch}>
               <Route
                 path="/"
