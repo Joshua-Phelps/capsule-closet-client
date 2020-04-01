@@ -27,8 +27,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function ItemCard({item, handleClick, buttonText}) {
   const classes = useStyles();
-  const { image, id, category } = item 
-
+  const { loading } = useContext(StateContext)
+  const { image, id, category, sub_category } = item 
+ 
   return (
     <>     
       <Card className={classes.root} variant="outlined">
@@ -40,6 +41,9 @@ export default function ItemCard({item, handleClick, buttonText}) {
           className={classes.media}
           image={image}
         />
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+            {sub_category}
+        </Typography>
         </CardContent>
         <CardActions className={classes.centered}>
           <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
