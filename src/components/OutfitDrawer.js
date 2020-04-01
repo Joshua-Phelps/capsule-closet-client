@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   drawerPaperShift: {
     position: 'fixed',
     marginTop: 0,
-    height: '100vh'
+    // height: '100vh'
   },
   itemDisplay: {
     width: '300px',
@@ -54,13 +54,13 @@ export default function OutfitDrawer() {
       <CssBaseline /> 
       <DrawerAppBar />
       <Drawer
-        className={classes.drawer}
+        className={classes.drawer, '.mui-fixed'}
         variant="persistent"
         anchor="left"
         open={editMode}
         classes={{
           paper: clsx(classes.drawerPaper, {[classes.drawerPaperShift]: hideNavBar}),
-        }}        
+        }}             
       >
         <DrawerHeader />
         <Divider />

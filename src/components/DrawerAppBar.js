@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    // position: 'fixed'
   },
   menuButton: {
     marginRight: theme.spacing(2),
