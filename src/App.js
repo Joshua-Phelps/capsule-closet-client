@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { CssBaseline } from '@material-ui/core'
 
 
 export const StateContext = createContext()
@@ -48,6 +49,13 @@ const theme = createMuiTheme({
     primary: {
       main: '#E33E7F'
     }
+  },
+  props: {
+    // Name of the component ⚛️
+    MuiButtonBase: {
+      // The properties to apply
+      disableRipple: true, // No more ripple, on the whole application 💣!
+    },
   }
 })
 

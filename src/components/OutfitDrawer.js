@@ -54,7 +54,7 @@ export default function OutfitDrawer() {
       <CssBaseline /> 
       <DrawerAppBar />
       <Drawer
-        className={classes.drawer, '.mui-fixed'}
+        className={classes.drawer, ".mui-fixed"}
         variant="persistent"
         anchor="left"
         open={editMode}
