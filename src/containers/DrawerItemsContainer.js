@@ -8,11 +8,18 @@ const useStyles = makeStyles(theme => ({
   root: {
       flexGrow: 1,
       paddingTop: theme.spacing(3)
-    }
+    },
+    itemDisplay: {
+      flexGrow: 1,
+      paddingTop: theme.spacing(3),
+      width: '300px',
+      overflowX: 'hidden',
+      height: '100%'
+    }, 
 }))
 
 export default function DrawerContainer(){
-  const { root } = useStyles()
+  const { root, itemDisplay } = useStyles()
   const { categories } = useContext(MethodContext)
 
   const renderCategoriesAndItems = () => {
@@ -25,7 +32,7 @@ export default function DrawerContainer(){
 
 
   return (
-    <div className={root}>
+    <div className={itemDisplay}>
         <Grid container spacing={1}> 
           {renderCategoriesAndItems()}
         </Grid>                       

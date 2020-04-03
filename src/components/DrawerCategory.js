@@ -6,12 +6,14 @@ import ItemCard from './ItemCard';
 
 const useStyles = makeStyles(theme => ({
   heading: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: '4px',
+    padding: '0px!important'
   },
   colorHeading: {
-    background: theme.palette.primary.gradient
+    background: theme.palette.primary.gradient,
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
-  }
+  },
 }))
 
 export default function DrawerCategory({ category }){
@@ -19,19 +21,16 @@ export default function DrawerCategory({ category }){
   const { selectedOutfit, newOutfitItemCategory } = useContext(StateContext)
   const { filterItemsByOutfit, removeItem, categoryItems } = useContext(MethodContext)
   const [open, setOpen] = useState(true)
-  // const outfitItems = filterItemsByOutfit(selectedOutfit)
   const items = (() => {
     const outfitItems = filterItemsByOutfit(selectedOutfit)
     return categoryItems(category, outfitItems)
   })()
   const totalItemsDisplay = items.length > 0 && ` - ${items.length}`
 
-
   useEffect(() => {
     if (newOutfitItemCategory === (category) || ( newOutfitItemCategory === category + '2')) setOpen(true)
   }, [newOutfitItemCategory])
   
-
   const renderItems = () => {
     if (items.length > 0) 
     return items.map(item => {       

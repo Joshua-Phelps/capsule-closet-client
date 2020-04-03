@@ -65,9 +65,9 @@ export default function OutfitDrawer() {
       >
         <DrawerHeader />
         <Divider />
-        <div className={classes.itemDisplay} >
+        {/* <div className={classes.itemDisplay} > */}
           <DrawerItemsContainer />
-        </div>         
+        {/* </div>          */}
         <DrawerButtons /> 
       </Drawer>
     </div>

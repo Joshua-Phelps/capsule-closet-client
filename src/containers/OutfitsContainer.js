@@ -37,7 +37,7 @@ export default function OutfitContainer({ history }){
     setEditMode(true)
     // setEditModeAndWindow(true)
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: outfit})
-    window.scrollTo(0, 48)
+    // window.scrollTo(0, 48)
     history.push('/closet')
     setNavBarValue(1)
   }

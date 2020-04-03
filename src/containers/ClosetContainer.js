@@ -14,24 +14,24 @@ const itemsURL = "http://localhost:3000/items"
 
 const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
-
-    root: {
-        flexGrow: 1,
-      }, 
-      paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      },
-content: {
+  root: {
+      flexGrow: 1,
+      width: '100%'
+    }, 
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    // marginLeft: -drawerWidth,
-    marginTop: '120px', 
+  // marginLeft: -drawerWidth,
+    marginTop: '70px', 
     textAlign: 'left',
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
@@ -43,6 +43,7 @@ content: {
     }),
     marginLeft: drawerWidth,
     // width: `calc(100% - ${drawerWidth}`
+    justifyContent: 'flex-end'
   },
   drawerHeader: {
     display: 'block',
@@ -51,6 +52,9 @@ content: {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+  },
+  items: {
+    maxWidth: '100%'
   }
 }))
 
@@ -86,11 +90,11 @@ const everyItem = () => {
 export default function ClosetContainer(){
     const classes = useStyles()
     const {editMode, items, selectedOutfit, categoryNavBarValue} = useContext(StateContext)
-    const { addItem, removeItem } = useContext(MethodContext)
-    const displayedItems = items.filter(item => item.category.includes(categoryNavBarValue)) 
+    const { addItem, removeItem, closetDisplayedItems } = useContext(MethodContext)
+    // const displayedItems = items.filter(item => item.category.includes(categoryNavBarValue)) 
     
     const renderItems = () => {
-      return displayedItems.map(item => {
+      return closetDisplayedItems.map(item => {
         if (!selectedOutfit.items.includes(item.id)){
           return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
         } else {
@@ -100,8 +104,8 @@ export default function ClosetContainer(){
     }
     
     return (
-    <div className={classes.root}>
-       <Grid container spacing={3}>           
+    // <div className={classes.root}>
+       <Grid className={classes.root} container spacing={3}>           
           <main
             className={clsx(classes.content, {
               [classes.contentShift]: editMode,
@@ -109,12 +113,12 @@ export default function ClosetContainer(){
             >
             <OutfitDrawer />
             <CategoryFilter/>                
-            <Grid container spacing={4}>
+            <Grid className={classes.items} container spacing={4}>
               {renderItems()}
             </Grid>         
           </main>                    
        </Grid>          
-    </div>
+    // </div>
   )
 } 
 

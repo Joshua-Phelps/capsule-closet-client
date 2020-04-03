@@ -52,13 +52,6 @@ const theme = createMuiTheme({
       gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
     },
   },
-  props: {
-    // Name of the component ⚛️
-    MuiButtonBase: {
-      // The properties to apply
-      disableRipple: true, // No more ripple, on the whole application 💣!
-    },
-  }
 })
 
 function App() {
@@ -86,6 +79,13 @@ function App() {
         } 
   }, [])
 
+  useEffect(() => {
+    editMode 
+    ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
+    : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
+  }, [editMode])
+
+
   const login = (username, password) => {
     api.auth.login(username, password)
     .then(data => {
@@ -101,7 +101,7 @@ function App() {
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
-    setEditModeAndWindow(true)
+    setEditMode(true)
     const category = categoryByItemId(itemId)
     // sets state to category + '2' to rerender DrawerCategory
     if (newOutfitItemCategory === category) {
@@ -127,7 +127,6 @@ function App() {
     .then(outfit => {
       outfitsDispatch({type: 'CREATE_OUTFIT', payload: outfit})
       setEditMode(false)
-      // setEditModeAndWindow(false)
       clearSelectedOutfit()
     })
   }
@@ -137,7 +136,6 @@ function App() {
     .then(outfit => {
       outfitsDispatch({type: 'UPDATE_OUTFIT', payload: outfit})
       setEditMode(false)
-      // setEditModeAndWindow(false)
       clearSelectedOutfit()
     })
   }
@@ -148,16 +146,12 @@ function App() {
       outfitsDispatch({type: 'DELETE_OUTFIT', payload: selectedOutfit.id})
       clearSelectedOutfit()
       setEditMode(false)
-      // setEditModeAndWindow(false)
     })
   }
 
   const categoryItems = (category, items) => items.filter(item => item.category === category)
 
-  const setEditModeAndWindow = (boolean) => {
-    setEditMode(boolean)
-    window.dispatchEvent(new CustomEvent('resize'))
-  }
+  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue))
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
 
@@ -187,8 +181,8 @@ function App() {
     categories, 
     setNavBarValue,
     categoryItems,
-    setEditModeAndWindow,
-    setCategoryNavBarValue 
+    setCategoryNavBarValue,
+    closetDisplayedItems 
   }
 
   return (

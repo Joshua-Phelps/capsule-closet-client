@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext } from '../App'
 import { useScrollPosition } from '../hooks/useScrollPosition'
@@ -44,16 +44,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
-  const { setEditModeAndWindow } = useContext(MethodContext)
-  const classes = useStyles();
+  const { setEditMode } = useContext(MethodContext)
+  const classes = useStyles()
 
+  // useEffect(() => {
+  //   editMode && setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
+  // }, [editMode])
     
   const handleDrawerOpen = () => {
-    window.scrollTo(0, 48)
-    setEditModeAndWindow(true)
-    // setEditMode(true);
-    // window.dispatchEvent(new CustomEvent('resize'))
-  };
+    setEditMode(true)
+  }
+  
   return(
     <AppBar
         position="absolute"
