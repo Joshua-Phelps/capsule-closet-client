@@ -106,9 +106,9 @@ export default function ItemForm(item) {
           name={'category'}
           onChange={handleChange}
         >
-          <MenuItem value={"Top"}>Top</MenuItem>
+          <MenuItem value={"Tops"}>Top</MenuItem>
           <MenuItem value={"Bottoms"}>Bottoms</MenuItem>
-          <MenuItem value={"Dress"}>Dress</MenuItem>
+          <MenuItem value={"Dresses"}>Dress</MenuItem>
           <MenuItem value={"Outerwear"}>Outerwear</MenuItem>
           <MenuItem value={"Shoes"}>Shoes</MenuItem>
           <MenuItem value={"Accessories"}>Accessories</MenuItem>

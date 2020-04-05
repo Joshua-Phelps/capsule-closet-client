@@ -32,6 +32,7 @@ const initialState = {
   },
   items: [],
   formItem: {
+    id: null,
     category: '',
     sub_category: '',
     color: '',
@@ -57,8 +58,15 @@ const theme = createMuiTheme({
     primary: {
       main: '#E33E7F',
       light: '#ff80ab',
+      dark: '#000',
       gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
     },
+    secondary: {
+      main:'#E33E7F',
+      light: '#ff80ab',
+      dark: '#000',
+      gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+    }
   }
 })
 
