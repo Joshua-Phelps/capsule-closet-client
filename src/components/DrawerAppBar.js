@@ -46,15 +46,11 @@ export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
   const { setEditMode } = useContext(MethodContext)
   const classes = useStyles()
-
-  // useEffect(() => {
-  //   editMode && setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
-  // }, [editMode])
     
   const handleDrawerOpen = () => {
     setEditMode(true)
   }
-  
+
   return(
     <AppBar
         position="absolute"
@@ -66,7 +62,6 @@ export default function DrawerAppBar(){
           <Button            
             color="inherit"
             variant="outlined" 
-            // backgroundColor='secondary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"

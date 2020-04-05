@@ -31,8 +31,8 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   // marginLeft: -drawerWidth,
+    width: '100%',
     marginTop: '70px', 
-    textAlign: 'left',
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
   },
@@ -42,8 +42,8 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: drawerWidth,
-    // width: `calc(100% - ${drawerWidth}`
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    width: `calc(100% - ${drawerWidth}px)`,
   },
   drawerHeader: {
     display: 'block',
@@ -112,8 +112,9 @@ export default function ClosetContainer(){
             })}
             >
             <OutfitDrawer />
+
             <CategoryFilter/>                
-            <Grid className={classes.items} container spacing={4}>
+            <Grid container spacing={4}>
               {renderItems()}
             </Grid>         
           </main>                    

@@ -22,20 +22,13 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
     marginTop: '48px',
-    // height: 'calc(100vh - 48px)',
     height: '100vh',
     position: 'absolute'
   },
   drawerPaperShift: {
     position: 'fixed',
     marginTop: 0,
-    // height: '100vh'
-  },
-  itemDisplay: {
-    width: '300px',
-    overflowX: 'hidden',
-    height: '100%'
-  }, 
+  }
 }));
 
 export default function OutfitDrawer() {
@@ -65,9 +58,7 @@ export default function OutfitDrawer() {
       >
         <DrawerHeader />
         <Divider />
-        {/* <div className={classes.itemDisplay} > */}
-          <DrawerItemsContainer />
-        {/* </div>          */}
+        <DrawerItemsContainer />
         <DrawerButtons /> 
       </Drawer>
     </div>
