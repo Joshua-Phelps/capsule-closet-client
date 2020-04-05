@@ -7,12 +7,10 @@ import ItemCard from './ItemCard';
 const useStyles = makeStyles(theme => ({
   heading: {
     textAlign: 'center',
-    marginBottom: '4px',
-    padding: '0px!important'
+    padding: '8px'
   },
   colorHeading: {
     background: theme.palette.primary.gradient,
-    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
   },
 }))
 
@@ -22,7 +20,7 @@ export default function DrawerCategory({ category }){
   const { filterItemsByOutfit, removeItem, categoryItems } = useContext(MethodContext)
   const [open, setOpen] = useState(true)
   const items = (() => {
-    const outfitItems = filterItemsByOutfit(selectedOutfit)
+  const outfitItems = filterItemsByOutfit(selectedOutfit)
     return categoryItems(category, outfitItems)
   })()
   const totalItemsDisplay = items.length > 0 && ` - ${items.length}`
@@ -43,10 +41,10 @@ export default function DrawerCategory({ category }){
   }
 
   return (
-    <Grid className={clsx(heading, {[colorHeading]: totalItemsDisplay})} item xs={12}>
+    <Grid item xs={12}>
       <Typography 
       onClick={toggleOpen} 
-      // className={clsx(heading, {[colorHeading]: totalItemsDisplay})}
+      className={clsx(heading, {[colorHeading]: totalItemsDisplay})}
       >
         {category}{totalItemsDisplay}
       </Typography>
