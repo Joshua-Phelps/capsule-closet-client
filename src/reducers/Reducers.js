@@ -5,6 +5,7 @@ const CREATE_ITEM = 'CREATE_ITEM'
 const EDIT_ITEM = 'EDIT_ITEM'
 const DESTROY_ITEM = 'DESTROY_ITEM'
 const ADD_ITEM = "ADD_ITEM"
+const UPDATE_FORMITEM = "UPDATE_FORMITEM"
 const GET_OUTFITS = 'GET_OUTFITS'
 const CREATE_OUTFIT = 'CREATE_OUTFIT'
 const UPDATE_OUTFIT = 'UPDATE_OUTFIT'
@@ -51,6 +52,15 @@ const userReducer = (state, action) => {
   }
 }
 
+const formItemReducer = (state, action) => {
+  switch (action.type) {
+    case UPDATE_FORMITEM:
+      return {...state, [action.payload.name]: action.payload.value}
+      
+  }
+}
+
+
 const outfitsReducer = (state, action) => {
   switch (action.type) {
     case GET_OUTFITS:
@@ -81,4 +91,4 @@ const selectedOutfitReducer = (state, action) => {
   }
 }
         
-export { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer }
+export { userReducer, itemsReducer, formItemReducer, outfitsReducer, selectedOutfitReducer }

@@ -45,7 +45,6 @@ export default function SimpleModal() {
       <ItemForm/>
       {/* <SimpleModal /> */}
       {/* <Button
-        type="button"
         variant="outlined" 
         onClick={handleClose}
         >Add Item
