@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react'
 import { 
     makeStyles, 
@@ -17,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14,
   },
   media: {
-    height: 0,
     paddingTop: '56.25%', // 16:9
   },
   centered: {
@@ -25,11 +25,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({item, handleClick, buttonText}) {
+export default function ItemCard({item, handleClick, buttonText, recommendedText}) {
   const classes = useStyles();
-  const { loading } = useContext(StateContext)
-  const { image, id, category, sub_category } = item 
- 
+  const { image, id, category, sub_category, recommended} = item 
+
   return (
     <>     
       <Card className={classes.root} variant="outlined">
@@ -40,10 +39,13 @@ export default function ItemCard({item, handleClick, buttonText}) {
           <CardMedia
           className={classes.media}
           image={image}
-        />
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          />
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
             {sub_category}
-        </Typography>
+          </Typography>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            {recommendedText}{recommended}
+          </Typography>
         </CardContent>
         <CardActions className={classes.centered}>
           <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
@@ -52,3 +54,4 @@ export default function ItemCard({item, handleClick, buttonText}) {
     </>
   );
 }
+
