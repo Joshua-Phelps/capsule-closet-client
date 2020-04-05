@@ -35,6 +35,7 @@ export default function CenteredTabs() {
           <Tab label="Tops" />
           <Tab label="Bottoms" />
           <Tab label="Dresses" />
+          <Tab label="Outerwear" />
           <Tab label="Shoes" />
           <Tab label="Accessories" />
           

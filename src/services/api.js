@@ -36,9 +36,17 @@ const createItem = item => {
   return fetch(`${API_ROOT}/items`, {
     method: 'POST',
     headers: headers(),
-    body: JSON.stringify(item)
+    body: JSON.stringify({item})
   }).then(res => res.json())
+    // .then( item => this.filterItems(item))
 }
+
+// //does this function need to go in App.js?
+// const filterItems = (items) => {
+//   let filteredItems = items.filter(item => {
+//     return item.user.id == this.state.user.id
+//   })
+// }
 
 const createOutfit = outfit => {
   return fetch(`${API_ROOT}/outfits`, {

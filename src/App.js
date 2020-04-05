@@ -5,7 +5,7 @@ import ClosetContainer from './containers/ClosetContainer'
 import OutfitsContainer from './containers/OutfitsContainer'
 import ItemForm from './components/ItemForm'
 import { api } from './services/api'
-import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer } from './reducers/Reducers'
+import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer, formItemReducer } from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -31,6 +31,14 @@ const initialState = {
     email: ''
   },
   items: [],
+  formItem: {
+    category: '',
+    sub_category: '',
+    color: '',
+    size: '',
+    brand: '',
+    image: ''
+  },
   outfits: [],
   boards: [],
   editMode: false, 
@@ -63,6 +71,7 @@ function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
+  const [formItem, formItemDispatch] = useReducer(formItemReducer, initialState.formItem)
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
@@ -92,6 +101,7 @@ function App() {
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
+  
   const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
@@ -100,6 +110,15 @@ function App() {
     setEditMode(true)
     setNewOutfitItemCategory(categoryByItemId(itemId))
     selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
+  }
+
+  const createItem = () => {
+    const newItem = {...formItem, user_id: user.id}
+    console.log(newItem)
+    api.items.createItem(newItem)
+    .then(item => {
+      itemsDispatch({type: 'CREATE_ITEM', payload: item})
+    })
   }
 
   const clearSelectedOutfit = () => {
@@ -140,10 +159,11 @@ function App() {
   }
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
+  const topsSubCategories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
 
-  const state =  { user, items, outfits, editMode, loading, selectedOutfit, newOutfitItemCategory }
-  const dispatch = { userDispatch, itemsDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, categories }
+  const state =  { user, items, formItem, outfits, editMode, loading, selectedOutfit, newOutfitItemCategory }
+  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
+  const method = { addItem, login, createItem, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, categories }
 
   return (
     <MuiThemeProvider theme={theme}>
