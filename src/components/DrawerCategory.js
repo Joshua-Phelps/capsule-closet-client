@@ -1,30 +1,37 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { Grid, makeStyles, Divider, Typography } from '@material-ui/core';
+import clsx from 'clsx';
 import ItemCard from './ItemCard';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   heading: {
-    textAlign: 'center'
-  }
-})
+    textAlign: 'center',
+    padding: '8px'
+  },
+  colorHeading: {
+    background: theme.palette.primary.gradient,
+  },
+}))
 
 export default function DrawerCategory({ category }){
-  const { heading } = useStyles()
+  const { heading, colorHeading } = useStyles()
   const { selectedOutfit, newOutfitItemCategory } = useContext(StateContext)
-  const { filterItemsByOutfit, removeItem } = useContext(MethodContext)
+  const { filterItemsByOutfit, removeItem, categoryItems } = useContext(MethodContext)
   const [open, setOpen] = useState(true)
-  const items = filterItemsByOutfit(selectedOutfit)
+  const items = (() => {
+  const outfitItems = filterItemsByOutfit(selectedOutfit)
+    return categoryItems(category, outfitItems)
+  })()
+  const totalItemsDisplay = items.length > 0 && ` - ${items.length}`
 
   useEffect(() => {
-    if (newOutfitItemCategory === category) setOpen(true)
+    if (newOutfitItemCategory === (category) || ( newOutfitItemCategory === category + '2')) setOpen(true)
   }, [newOutfitItemCategory])
   
-
   const renderItems = () => {
-    const itemsByCategory = items.filter(item => item.category === category)
-    if (itemsByCategory.length > 0) 
-    return itemsByCategory.map(item => {       
+    if (items.length > 0) 
+    return items.map(item => {       
       return <Grid key={item.id} item xs={12}><ItemCard buttonText={'Remove From Outfit'} handleClick={removeItem} item={item} /><Divider /></Grid>
     })
   }
@@ -35,7 +42,12 @@ export default function DrawerCategory({ category }){
 
   return (
     <Grid item xs={12}>
-      <Typography onClick={toggleOpen} className={heading}>{category}</Typography>
+      <Typography 
+      onClick={toggleOpen} 
+      className={clsx(heading, {[colorHeading]: totalItemsDisplay})}
+      >
+        {category}{totalItemsDisplay}
+      </Typography>
       <Divider />
       {open && renderItems() }
     </Grid>

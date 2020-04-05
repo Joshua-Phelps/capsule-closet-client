@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext } from '../App'
 import { useScrollPosition } from '../hooks/useScrollPosition'
@@ -45,13 +45,12 @@ const useStyles = makeStyles(theme => ({
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
   const { setEditMode } = useContext(MethodContext)
-  const classes = useStyles();
-
+  const classes = useStyles()
     
   const handleDrawerOpen = () => {
-    window.scrollTo(0, 48)
-    setEditMode(true);
-  };
+    setEditMode(true)
+  }
+
   return(
     <AppBar
         position="absolute"
@@ -63,7 +62,6 @@ export default function DrawerAppBar(){
           <Button            
             color="inherit"
             variant="outlined" 
-            // backgroundColor='secondary'
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"

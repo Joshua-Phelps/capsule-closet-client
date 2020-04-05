@@ -22,20 +22,13 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
     marginTop: '48px',
-    // height: 'calc(100vh - 48px)',
     height: '100vh',
     position: 'absolute'
   },
   drawerPaperShift: {
     position: 'fixed',
     marginTop: 0,
-    height: '100vh'
-  },
-  itemDisplay: {
-    width: '300px',
-    overflowX: 'hidden',
-    height: '100%'
-  }, 
+  }
 }));
 
 export default function OutfitDrawer() {
@@ -54,19 +47,18 @@ export default function OutfitDrawer() {
       <CssBaseline /> 
       <DrawerAppBar />
       <Drawer
-        className={classes.drawer, ".mui-fixed"}
+        // className={classes.drawer, ".mui-fixed"}
+        className={classes.drawer}
         variant="persistent"
         anchor="left"
         open={editMode}
         classes={{
           paper: clsx(classes.drawerPaper, {[classes.drawerPaperShift]: hideNavBar}),
-        }}        
+        }}             
       >
         <DrawerHeader />
         <Divider />
-        <div className={classes.itemDisplay} >
-          <DrawerItemsContainer />
-        </div>         
+        <DrawerItemsContainer />
         <DrawerButtons /> 
       </Drawer>
     </div>

@@ -55,16 +55,10 @@ const initialState = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#E33E7F'
-    }
-  },
-  props: {
-    // Name of the component ⚛️
-    MuiButtonBase: {
-      // The properties to apply
-      disableRipple: true, // No more ripple, on the whole application 💣!
+      main: '#E33E7F',
+      light: '#ff80ab',
+      gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
     },
-  }
 })
 
 function App() {
@@ -76,6 +70,8 @@ function App() {
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
+  const [navBarValue, setNavBarValue] = useState(false)
+  const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   
 
   useEffect(() => {
@@ -91,6 +87,13 @@ function App() {
         } 
   }, [])
 
+  useEffect(() => {
+    editMode 
+    ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
+    : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
+  }, [editMode])
+
+
   const login = (username, password) => {
     api.auth.login(username, password)
     .then(data => {
@@ -101,14 +104,19 @@ function App() {
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
-  
   const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
     setEditMode(true)
-    setNewOutfitItemCategory(categoryByItemId(itemId))
+    const category = categoryByItemId(itemId)
+    // sets state to category + '2' to rerender DrawerCategory
+    if (newOutfitItemCategory === category) {
+      setNewOutfitItemCategory(category + '2')
+    } else if (newOutfitItemCategory === category + '2') {
+      setNewOutfitItemCategory(category)
+    } else setNewOutfitItemCategory(category)
     selectedOutfitDispatch({type: 'ADD_ITEM', payload: itemId})
   }
 
@@ -158,19 +166,51 @@ function App() {
     })
   }
 
+  const categoryItems = (category, items) => items.filter(item => item.category === category)
+
+  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue))
+
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
   const topsSubCategories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
 
-  const state =  { user, items, formItem, outfits, editMode, loading, selectedOutfit, newOutfitItemCategory }
   const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
-  const method = { addItem, login, createItem, filterItemsByOutfit, setEditMode, removeItem, setLoading, clearSelectedOutfit, deleteOutfit, updateOutfit, createOutfit, categories }
+  const state =  { 
+    user, 
+    items, 
+    formItem,
+    outfits, 
+    editMode, 
+    loading, 
+    selectedOutfit, 
+    newOutfitItemCategory, 
+    navBarValue, 
+    categoryNavBarValue 
+  }
+  const methods = { 
+    addItem, 
+    login, 
+    filterItemsByOutfit, 
+    setEditMode, 
+    removeItem, 
+    setLoading, 
+    clearSelectedOutfit, 
+    deleteOutfit, 
+    updateOutfit, 
+    createOutfit, 
+    categories, 
+    setNavBarValue,
+    categoryItems,
+    setCategoryNavBarValue,
+    closetDisplayedItems,
+    createItem, 
+  }
 
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
       <div className="App">
         <StateContext.Provider value={state}>
-          <MethodContext.Provider value={method}>
+          <MethodContext.Provider value={methods}>
             <DispatchContext.Provider value={dispatch}>
               <Route
                 path="/"

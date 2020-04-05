@@ -34,7 +34,8 @@ export default function DrawerHeader(){
   }
 
   const handleDrawerClose = () => {
-    setEditMode(false);
+    setEditMode(false)
+    // setEditModeAndWindow(false)
   }
 
   return (
