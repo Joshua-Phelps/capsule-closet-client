@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { Grid, makeStyles, Divider, Typography } from '@material-ui/core';
 import clsx from 'clsx';
@@ -19,6 +19,7 @@ export default function DrawerCategory({ category }){
   const { selectedOutfit, newOutfitItemCategory } = useContext(StateContext)
   const { filterItemsByOutfit, removeItem, categoryItems } = useContext(MethodContext)
   const [open, setOpen] = useState(true)
+  const myRef = useRef(null)
   const items = (() => {
   const outfitItems = filterItemsByOutfit(selectedOutfit)
     return categoryItems(category, outfitItems)
@@ -26,7 +27,10 @@ export default function DrawerCategory({ category }){
   const totalItemsDisplay = items.length > 0 && ` - ${items.length}`
 
   useEffect(() => {
-    if (newOutfitItemCategory === (category) || ( newOutfitItemCategory === category + '2')) setOpen(true)
+    if (newOutfitItemCategory === (category) || ( newOutfitItemCategory === category + '2')){ 
+      setOpen(true)
+      myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }, [newOutfitItemCategory])
   
   const renderItems = () => {
@@ -41,12 +45,13 @@ export default function DrawerCategory({ category }){
   }
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} ref={myRef}>
       <Typography 
       onClick={toggleOpen} 
       className={clsx(heading, {[colorHeading]: totalItemsDisplay})}
       >
-        {category}{totalItemsDisplay}
+        <span>{category}</span>
+        <span>{totalItemsDisplay}</span>
       </Typography>
       <Divider />
       {open && renderItems() }

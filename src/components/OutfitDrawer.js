@@ -43,7 +43,7 @@ export default function OutfitDrawer() {
 
 
   return (
-    <div className={classes.root}>
+    <div id='drawer' className={classes.root}>
       <CssBaseline /> 
       <DrawerAppBar />
       <Drawer

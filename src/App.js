@@ -81,6 +81,7 @@ function App() {
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
+  const [subCategoryNavBarValue, setSubCategoryNavBarValue] = useState('')
   
 
   useEffect(() => {
@@ -177,10 +178,20 @@ function App() {
 
   const categoryItems = (category, items) => items.filter(item => item.category === category)
 
-  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue))
+  const getSubCategoryItems = (subCategory, items) => items.filter(item => item.subCategory === subCategory)
+
+  const getSubCategories = (items) => {
+    let subCatObj = {}
+    items.forEach(item => {
+      subCatObj[item.sub_category] = subCatObj[item.sub_category] || true
+    })
+    return Object.keys(subCatObj).sort()
+  }
+
+  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue) && item.sub_category.includes(subCategoryNavBarValue))
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
-  const topsSubCategories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
+  // const topsSubCategories = ['Tank Shirt', 'White Top', ]
 
   const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
   const state =  { 
@@ -193,7 +204,8 @@ function App() {
     selectedOutfit, 
     newOutfitItemCategory, 
     navBarValue, 
-    categoryNavBarValue 
+    categoryNavBarValue,
+    subCategoryNavBarValue 
   }
   const methods = { 
     addItem, 
@@ -212,6 +224,9 @@ function App() {
     setCategoryNavBarValue,
     closetDisplayedItems,
     createItem, 
+    getSubCategoryItems,
+    getSubCategories,
+    setSubCategoryNavBarValue
   }
 
   return (
