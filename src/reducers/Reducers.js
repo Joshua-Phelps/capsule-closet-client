@@ -13,6 +13,7 @@ const DELETE_OUTFIT = 'DELETE_OUTFIT'
 const SELECT_OUTFIT = 'SELECT_OUTFIT'
 const EDIT_NAME = 'EDIT_NAME'
 const REMOVE_ITEM = "REMOVE_ITEM"
+const SET_ITEM = 'SET_ITEM'
 
 const userReducer = (state, action) => {
   const { id, username, email } = action.payload  
@@ -56,7 +57,10 @@ const formItemReducer = (state, action) => {
   switch (action.type) {
     case UPDATE_FORMITEM:
       return {...state, [action.payload.name]: action.payload.value}
-      
+    case SET_ITEM:
+      return {...state, category: action.payload.category, sub_category: action.payload.sub_category, image: action.payload.image}
+    default: 
+      return state   
   }
 }
 
