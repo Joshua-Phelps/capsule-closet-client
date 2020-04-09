@@ -85,7 +85,7 @@ const selectedOutfitReducer = (state, action) => {
     case REMOVE_ITEM:
       return {...state, items: [...state.items.filter(itemId => itemId !== action.payload)]}
     case ADD_ITEM: 
-      return  {...state, items: [action.payload, ...state.items,]}
+      return  {...state, items: [action.payload, ...state.items]}
     default: 
       return state
   }

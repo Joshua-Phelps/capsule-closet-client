@@ -1,9 +1,8 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { makeStyles, Link } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Grid, Typography } from '@material-ui/core'
 import { StateContext, MethodContext } from '../App';
 
 
@@ -18,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SubCategoryFilter() {
   const classes = useStyles();
-  const { categoryNavBarValue, items, editMode, subCategoryNavBarValue } = useContext(StateContext)
+  const { categoryNavBarValue, items, subCategoryNavBarValue } = useContext(StateContext)
   const { getSubCategories, categoryItems, setSubCategoryNavBarValue } = useContext(MethodContext)
   const tabsActions = useRef()  
 
@@ -55,12 +54,11 @@ export default function SubCategoryFilter() {
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
-            // centered
             variant="scrollable"         
             scrollButtons="on"
             className={classes.tabs}
           >   
-    
+          <Tab value='' label={`All ${categoryNavBarValue}`} />
           {renderTabs()} 
 
             {/* <Tab value='' label="All Items" />

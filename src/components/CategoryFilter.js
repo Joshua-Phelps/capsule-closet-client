@@ -29,7 +29,7 @@ export default function CategoryFilter() {
   useEffect(() => {
     setTimeout(() => tabsActions.current.updateIndicator(), 200)
     setTimeout(() => tabsActions.current.updateScrollButtons(), 200)
-  }, [editMode])
+  }, [editMode, []])
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function CategoryFilter() {
           indicatorColor='primary'
           textColor='primary'
           centered={editMode ? false : true}
-          variant={editMode ? 'scrollable' : ''}        
+          variant={editMode ? 'scrollable' : 'standard'}        
           scrollButtons={editMode ? 'on': 'off'}
           className={classes.tabs}
         >      

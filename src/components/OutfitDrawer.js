@@ -46,21 +46,23 @@ export default function OutfitDrawer() {
     <div id='drawer' className={classes.root}>
       <CssBaseline /> 
       <DrawerAppBar />
-      <Drawer
-        // className={classes.drawer, ".mui-fixed"}
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={editMode}
-        classes={{
-          paper: clsx(classes.drawerPaper, {[classes.drawerPaperShift]: hideNavBar}),
-        }}             
-      >
-        <DrawerHeader />
-        <Divider />
-        <DrawerItemsContainer />
-        <DrawerButtons /> 
-      </Drawer>
+      {editMode &&
+        <Drawer
+          // className={classes.drawer, ".mui-fixed"}
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={editMode}
+          classes={{
+            paper: clsx(classes.drawerPaper, {[classes.drawerPaperShift]: hideNavBar}),
+          }}             
+        >
+          <DrawerHeader />
+          <Divider />
+          <DrawerItemsContainer />
+          <DrawerButtons /> 
+        </Drawer>
+      } 
     </div>
   );
 }

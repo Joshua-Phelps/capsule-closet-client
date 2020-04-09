@@ -114,12 +114,18 @@ function App() {
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
-  const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
+  // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
+
+  const filterItemsByOutfit = outfit => {
+    let t = outfit.items.map(id => items.filter(item => item.id ===id)[0])
+    console.log(t)
+    return t
+  }
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
-    setEditMode(true)
+    !editMode && setEditMode(true)
     const category = categoryByItemId(itemId)
     // sets state to category + '2' to rerender DrawerCategory
     if (newOutfitItemCategory === category) {
