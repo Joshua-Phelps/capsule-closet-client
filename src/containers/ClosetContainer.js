@@ -1,14 +1,14 @@
-import React, {useState, useContext} from 'react'
+import React, { useContext } from 'react'
 import { StateContext, MethodContext } from '../App'
-import { Container, Grid, Drawer, Button, makeStyles } from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
 import OutfitDrawer from '../components/OutfitDrawer'
 import CategoryFilter from '../components/CategoryFilter'
 import ItemCard from '../components/ItemCard'
-import AddItemModal from '../components/AddItemModal'
+import SubCategoryFilter from '../components/SubCategoryFilter'
 import clsx from 'clsx'
 
-import Paper from '@material-ui/core/Paper';
-import ItemForm from '../components/ItemForm'
+// import Paper from '@material-ui/core/Paper';
+// import ItemForm from '../components/ItemForm'
 
 const itemsURL = "http://localhost:3000/items"
 
@@ -104,7 +104,6 @@ export default function ClosetContainer(){
     }
     
     return (
-    // <div className={classes.root}>
        <Grid className={classes.root} container spacing={3}>           
           <main
             className={clsx(classes.content, {
@@ -113,13 +112,14 @@ export default function ClosetContainer(){
             >
             <OutfitDrawer />
 
-            <CategoryFilter/>                
+            <CategoryFilter/>  
+            <br></br> 
+            <SubCategoryFilter />             
             <Grid container spacing={4}>
               {renderItems()}
             </Grid>         
           </main>                    
        </Grid>          
-    // </div>
   )
 } 
 

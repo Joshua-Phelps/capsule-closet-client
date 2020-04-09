@@ -29,7 +29,7 @@ export default function CategoryFilter() {
   useEffect(() => {
     setTimeout(() => tabsActions.current.updateIndicator(), 200)
     setTimeout(() => tabsActions.current.updateScrollButtons(), 200)
-  }, [editMode])
+  }, [editMode, []])
 
   return (
     <>
@@ -50,11 +50,11 @@ export default function CategoryFilter() {
           action={tabsActions}
           value={categoryNavBarValue}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-          variant="scrollable"         
-          scrollButtons="on"
+          indicatorColor='primary'
+          textColor='primary'
+          centered={editMode ? false : true}
+          variant={editMode ? 'scrollable' : 'standard'}        
+          scrollButtons={editMode ? 'on': 'off'}
           className={classes.tabs}
         >      
           <Tab value='' label="All Items" />

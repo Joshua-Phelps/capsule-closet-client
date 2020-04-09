@@ -82,6 +82,7 @@ function App() {
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   const [openItemModal, setOpenItemModal] = useState(false)
+  const [subCategoryNavBarValue, setSubCategoryNavBarValue] = useState('')
   
 
   useEffect(() => {
@@ -114,12 +115,18 @@ function App() {
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
-  const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
+  // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
+
+  const filterItemsByOutfit = outfit => {
+    let t = outfit.items.map(id => items.filter(item => item.id ===id)[0])
+    console.log(t)
+    return t
+  }
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
-    setEditMode(true)
+    !editMode && setEditMode(true)
     const category = categoryByItemId(itemId)
     // sets state to category + '2' to rerender DrawerCategory
     if (newOutfitItemCategory === category) {
@@ -178,10 +185,20 @@ function App() {
 
   const categoryItems = (category, items) => items.filter(item => item.category === category)
 
-  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue))
+  const getSubCategoryItems = (subCategory, items) => items.filter(item => item.subCategory === subCategory)
+
+  const getSubCategories = (items) => {
+    let subCatObj = {}
+    items.forEach(item => {
+      subCatObj[item.sub_category] = subCatObj[item.sub_category] || true
+    })
+    return Object.keys(subCatObj).sort()
+  }
+
+  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue) && item.sub_category.includes(subCategoryNavBarValue))
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
-  const topsSubCategories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
+  // const topsSubCategories = ['Tank Shirt', 'White Top', ]
 
   const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
   const state =  { 
@@ -195,7 +212,8 @@ function App() {
     newOutfitItemCategory, 
     navBarValue, 
     categoryNavBarValue,
-    openItemModal 
+    openItemModal,
+    subCategoryNavBarValue 
   }
   const methods = { 
     addItem, 
@@ -213,8 +231,11 @@ function App() {
     categoryItems,
     setCategoryNavBarValue,
     closetDisplayedItems,
-    createItem,
-    setOpenItemModal 
+    setOpenItemModal,
+    createItem, 
+    getSubCategoryItems,
+    getSubCategories,
+    setSubCategoryNavBarValue
   }
 
   return (
