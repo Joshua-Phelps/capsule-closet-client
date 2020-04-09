@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import ItemForm from './ItemForm'
+import { StateContext, MethodContext } from '../App'
 import { Button } from '@material-ui/core'
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -25,16 +26,18 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
 }));
-export default function SimpleModal() {
+export default function SimpleModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const {openItemModal} = useContext(StateContext) 
+  const {setOpenItemModal} = useContext(MethodContext)
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenItemModal(false);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -42,7 +45,7 @@ export default function SimpleModal() {
       <p id="simple-modal-description">
         Enter the details of your item below:
       </p>
-      <ItemForm/>
+      <ItemForm guideItem={props.item}/>
       {/* <SimpleModal /> */}
       {/* <Button
         variant="outlined" 
@@ -59,7 +62,7 @@ export default function SimpleModal() {
   );
   return (
     <div>
-      <Button 
+      {/* <Button 
         type="button" 
         onClick={handleOpen}
         variant="outlined" 
@@ -67,9 +70,9 @@ export default function SimpleModal() {
         // backgroundColor='secondary'
         >
         Add Item to Closet
-      </Button>
+      </Button> */}
       <Modal
-        open={open}
+        open={openItemModal}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
