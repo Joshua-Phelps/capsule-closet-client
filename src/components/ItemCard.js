@@ -1,5 +1,6 @@
 
 import React, { useContext } from 'react'
+import AddItemModal from '../components/AddItemModal'
 import { 
     makeStyles, 
     Card, 
@@ -29,6 +30,14 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
   const classes = useStyles();
   const { image, id, category, sub_category, recommended} = item 
 
+  // const choiceClick = (id) => {
+  //   if (buttonText === 'Add to Closet') {
+  //     return <AddItemModal />
+  //   } else {
+  //     return <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
+  //   }
+  // }
+
   return (
     <>     
       <Card className={classes.root} variant="outlined">
@@ -49,6 +58,7 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
         </CardContent>
         <CardActions className={classes.centered}>
           <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
+          {/* {choiceClick(id)} */}
         </CardActions>
       </Card>    
     </>

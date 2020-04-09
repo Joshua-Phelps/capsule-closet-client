@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
-  const { setEditMode } = useContext(MethodContext)
+  const { setEditMode, setOpenItemModal } = useContext(MethodContext)
   const classes = useStyles()
     
   const handleDrawerOpen = () => {
@@ -68,6 +68,15 @@ export default function DrawerAppBar(){
             className={clsx(classes.buttonstyle, classes.menuButton, {[classes.hide]: editMode})}
           >
             Create Outfit
+          </Button>
+          <Button 
+          type="button" 
+          onClick={() => setOpenItemModal(true)}
+          variant="outlined" 
+          color="inherit"
+          // backgroundColor='secondary'
+          >
+          Add Item to Closet
           </Button>
           <AddItemModal/>
         </Toolbar>

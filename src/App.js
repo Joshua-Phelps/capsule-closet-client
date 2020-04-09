@@ -73,6 +73,7 @@ function App() {
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
+  const [openItemModal, setOpenItemModal] = useState(false)
   
 
   useEffect(() => {
@@ -185,7 +186,8 @@ function App() {
     selectedOutfit, 
     newOutfitItemCategory, 
     navBarValue, 
-    categoryNavBarValue 
+    categoryNavBarValue,
+    openItemModal 
   }
   const methods = { 
     addItem, 
@@ -203,7 +205,8 @@ function App() {
     categoryItems,
     setCategoryNavBarValue,
     closetDisplayedItems,
-    createItem, 
+    createItem,
+    setOpenItemModal 
   }
 
   return (

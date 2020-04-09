@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ItemForm(item) {
+export default function ItemForm(item, props) {
   // const [name, setName] = React.useState('Placeholder');
   const { formItem } = useContext(StateContext)
   const { formItemDispatch } = useContext(DispatchContext)
@@ -48,7 +48,7 @@ export default function ItemForm(item) {
   // const [age, setAge] = React.useState('');
 
   const handleChange = (e) => {
-    formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: e.target.name, value: e.target.value}})
+      return formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: e.target.name, value: e.target.value}})
   };
 
   const handleSubCatSelect = (e) => {
@@ -86,6 +86,26 @@ export default function ItemForm(item) {
     //firebase storage??
   }
 
+  const subcats = {
+    'Tops': ["Tank Shirt", "White Top", "Patterned Shirt", "Sweater", "Flannel Shirt", "Blouse", "Button-down Chambray", "Cardigan"],
+    'Bottoms': ["Skinny Jeans", "Black Pants", "Leggings", "Shorts", "Skirts", "Colored/Patterned Pants"],
+    'Outerwear': ["Sweatshirt", "Denim Jacket", "Blazer", "Trench Coat", "Outerwear Coat"],
+    'Dresses': ["Shirt Dress", "Patterened Dress", "Sweater Dress"],
+    'Shoes': ["Tall Boots", "Short Boots", "Wedges", "Flats", "Sandals", "Sneakers"],
+    'Accessories': ["Neutral Purse", "Sunhat", "Winter Hat", "Sunglasses", "Scarves", "Choice Jewelry"]
+  }
+
+  const select = () => {
+    console.log(subcats[`${formItem.category}`])
+    if (formItem.category){
+           return subcats[`${formItem.category}`].map( sub => {
+             console.log(subcats)
+            return <MenuItem value={sub}>{sub}</MenuItem>
+           })
+
+    }
+  }
+
   return (
     <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
       {/* <FormControl>
@@ -106,9 +126,9 @@ export default function ItemForm(item) {
           name={'category'}
           onChange={handleChange}
         >
-          <MenuItem value={"Top"}>Top</MenuItem>
+          <MenuItem value={"Tops"}>Tops</MenuItem>
           <MenuItem value={"Bottoms"}>Bottoms</MenuItem>
-          <MenuItem value={"Dress"}>Dress</MenuItem>
+          <MenuItem value={"Dresses"}>Dress</MenuItem>
           <MenuItem value={"Outerwear"}>Outerwear</MenuItem>
           <MenuItem value={"Shoes"}>Shoes</MenuItem>
           <MenuItem value={"Accessories"}>Accessories</MenuItem>
@@ -124,13 +144,14 @@ export default function ItemForm(item) {
           name={'sub_category'}
           onChange={handleSubCatSelect}
         >
-          <MenuItem value={"Tops"}>Tops</MenuItem>
+          {/* <MenuItem value={"Tops"}>Tops</MenuItem>
           <MenuItem value={"Bottoms"}>Bottoms</MenuItem>
           <MenuItem value={"Dresses"}>Dresses</MenuItem>
           <MenuItem value={"Outerwear"}>Outerwear</MenuItem>
           <MenuItem value={"Shoes"}>Shoes</MenuItem>
-          <MenuItem value={"Accessories"}>Accessories</MenuItem>
+          <MenuItem value={"Accessories"}>Accessories</MenuItem> */}
           <MenuItem value={"Custom Subcategory"}>Custom Subcategory</MenuItem>
+          {select()}
         </Select>
       </FormControl>
 
