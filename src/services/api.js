@@ -35,18 +35,21 @@ const signup = (username, email, password) => {
 const createItem = item => {
   return fetch(`${API_ROOT}/items`, {
     method: 'POST',
-    headers: headers(),
-    body: JSON.stringify({item})
+    headers: {
+      Authorization: token(),
+    },
+    body: item
   }).then(res => res.json())
-    // .then( item => this.filterItems(item))
 }
 
-// //does this function need to go in App.js?
-// const filterItems = (items) => {
-//   let filteredItems = items.filter(item => {
-//     return item.user.id == this.state.user.id
-//   })
-// }
+const sendImageToController = formPayLoad => {
+  return fetch(`${API_ROOT}/items`, {
+    credentials: 'same-origin',
+    method: 'POST',
+    headers: headers(),
+    body: formPayLoad
+  }).then(res => res.json())
+}
 
 const createOutfit = outfit => {
   return fetch(`${API_ROOT}/outfits`, {
@@ -80,6 +83,7 @@ export const api = {
   },
   items: {
     createItem,
+    sendImageToController
   },
   outfits: {
     createOutfit,
