@@ -1,5 +1,6 @@
 import React, { useState, useContext} from 'react'
 import { StateContext, MethodContext, DispatchContext } from '../App'
+import { api } from '../services/api'
 import { makeStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
 import FilledInput from '@material-ui/core/FilledInput'
@@ -7,11 +8,10 @@ import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
-// import axios from 'axios'
-// NEED TO: NPM INSTALL --SAVE AXIOS
+import Dropzone from 'react-dropzone-component'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +35,7 @@ export default function ItemForm(item) {
   // const [name, setName] = React.useState('Placeholder');
   const { formItem } = useContext(StateContext)
   const { formItemDispatch } = useContext(DispatchContext)
-  const { createItemMode, createItem } = useContext(MethodContext)
+  const { createItemMode, createItem} = useContext(MethodContext)
   const [ subCatDisplay, setSubCatDisplay ] = useState(false)
   const classes = useStyles();
   //form states:
@@ -49,7 +49,15 @@ export default function ItemForm(item) {
 
   const handleChange = (e) => {
     formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: e.target.name, value: e.target.value}})
-  };
+  }
+
+  const handleFileChange = (e) => {
+    let formPayLoad = new FormData()
+      formPayLoad.append('image', e.target.files[0])
+    formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: "image", value: e.target.files[0]}})
+    // api.items.createItem(formPayLoad)
+    // console.log(e.target.files[0])
+  }
 
   const handleSubCatSelect = (e) => {
     if (e.target.value == "Custom Subcategory") {
@@ -60,10 +68,11 @@ export default function ItemForm(item) {
     handleChange(e)
   }
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     createItem()
-    alert(`Submitting Item: ${formItem.color} ${formItem.brand} ${formItem.category}`)
+    // alert(`Submitting Item: ${formItem.color} ${formItem.brand} ${formItem.category}`)
   }
 
 
@@ -71,23 +80,27 @@ export default function ItemForm(item) {
 
 
   //handle image selector
-  const handleFileSelector = e => {
+    // const handleFileSelector = e => {
     // console.log(e.target.files[0])
     // setSelectedFile(e.target.files[0])
-    console.log("hello")
-  }
+    // console.log("hello")
+  //}
 
   //handle image uploader
-  const handleFileUploader = e => {
-    console.log("hi")
-    // const fd = new FormData()
-    // fd.append('image', selectedFile, )
-    // axios.post('')
-    //firebase storage??
-  }
+  // const readFile = file => {
+  //   if (file && file[0]) {
+  //     let formPayLoad = new FormData()
+  //     formPayLoad.append('upload_image', file[0])
+  //     sendImageToController(formPayLoad)
+  //   }
+  //   console.log("hi from readFile()")
+  //   console.log(file)
+  // }
+
+
 
   return (
-    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit} >
       {/* <FormControl>
         <InputLabel htmlFor="component-simple">Category</InputLabel>
         <Input 
@@ -120,7 +133,7 @@ export default function ItemForm(item) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formItem.subCategory}
+          value={formItem.sub_category}
           name={'sub_category'}
           onChange={handleSubCatSelect}
         >
@@ -139,7 +152,7 @@ export default function ItemForm(item) {
           <InputLabel htmlFor="component-simple">Create SubCategory</InputLabel>
           <Input 
             id="component-simple" 
-            value={formItem.subCategory}
+            value={formItem.sub_category}
             name={'sub_category'}
             onChange={handleChange} />
         </FormControl>
@@ -171,14 +184,18 @@ export default function ItemForm(item) {
       </FormControl>
       <FormControl>
         <InputLabel htmlFor="component-simple">Image</InputLabel>
-        <Input type="file"
-          id="component-simple" 
-          //  value={selectedFile}
-          onChange={handleFileSelector} />
-        <Button onClick={handleFileUploader}>Upload</Button>
+          {/* <Dropzone onDrop={readFile}> */}
+            <Input type="file"
+              id="component-simple" 
+              //  value={selectedFile}
+              onChange={handleFileChange} 
+              name={'image'}
+              />
+            <Button>Upload</Button>
+          {/* </Dropzone> */}
       </FormControl>
       <FormControl>
-        <Button
+        <Button 
           variant="outlined"
           type="submit"
         >

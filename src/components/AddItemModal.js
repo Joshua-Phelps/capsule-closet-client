@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import ItemForm from './ItemForm'
 import { Button } from '@material-ui/core'
+import CancelIcon from '@material-ui/icons/Cancel'
+
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  rightAlign: {
+    float: 'right'
+  }
 }));
 export default function SimpleModal() {
   const classes = useStyles();
@@ -38,23 +43,21 @@ export default function SimpleModal() {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
+      <CancelIcon
+        type="button"
+        variant="outlined" 
+        onClick={handleClose}
+        className={classes.rightAlign}>
+        
+
+        </CancelIcon>
       <h2 id="simple-modal-title">Add an Item to your Closet</h2>
+      
       <p id="simple-modal-description">
         Enter the details of your item below:
       </p>
       <ItemForm/>
-      {/* <SimpleModal /> */}
-      {/* <Button
-        variant="outlined" 
-        onClick={handleClose}
-        >Add Item
-      </Button> */}
-      <Button
-        type="button"
-        variant="outlined" 
-        onClick={handleClose}
-        >Close
-      </Button>
+     
     </div>
   );
   return (

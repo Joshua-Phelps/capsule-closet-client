@@ -131,10 +131,20 @@ function App() {
 
   const createItem = () => {
     const newItem = {...formItem, user_id: user.id}
-    console.log(newItem)
-    api.items.createItem(newItem)
+    let data = new FormData()
+    data.append('category', formItem.category)
+    data.append('sub_category', formItem.sub_category)
+    data.append('color', formItem.color)
+    data.append('brand', formItem.brand)
+    data.append('size', formItem.size)
+    data.append('image', formItem.image)
+    data.append('user_id', user.id)
+
+    console.log("hello from createItem in App.js")
+    api.items.createItem(data)
     .then(item => {
-      itemsDispatch({type: 'CREATE_ITEM', payload: item})
+      // itemsDispatch({type: 'CREATE_ITEM', payload: item})
+      console.log(item)
     })
   }
 
