@@ -138,22 +138,16 @@ function App() {
   }
 
   const createItem = () => {
-    const newItem = {...formItem, user_id: user.id}
     let data = new FormData()
-    data.append('category', formItem.category)
-    data.append('sub_category', formItem.sub_category)
-    data.append('color', formItem.color)
-    data.append('brand', formItem.brand)
-    data.append('size', formItem.size)
-    data.append('image', formItem.image)
-    data.append('user_id', user.id)
-
-    console.log("hello from createItem in App.js")
+    data.append('item[category]', formItem.category)
+    data.append('item[sub_category]', formItem.sub_category)
+    data.append('item[color]', formItem.color)
+    data.append('item[brand]', formItem.brand)
+    data.append('item[size]', formItem.size)
+    data.append('item[avatar]', formItem.image)
+    data.append('item[user_id]', user.id)
     api.items.createItem(data)
-    .then(item => {
-      // itemsDispatch({type: 'CREATE_ITEM', payload: item})
-      console.log(item)
-    })
+    .then(item => itemsDispatch({type: 'CREATE_ITEM', payload: item}))
   }
 
   const clearSelectedOutfit = () => {

@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useEffect } from 'react';
+import SubCategoryFilter from '../components/SubCategoryFilter'
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -33,7 +34,7 @@ export default function CategoryFilter() {
 
   return (
     <>
-      <Grid container spacing={4} >
+      {/* <Grid container spacing={4} >
           <Grid item xs={9}></Grid>
           <Grid item >
             <Paper className={classes.counter}>
@@ -43,7 +44,7 @@ export default function CategoryFilter() {
               </Paper>
           </Grid>
           <Grid item xs={1}></Grid>
-      </Grid>
+      </Grid> */}
 
       <Paper className={classes.root}>      
         <Tabs
@@ -65,6 +66,7 @@ export default function CategoryFilter() {
           <Tab value='Shoes' label="Shoes" />
           <Tab value='Accessories' label="Accessories" />    
         </Tabs>
+        <SubCategoryFilter />
       </Paper>
     </>
   );

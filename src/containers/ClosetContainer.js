@@ -113,8 +113,8 @@ export default function ClosetContainer(){
             <OutfitDrawer />
 
             <CategoryFilter/>  
-            <br></br> 
-            <SubCategoryFilter />             
+            {/* <br></br>  */}
+            {/* <SubCategoryFilter />              */}
             <Grid container spacing={4}>
               {renderItems()}
             </Grid>         

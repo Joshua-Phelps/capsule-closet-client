@@ -1,12 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { StateContext, MethodContext } from '../App'
-import { makeStyles, AppBar, Tabs, Tab } from "@material-ui/core/";
-
+import { makeStyles, AppBar, Tabs, Tab, Menu, MenuItem } from "@material-ui/core/";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper
+  },
+  account: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -14,6 +17,19 @@ export default function NavBar({ history, location }) {
   const classes = useStyles();
   const { navBarValue} = useContext(StateContext)
   const { setNavBarValue } = useContext(MethodContext)
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+
+  const handleAccount = () => {
+
+  }
 
   const handleChange = (event, newValue) => {
     setNavBarValue(newValue)
@@ -21,7 +37,12 @@ export default function NavBar({ history, location }) {
     newValue === 1 && history.push('/closet')
     newValue === 2 && history.push('/outfits')
     newValue === 3 && history.push('/boards')
-  };
+  }
+
+  const handleLogout = () => {
+    localStorage.clear()
+    history.push('/login')
+  }
 
   return (
     <div className={classes.root}>
@@ -36,7 +57,24 @@ export default function NavBar({ history, location }) {
           <Tab label="Closet" />
           <Tab label="Outifts" />
           <Tab label="Boards" />
-          {/* create hamburger menu item for Signout, My Account (edit) */}
+
+          <AccountCircleIcon 
+          aria-controls="simple-menu" 
+          aria-haspopup="true"  
+          className={classes.account} 
+          onClick={handleClick} 
+          fontSize='large' 
+          />
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={anchorEl}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleAccount}>My account</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
         </Tabs>
       </AppBar>
     </div>
