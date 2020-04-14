@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { StateContext, MethodContext } from '../App'
-import { makeStyles, AppBar, Tabs, Tab, Menu, MenuItem } from "@material-ui/core/";
+import { makeStyles, AppBar, Tabs, Tab, Menu, MenuItem, Grid } from "@material-ui/core/";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles(theme => ({
@@ -15,16 +15,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBar({ history, location }) {
   const classes = useStyles();
-  const { navBarValue} = useContext(StateContext)
-  const { setNavBarValue } = useContext(MethodContext)
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { navBarValue } = useContext(StateContext)
+  const { setNavBarValue, clearState } = useContext(MethodContext)
+  const [anchorEl, setAnchorEl] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
   }
 
   const handleAccount = () => {
@@ -40,13 +40,16 @@ export default function NavBar({ history, location }) {
   }
 
   const handleLogout = () => {
-    localStorage.clear()
-    history.push('/login')
+    // localStorage.clear()
+    // history.push('/login')
+    clearState()
   }
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
+        <Grid container >
+          <Grid item xs={11}>
         <Tabs
           variant="fullWidth"
           value={navBarValue}
@@ -58,6 +61,9 @@ export default function NavBar({ history, location }) {
           <Tab label="Outifts" />
           <Tab label="Boards" />
 
+        </Tabs>
+        </Grid>
+        <Grid item xs={1}>
           <AccountCircleIcon 
           aria-controls="simple-menu" 
           aria-haspopup="true"  
@@ -75,7 +81,8 @@ export default function NavBar({ history, location }) {
             <MenuItem onClick={handleAccount}>My account</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
-        </Tabs>
+          </Grid>
+          </Grid>
       </AppBar>
     </div>
   );

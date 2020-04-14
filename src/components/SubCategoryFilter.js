@@ -1,15 +1,13 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { makeStyles, Tab, FormControl, InputLabel, Select, MenuItem, FormHelperText, AppBar } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import { StateContext, MethodContext } from '../App';
+import React, { useContext, useRef, useEffect } from 'react'
+import { makeStyles, FormControl, InputLabel, Select, MenuItem, FormHelperText, AppBar } from '@material-ui/core'
+import { StateContext, MethodContext } from '../App'
 
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  formControl: {
+  select: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
@@ -18,52 +16,45 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SubCategoryFilter() {
+export default function SubCategoryFilter({handleSelection, selectionValue, formText, selections}) {
   const classes = useStyles();
-  const { categoryNavBarValue, items, subCategoryNavBarValue } = useContext(StateContext)
-  const { getSubCategories, categoryItems, setSubCategoryNavBarValue } = useContext(MethodContext)
-  const tabsActions = useRef()  
+  const { categoryNavBarValue } = useContext(StateContext)
 
   const handleChange = (e) => {
-    setSubCategoryNavBarValue(e.target.value)
+    handleSelection(e.target.value)
   }
 
-  useEffect(() => {
-    setSubCategoryNavBarValue('')
-  }, [categoryNavBarValue])
+  // useEffect(() => {
+  //   handleSelection('')
+  // }, [categoryNavBarValue])
 
 
   const renderSelections = () => {
-    let subCategories = getSubCategories(categoryItems(categoryNavBarValue, items))
-    return subCategories.map(subCategory => {
+    return selections.map(category => {
       return (
         <MenuItem 
-          key={subCategory} 
-          value={subCategory} 
-          // label={subCategory}
-          >
-          <em>{subCategory}</em>
+          key={category} 
+          value={category} 
+        >
+          <em>{category}</em>
         </MenuItem>
       )
     })
   }
 
   return (
-    <>
-      {categoryNavBarValue !== '' && 
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-autowidth-label"></InputLabel>
-          <Select
-            value={subCategoryNavBarValue}
-            onChange={handleChange}
-            autoWidth
-          >
-            <MenuItem value=""><em>None</em></MenuItem>
-            {renderSelections()}
-          </Select>
-          <FormHelperText>Sub Categories</FormHelperText>
-        </FormControl>
-      }
-    </>
+    <FormControl className={classes.select}>
+      <InputLabel id="demo-simple-select-autowidth-label"></InputLabel>
+      <Select
+        value={selectionValue}
+        onChange={handleChange}
+        autoWidth
+        className={classes.selectEmpty}
+      >
+        <MenuItem value=""><em>None</em></MenuItem>
+        {renderSelections()}
+      </Select>
+      <FormHelperText>{formText}</FormHelperText>
+    </FormControl>
   );
 }

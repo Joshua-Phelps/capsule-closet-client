@@ -82,7 +82,10 @@ function App() {
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   const [openItemModal, setOpenItemModal] = useState(false)
-  const [subCategoryNavBarValue, setSubCategoryNavBarValue] = useState('')
+  const [subCategoryFilter, setSubCategoryFilter] = useState('')
+  const [closetColorFilter, setClosetColorFilter] = useState('')
+  const [closetBrandFilter, setClosetBrandFilter] = useState('')
+  const [closetSizeFilter, setClosetSizeFilter] = useState('')
   
 
   useEffect(() => {
@@ -114,6 +117,14 @@ function App() {
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
+
+  const clearState = () => {
+    console.log('hello')
+    userDispatch({type: 'CLEAR_STATE', payload: initialState.user})
+    itemsDispatch({type: 'CLEAR_STATE', payload: initialState.items})
+    outfitsDispatch({type: 'CLEAR_STATE', payload: initialState.outfits})
+    // boardsDispatch({type: 'CLEAR_STATE', payload: initialState.boards})
+  }
 
   // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
@@ -187,19 +198,25 @@ function App() {
     })
   }
 
-  const categoryItems = (category, items) => items.filter(item => item.category === category)
+  const categoryItems = (category, items) => items.filter(item => item.category.includes(category))
 
   const getSubCategoryItems = (subCategory, items) => items.filter(item => item.subCategory === subCategory)
 
-  const getSubCategories = (items) => {
+  const getSubCategories = (items, subCategory) => {
     let subCatObj = {}
     items.forEach(item => {
-      subCatObj[item.sub_category] = subCatObj[item.sub_category] || true
+      subCatObj[item[subCategory]] = subCatObj[item[subCategory]] || true
     })
     return Object.keys(subCatObj).sort()
   }
 
-  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue) && item.sub_category.includes(subCategoryNavBarValue))
+  const closetDisplayedItems = items.filter(item => {
+    return item.category.includes(categoryNavBarValue) 
+    && item.sub_category.includes(subCategoryFilter)
+    && item.color.includes(closetColorFilter)
+    && item.size.includes(closetSizeFilter)
+    && item.brand.includes(closetBrandFilter)
+  })
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
   // const topsSubCategories = ['Tank Shirt', 'White Top', ]
@@ -217,7 +234,10 @@ function App() {
     navBarValue, 
     categoryNavBarValue,
     openItemModal,
-    subCategoryNavBarValue 
+    subCategoryFilter,
+    closetColorFilter,
+    closetBrandFilter,
+    closetSizeFilter
   }
   const methods = { 
     addItem, 
@@ -239,7 +259,11 @@ function App() {
     createItem, 
     getSubCategoryItems,
     getSubCategories,
-    setSubCategoryNavBarValue
+    setSubCategoryFilter,
+    clearState,
+    setClosetColorFilter,
+    setClosetSizeFilter,
+    setClosetBrandFilter
   }
 
   return (

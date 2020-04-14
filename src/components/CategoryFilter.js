@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import SubCategoryFilter from '../components/SubCategoryFilter'
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -19,13 +19,39 @@ const useStyles = makeStyles(theme => ({
 
 export default function CategoryFilter() {
   const classes = useStyles();
-  const { categoryNavBarValue, editMode } = useContext(StateContext)
-  const { setCategoryNavBarValue, closetDisplayedItems } = useContext(MethodContext)
-  const tabsActions = useRef()  
+  const [openFilters, setOpenFilters] = useState(false)
+  const { 
+    categoryNavBarValue, 
+    subCategoryFilter, 
+    closetColorFilter, 
+    editMode, 
+    items,
+    closetBrandFilter,
+    closetSizeFilter 
+  } = useContext(StateContext)
+  const { 
+    setCategoryNavBarValue, 
+    setSubCategoryFilter, 
+    categoryItems, 
+    getSubCategories,  
+    setClosetColorFilter,
+    setClosetBrandFilter,
+    setClosetSizeFilter 
+  } = useContext(MethodContext)
+  const tabsActions = useRef() 
+  const subCategories = getSubCategories(categoryItems(categoryNavBarValue, items), 'sub_category') 
+  const colors = getSubCategories(categoryItems(categoryNavBarValue, items), 'color') 
+  const brands = getSubCategories(categoryItems(categoryNavBarValue, items), 'brand')
+  const sizes = getSubCategories(categoryItems(categoryNavBarValue, items), 'size')
 
   const handleChange = (event, newValue) => {
     setCategoryNavBarValue(newValue)
   }
+
+  const handleOpenFilters = () => {
+    setOpenFilters(!openFilters)
+  }
+
 
   useEffect(() => {
     setTimeout(() => tabsActions.current.updateIndicator(), 200)
@@ -46,7 +72,8 @@ export default function CategoryFilter() {
           <Grid item xs={1}></Grid>
       </Grid> */}
 
-      <Paper className={classes.root}>      
+      <Paper className={classes.root}>
+        <Button onClick={handleOpenFilters}>All Filters</Button>      
         <Tabs
           action={tabsActions}
           value={categoryNavBarValue}
@@ -66,7 +93,34 @@ export default function CategoryFilter() {
           <Tab value='Shoes' label="Shoes" />
           <Tab value='Accessories' label="Accessories" />    
         </Tabs>
-        <SubCategoryFilter />
+        { openFilters && (
+          <>
+            <SubCategoryFilter 
+              selections={subCategories} 
+              handleSelection={setSubCategoryFilter} 
+              selectionValue={subCategoryFilter}
+              formText={'Sub Category'}
+            />
+            <SubCategoryFilter 
+              selections={colors} 
+              handleSelection={setClosetColorFilter} 
+              selectionValue={closetColorFilter}
+              formText={'Color'}
+            />
+            <SubCategoryFilter 
+              selections={brands} 
+              handleSelection={setClosetBrandFilter} 
+              selectionValue={closetBrandFilter}
+              formText={'Brand'}
+            />
+            <SubCategoryFilter 
+              selections={sizes} 
+              handleSelection={setClosetSizeFilter} 
+              selectionValue={closetSizeFilter}
+              formText={'Size'}
+            />
+          </>
+        )}
       </Paper>
     </>
   );

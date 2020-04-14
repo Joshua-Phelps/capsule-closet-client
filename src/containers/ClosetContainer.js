@@ -96,9 +96,28 @@ export default function ClosetContainer(){
     const renderItems = () => {
       return closetDisplayedItems.map(item => {
         if (!selectedOutfit.items.includes(item.id)){
-          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+          return (
+            <Grid 
+            key={item.id} 
+            item xs={3} 
+            >
+              <ItemCard 
+              item={item} 
+              buttonText='Add to Outfit' 
+              handleClick={addItem} 
+              />
+            </Grid>)
         } else {
-          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Remove from Outfit' handleClick={removeItem} /></Grid>
+          return (
+            <Grid 
+            key={item.id} 
+            item xs={3} 
+            >
+              <ItemCard 
+              item={item} 
+              buttonText='Remove from Outfit' 
+              handleClick={removeItem} />
+            </Grid>)
         }
       })
     }
