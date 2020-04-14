@@ -129,9 +129,7 @@ function App() {
   // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
   const filterItemsByOutfit = outfit => {
-    let t = outfit.items.map(id => items.filter(item => item.id ===id)[0])
-    console.log(t)
-    return t
+    return outfit.items.map(id => items.filter(item => item.id ===id)[0])
   }
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})

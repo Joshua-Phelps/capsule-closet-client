@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { StateContext, MethodContext, DispatchContext } from '../App'
-import { Grid, makeStyles, Paper, Fab, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Fab, Typography, AppBar } from '@material-ui/core';
 import OutfitCard from '../components/OutfitCard';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -65,6 +65,7 @@ export default function OutfitContainer({ history }){
 
   return (
     <div className={root}>
+      <AppBar></AppBar>
         <Grid container spacing={3}>
           {renderOufits()}                            
         </Grid>                       

@@ -73,7 +73,7 @@ export default function CategoryFilter() {
       </Grid> */}
 
       <Paper className={classes.root}>
-        <Button onClick={handleOpenFilters}>All Filters</Button>      
+        <Button onClick={handleOpenFilters}>+ Filters</Button>      
         <Tabs
           action={tabsActions}
           value={categoryNavBarValue}
