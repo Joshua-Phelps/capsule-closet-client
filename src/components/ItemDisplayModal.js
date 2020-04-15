@@ -86,8 +86,6 @@ export default function ItemDisplayModal() {
 
   return (
     <div>
-      <div>
-      </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -101,10 +99,10 @@ export default function ItemDisplayModal() {
         }}
       >
         <Fade in={itemDisplayModal}>
+              <Grid container className={classes.paper}>
 
           <div className={classes.paper}>
             <div  className={classes.root}>
-              <Grid container>
                 <Grid item xs={1}>
                   <Button onClick={handlePrevious} className={classes.button}>
                     <ArrowBackIosIcon />
@@ -118,12 +116,12 @@ export default function ItemDisplayModal() {
                     <ArrowForwardIosIcon />
                   </Button>
                 </Grid>
-              </Grid>
               <Grid item >
                 <Button>Edit</Button>                     
               </Grid>
             </div>
           </div>
+            </Grid>
         </Fade>
       </Modal>
     </div>
