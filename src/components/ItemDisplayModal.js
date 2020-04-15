@@ -69,18 +69,19 @@ export default function ItemDisplayModal() {
   const { setItemDisplayModal } = useContext(MethodContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
   const item = modalItems.current
+  
+  const currentIndex = modalItems.items.findIndex(currItem => currItem === item)
 
   const handleClose = () => setItemDisplayModal(false)
 
-  const handleNext = (number) => {
-    let currentIndex = modalItems.items.findIndex(currItem => currItem === item)
-    let nextItem = (currentIndex+number >= modalItems.items.length) ? modalItems.items[0] : modalItems.items[currentIndex+1]
-    console.log(nextItem)
+  const handleNext = () => {
+    let nextItem = (currentIndex+1 >= modalItems.items.length) ? modalItems.items[0] : modalItems.items[currentIndex+1]
     modalItemsDispatch({type: 'SET_CURRENT', payload: nextItem})
   }
 
   const handlePrevious = () => {
-
+    let prevItem = currentIndex === 0 ? modalItems.items[modalItems.items.length-1] : modalItems.items[currentIndex-1]
+    modalItemsDispatch({type: 'SET_CURRENT', payload: prevItem})
   }
 
   return (
@@ -105,7 +106,7 @@ export default function ItemDisplayModal() {
             <div  className={classes.root}>
               <Grid container>
                 <Grid item xs={1}>
-                  <Button onClick={() => handleNext(-1)} className={classes.button}>
+                  <Button onClick={handlePrevious} className={classes.button}>
                     <ArrowBackIosIcon />
                   </Button>
                 </Grid>
@@ -113,7 +114,7 @@ export default function ItemDisplayModal() {
                   <img className={classes.image} src={item.image} />
                 </Grid>
                 <Grid item xs={1}>
-                  <Button onClick={() => handleNext(1)} className={classes.button}>
+                  <Button onClick={handleNext} className={classes.button}>
                     <ArrowForwardIosIcon />
                   </Button>
                 </Grid>
