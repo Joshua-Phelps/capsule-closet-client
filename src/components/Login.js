@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    // backgroundImage: 'url(https://source.unsplash.com/random)',
+    // backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80)',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -80,10 +82,11 @@ export default function Login(props) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
+
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Log in
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
@@ -123,7 +126,7 @@ export default function Login(props) {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Log In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -132,7 +135,7 @@ export default function Login(props) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

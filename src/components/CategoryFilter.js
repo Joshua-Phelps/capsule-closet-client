@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
   counter: {
     padding: theme.spacing(1),
+    marginBottom: "16px"
   }
 }));
 
