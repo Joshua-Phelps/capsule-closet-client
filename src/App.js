@@ -5,7 +5,14 @@ import ClosetContainer from './containers/ClosetContainer'
 import OutfitsContainer from './containers/OutfitsContainer'
 import ItemForm from './components/ItemForm'
 import { api } from './services/api'
-import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer, formItemReducer } from './reducers/Reducers'
+import { 
+  userReducer, 
+  itemsReducer, 
+  outfitsReducer, 
+  selectedOutfitReducer, 
+  formItemReducer,
+  modalItemsReducer 
+} from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -49,7 +56,8 @@ const initialState = {
     name: '',
     times_worn: null,
     items: []
-  }
+  },
+  modalItems: {current: {}, items:[]}
 }
 
 //can change Material UI's default theme colors with this function:
@@ -76,13 +84,18 @@ function App() {
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
   const [formItem, formItemDispatch] = useReducer(formItemReducer, initialState.formItem)
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
+  const [modalItems, modalItemsDispatch] = useReducer(modalItemsReducer, initialState.modalItems)
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   const [openItemModal, setOpenItemModal] = useState(false)
-  const [subCategoryNavBarValue, setSubCategoryNavBarValue] = useState('')
+  const [itemDisplayModal, setItemDisplayModal] = useState(false)
+  const [subCategoryFilter, setSubCategoryFilter] = useState('')
+  const [closetColorFilter, setClosetColorFilter] = useState('')
+  const [closetBrandFilter, setClosetBrandFilter] = useState('')
+  const [closetSizeFilter, setClosetSizeFilter] = useState('')
   
 
   useEffect(() => {
@@ -98,12 +111,6 @@ function App() {
         } 
   }, [])
 
-  useEffect(() => {
-    editMode 
-    ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
-    : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
-  }, [editMode])
-
 
   const login = (username, password) => {
     api.auth.login(username, password)
@@ -115,12 +122,18 @@ function App() {
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
+  const clearState = () => {
+    console.log('hello')
+    userDispatch({type: 'CLEAR_STATE', payload: initialState.user})
+    itemsDispatch({type: 'CLEAR_STATE', payload: initialState.items})
+    outfitsDispatch({type: 'CLEAR_STATE', payload: initialState.outfits})
+    // boardsDispatch({type: 'CLEAR_STATE', payload: initialState.boards})
+  }
+
   // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
 
   const filterItemsByOutfit = outfit => {
-    let t = outfit.items.map(id => items.filter(item => item.id ===id)[0])
-    console.log(t)
-    return t
+    return outfit.items.map(id => items.filter(item => item.id ===id)[0])
   }
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
@@ -138,22 +151,16 @@ function App() {
   }
 
   const createItem = () => {
-    const newItem = {...formItem, user_id: user.id}
     let data = new FormData()
-    data.append('category', formItem.category)
-    data.append('sub_category', formItem.sub_category)
-    data.append('color', formItem.color)
-    data.append('brand', formItem.brand)
-    data.append('size', formItem.size)
-    data.append('image', formItem.image)
-    data.append('user_id', user.id)
-
-    console.log("hello from createItem in App.js")
+    data.append('item[category]', formItem.category)
+    data.append('item[sub_category]', formItem.sub_category)
+    data.append('item[color]', formItem.color)
+    data.append('item[brand]', formItem.brand)
+    data.append('item[size]', formItem.size)
+    data.append('item[avatar]', formItem.image)
+    data.append('item[user_id]', user.id)
     api.items.createItem(data)
-    .then(item => {
-      itemsDispatch({type: 'CREATE_ITEM', payload: item})
-      // console.log(item)
-    })
+    .then(item => itemsDispatch({type: 'CREATE_ITEM', payload: item}))
   }
 
   const clearSelectedOutfit = () => {
@@ -193,24 +200,30 @@ function App() {
     })
   }
 
-  const categoryItems = (category, items) => items.filter(item => item.category === category)
+  const categoryItems = (category, items) => items.filter(item => item.category.includes(category))
 
   const getSubCategoryItems = (subCategory, items) => items.filter(item => item.subCategory === subCategory)
 
-  const getSubCategories = (items) => {
+  const getSubCategories = (items, subCategory) => {
     let subCatObj = {}
     items.forEach(item => {
-      subCatObj[item.sub_category] = subCatObj[item.sub_category] || true
+      subCatObj[item[subCategory]] = subCatObj[item[subCategory]] || true
     })
     return Object.keys(subCatObj).sort()
   }
 
-  const closetDisplayedItems = items.filter(item => item.category.includes(categoryNavBarValue) && item.sub_category.includes(subCategoryNavBarValue))
+  const closetDisplayedItems = items.filter(item => {
+    return item.category.includes(categoryNavBarValue) 
+    && item.sub_category.includes(subCategoryFilter)
+    && item.color.includes(closetColorFilter)
+    && item.size.includes(closetSizeFilter)
+    && item.brand.includes(closetBrandFilter)
+  })
 
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
   // const topsSubCategories = ['Tank Shirt', 'White Top', ]
 
-  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
+  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch, modalItemsDispatch }
   const state =  { 
     user, 
     items, 
@@ -223,7 +236,12 @@ function App() {
     navBarValue, 
     categoryNavBarValue,
     openItemModal,
-    subCategoryNavBarValue 
+    subCategoryFilter,
+    closetColorFilter,
+    closetBrandFilter,
+    closetSizeFilter,
+    itemDisplayModal,
+    modalItems
   }
   const methods = { 
     addItem, 
@@ -245,7 +263,12 @@ function App() {
     createItem, 
     getSubCategoryItems,
     getSubCategories,
-    setSubCategoryNavBarValue
+    setSubCategoryFilter,
+    clearState,
+    setClosetColorFilter,
+    setClosetSizeFilter,
+    setClosetBrandFilter,
+    setItemDisplayModal
   }
 
   return (

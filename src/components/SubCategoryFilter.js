@@ -1,76 +1,60 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { StateContext, MethodContext } from '../App';
+import React, { useContext, useRef, useEffect } from 'react'
+import { makeStyles, FormControl, InputLabel, Select, MenuItem, FormHelperText, AppBar } from '@material-ui/core'
+import { StateContext, MethodContext } from '../App'
 
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  tab: {
-    minWidth: '0px',
+  select: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
-export default function SubCategoryFilter() {
+export default function SubCategoryFilter({handleSelection, selectionValue, formText, selections}) {
   const classes = useStyles();
-  const { categoryNavBarValue, items, subCategoryNavBarValue } = useContext(StateContext)
-  const { getSubCategories, categoryItems, setSubCategoryNavBarValue } = useContext(MethodContext)
-  const tabsActions = useRef()  
+  const { categoryNavBarValue } = useContext(StateContext)
 
-  const handleChange = (event, newValue) => {
-    setSubCategoryNavBarValue(newValue)
-  }
-
-  useEffect(() => {
-    setSubCategoryNavBarValue('')
-  }, [categoryNavBarValue])
-
-  const renderTabs = () => {
-    // getSubCategoryItems(items, )
-    let subCategories = getSubCategories(categoryItems(categoryNavBarValue, items))
-    return subCategories.map(subCategory => {
-      return <Tab classes={{root: classes.tab}} key={subCategory} value={subCategory} label={subCategory} />
-    })
+  const handleChange = (e) => {
+    handleSelection(e.target.value)
   }
 
   // useEffect(() => {
-  //   if( categoryNavBarValue !== ''){
-  //   setTimeout(() => tabsActions.current.updateIndicator(), 200)
-  //   setTimeout(() => tabsActions.current.updateScrollButtons(), 200)
-  //   }
-  // }, [editMode])
+  //   handleSelection('')
+  // }, [categoryNavBarValue])
+
+
+  const renderSelections = () => {
+    return selections.map(category => {
+      return (
+        <MenuItem 
+          key={category} 
+          value={category} 
+        >
+          <em>{category}</em>
+        </MenuItem>
+      )
+    })
+  }
 
   return (
-    <>
-      {categoryNavBarValue !== '' && 
-        <Paper className={classes.root}>      
-          <Tabs
-            action={tabsActions}
-            value={subCategoryNavBarValue}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"         
-            scrollButtons="on"
-            className={classes.tabs}
-          >   
-          <Tab value='' label={`All ${categoryNavBarValue}`} />
-          {renderTabs()} 
-
-            {/* <Tab value='' label="All Items" />
-            <Tab value='Tops' label="Tops" />
-            <Tab value='Bottoms' label="Bottoms" />
-            <Tab value='Dresses' label="Dresses" />
-            <Tab value='Outerwear' label="Outerwear" />
-            <Tab value='Shoes' label="Shoes" />
-            <Tab value='Accessories' label="Accessories" />     */}
-          </Tabs>
-        </Paper>
-      }
-    </>
+    <FormControl className={classes.select}>
+      <InputLabel id="demo-simple-select-autowidth-label"></InputLabel>
+      <Select
+        value={selectionValue}
+        onChange={handleChange}
+        autoWidth
+        className={classes.selectEmpty}
+      >
+        <MenuItem value=""><em>None</em></MenuItem>
+        {renderSelections()}
+      </Select>
+      <FormHelperText>{formText}</FormHelperText>
+    </FormControl>
   );
 }
