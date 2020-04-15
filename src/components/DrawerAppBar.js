@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext } from '../App'
-import { useScrollPosition } from '../hooks/useScrollPosition'
 import clsx from 'clsx';
-import { makeStyles, Button, Toolbar } from '@material-ui/core'
+import { makeStyles, Button, Toolbar, Paper, Typography } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar';
 
 const drawerWidth = 300; 
@@ -44,7 +43,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
-  const { setEditMode, setOpenItemModal } = useContext(MethodContext)
+  const { setEditMode, setOpenItemModal, closetDisplayedItems } = useContext(MethodContext)
+  const { categoryNavBarValue } = useContext(StateContext)
   const classes = useStyles()
     
   const handleDrawerOpen = () => {
@@ -70,15 +70,20 @@ export default function DrawerAppBar(){
             Create Outfit
           </Button>
           <Button 
-          type="button" 
-          onClick={() => setOpenItemModal(true)}
-          variant="outlined" 
-          color="inherit"
-          // backgroundColor='secondary'
+            type="button" 
+            onClick={() => setOpenItemModal(true)}
+            variant="outlined" 
+            color="inherit"
+            // backgroundColor='secondary'
           >
           Add Item to Closet
           </Button>
           <AddItemModal/>
+          <Paper className={classes.counter}>
+              <Typography color='secondary'>
+                {`Total ${categoryNavBarValue ? categoryNavBarValue : 'Items'}: ${closetDisplayedItems.length}`}
+              </Typography>
+          </Paper>
         </Toolbar>
     </AppBar>
   )

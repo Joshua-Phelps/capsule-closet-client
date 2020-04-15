@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   },
   counter: {
     padding: theme.spacing(1),
+  },
+  button: {
+    marginTop: '30px'
   }
 }));
 
@@ -52,10 +55,16 @@ export default function CategoryFilter() {
     setOpenFilters(!openFilters)
   }
 
+  const clearFilters = () => {
+    setClosetBrandFilter('')
+    setClosetColorFilter('')
+    setClosetSizeFilter('')
+    setSubCategoryFilter('')
+  }
 
   useEffect(() => {
-    setTimeout(() => tabsActions.current.updateIndicator(), 200)
-    setTimeout(() => tabsActions.current.updateScrollButtons(), 200)
+    setTimeout(() => tabsActions.current.updateIndicator(), 150)
+    setTimeout(() => tabsActions.current.updateScrollButtons(), 150)
   }, [editMode, []])
 
   return (
@@ -67,7 +76,7 @@ export default function CategoryFilter() {
               <Typography color='secondary'>
                 {`Total ${categoryNavBarValue ? categoryNavBarValue : 'Items'}: ${closetDisplayedItems.length}`}
                 </Typography>
-              </Paper>
+            </Paper>
           </Grid>
           <Grid item xs={1}></Grid>
       </Grid> */}
@@ -119,6 +128,9 @@ export default function CategoryFilter() {
               selectionValue={closetSizeFilter}
               formText={'Size'}
             />
+            <Button onClick={clearFilters} className={classes.button}>
+              Clear Filters
+            </Button>
           </>
         )}
       </Paper>

@@ -5,7 +5,14 @@ import ClosetContainer from './containers/ClosetContainer'
 import OutfitsContainer from './containers/OutfitsContainer'
 import ItemForm from './components/ItemForm'
 import { api } from './services/api'
-import { userReducer, itemsReducer, outfitsReducer, selectedOutfitReducer, formItemReducer } from './reducers/Reducers'
+import { 
+  userReducer, 
+  itemsReducer, 
+  outfitsReducer, 
+  selectedOutfitReducer, 
+  formItemReducer,
+  modalItemsReducer 
+} from './reducers/Reducers'
 import './App.css'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import NavBar from './components/NavBar'
@@ -49,7 +56,8 @@ const initialState = {
     name: '',
     times_worn: null,
     items: []
-  }
+  },
+  modalItems: {current: {}, items:[]}
 }
 
 //can change Material UI's default theme colors with this function:
@@ -76,12 +84,14 @@ function App() {
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
   const [formItem, formItemDispatch] = useReducer(formItemReducer, initialState.formItem)
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
+  const [modalItems, modalItemsDispatch] = useReducer(modalItemsReducer, initialState.modalItems)
   const [editMode, setEditMode] = useState(initialState.editMode)
   const [loading, setLoading] = useState(initialState.loading)
   const [newOutfitItemCategory, setNewOutfitItemCategory] = useState(null)
   const [navBarValue, setNavBarValue] = useState(false)
   const [categoryNavBarValue, setCategoryNavBarValue] = useState('')
   const [openItemModal, setOpenItemModal] = useState(false)
+  const [itemDisplayModal, setItemDisplayModal] = useState(false)
   const [subCategoryFilter, setSubCategoryFilter] = useState('')
   const [closetColorFilter, setClosetColorFilter] = useState('')
   const [closetBrandFilter, setClosetBrandFilter] = useState('')
@@ -100,12 +110,6 @@ function App() {
           }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error}))
         } 
   }, [])
-
-  useEffect(() => {
-    editMode 
-    ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
-    : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
-  }, [editMode])
 
 
   const login = (username, password) => {
@@ -219,7 +223,7 @@ function App() {
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
   // const topsSubCategories = ['Tank Shirt', 'White Top', ]
 
-  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch }
+  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch, modalItemsDispatch }
   const state =  { 
     user, 
     items, 
@@ -235,7 +239,9 @@ function App() {
     subCategoryFilter,
     closetColorFilter,
     closetBrandFilter,
-    closetSizeFilter
+    closetSizeFilter,
+    itemDisplayModal,
+    modalItems
   }
   const methods = { 
     addItem, 
@@ -261,7 +267,8 @@ function App() {
     clearState,
     setClosetColorFilter,
     setClosetSizeFilter,
-    setClosetBrandFilter
+    setClosetBrandFilter,
+    setItemDisplayModal
   }
 
   return (

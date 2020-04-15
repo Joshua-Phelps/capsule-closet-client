@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { Grid, makeStyles } from '@material-ui/core'
 import OutfitDrawer from '../components/OutfitDrawer'
@@ -89,9 +89,15 @@ const everyItem = () => {
 
 export default function ClosetContainer(){
     const classes = useStyles()
-    const {editMode, items, selectedOutfit, categoryNavBarValue} = useContext(StateContext)
+    const {editMode, items, selectedOutfit, categoryNavBarValue } = useContext(StateContext)
     const { addItem, removeItem, closetDisplayedItems } = useContext(MethodContext)
     // const displayedItems = items.filter(item => item.category.includes(categoryNavBarValue)) 
+
+    useEffect(() => {
+      editMode 
+      ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
+      : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
+    }, [editMode])
     
     const renderItems = () => {
       return closetDisplayedItems.map(item => {

@@ -27,7 +27,7 @@ export default function OutfitCard({ outfit }) {
     return items.map(item => {
       return (
         <GridListTile key={item.id}>
-          <OutfitCardItem item={item}/>
+          <OutfitCardItem outfit={outfit} item={item}/>
         </GridListTile>
       )
     })

@@ -15,6 +15,8 @@ const EDIT_NAME = 'EDIT_NAME'
 const REMOVE_ITEM = "REMOVE_ITEM"
 const SET_ITEM = 'SET_ITEM'
 const CLEAR_STATE = "CLEAR_STATE"
+const SET_ITEMS = 'SET_ITEMS'
+const SET_CURRENT = 'SET_CURRENT'
 
 const userReducer = (state, action) => {
   const { id, username, email } = action.payload  
@@ -101,5 +103,19 @@ const selectedOutfitReducer = (state, action) => {
       return state
   }
 }
+
+const modalItemsReducer = (state, action) => {
+  switch (action.type){
+    case SET_ITEMS:
+      return {
+        current: action.payload.current, 
+        items: action.payload.items
+      }
+    case SET_CURRENT: 
+      return {...state, current: action.payload}
+    default:
+      return state
+  }
+}
         
-export { userReducer, itemsReducer, formItemReducer, outfitsReducer, selectedOutfitReducer }
+export { userReducer, itemsReducer, formItemReducer, outfitsReducer, selectedOutfitReducer, modalItemsReducer }

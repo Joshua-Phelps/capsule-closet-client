@@ -15,10 +15,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left',
     paddingLeft: '10px'
   },
-  rightText: {
-    textAlign: 'right',
-    paddingRight: '10px'
-  }
 }))
 
 export default function DrawerCategory({ category }){
@@ -60,11 +56,11 @@ export default function DrawerCategory({ category }){
       ref={myRef}
       onClick={toggleOpen} 
     >
-      <Grid item xs={6}>
+      <Grid item xs={11}>
         <Typography className={classes.leftText}>{category}</Typography>
       </Grid>
-      <Grid item xs={6}>
-        <Badge className={classes.rightText} color="secondary" badgeContent={items.length}></Badge>
+      <Grid item xs={1}>
+        <Badge color="secondary" badgeContent={items.length}></Badge>
       </Grid>
       <Divider />
       {open && renderItems() }

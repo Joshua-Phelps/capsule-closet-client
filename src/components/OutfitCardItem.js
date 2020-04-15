@@ -1,4 +1,5 @@
-import React, { useState }from 'react'
+import React, { useState, useContext }from 'react'
+import { StateContext, MethodContext, DispatchContext } from '../App'
 import { makeStyles, GridListTile, GridListTileBar } from '@material-ui/core'
 import clsx from 'clsx'
 
@@ -15,21 +16,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function OutfitCardItem({ item }) {
+export default function OutfitCardItem({ item, outfit }) {
   const [hover, setHover] = useState(false)
+  const { setItemDisplayModal, filterItemsByOutfit } = useContext(MethodContext)
+  const { itemDisplayModal } = useContext(StateContext)
+  const { modalItemsDispatch } = useContext(DispatchContext)
   const classes = useStyles()
   const { image, sub_category, id, category } = item 
   const showHover = () => setHover(true) 
   const hideHover = () => setHover(false)
+  const items = filterItemsByOutfit(outfit)
 
   const handleClick = () => {
-    //show item Modal
+    setItemDisplayModal(!itemDisplayModal)
+    modalItemsDispatch({type: 'SET_ITEMS', payload: {items, current: item}})
   }
 
   return (
     <GridListTile 
     onMouseEnter={showHover}
     onMouseLeave={hideHover} 
+    onClick={handleClick}
     key={id}
     style={{height: '180px'}}
     >
