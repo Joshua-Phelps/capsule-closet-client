@@ -36,8 +36,6 @@ const createItem = item => {
   return fetch(`${API_ROOT}/items`, {
     method: 'POST',
     headers: {
-      // 'Content-Type': 'application/json',
-      // 'Content-Type': 'multipart/form-data',
       'Accept': 'application/json',
       Authorization: token(),
     },
