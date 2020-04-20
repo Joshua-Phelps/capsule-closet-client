@@ -18,18 +18,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function OutfitCardItem({ item, outfit }) {
   const [hover, setHover] = useState(false)
-  const { setItemDisplayModal, filterItemsByOutfit } = useContext(MethodContext)
+  const { setItemDisplayModal, filterItemsIdsByOutfit } = useContext(MethodContext)
   const { itemDisplayModal } = useContext(StateContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
   const classes = useStyles()
   const { image, sub_category, id, category } = item 
   const showHover = () => setHover(true) 
   const hideHover = () => setHover(false)
-  const items = filterItemsByOutfit(outfit)
 
   const handleClick = () => {
     setItemDisplayModal(!itemDisplayModal)
-    modalItemsDispatch({type: 'SET_ITEMS', payload: {items, current: item}})
+    modalItemsDispatch({type: 'SET_ITEMS', payload: {itemIds: outfit.items, current: item.id}})
   }
 
   return (

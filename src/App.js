@@ -136,6 +136,7 @@ function App() {
     return outfit.items.map(id => items.filter(item => item.id ===id)[0])
   }
 
+
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
   const addItem = itemId => {
@@ -165,6 +166,14 @@ function App() {
 
   const clearSelectedOutfit = () => {
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: initialState.selectedOutfit})
+  }
+
+  const getItemOutfits = (itemId) => {
+    return outfits.filter(outfit => {
+      if (outfit.items.includes(itemId)){
+        return outfit
+      }
+    })
   }
 
   const categoryByItemId = itemId => {
@@ -268,7 +277,8 @@ function App() {
     setClosetColorFilter,
     setClosetSizeFilter,
     setClosetBrandFilter,
-    setItemDisplayModal
+    setItemDisplayModal,
+    getItemOutfits
   }
 
   return (

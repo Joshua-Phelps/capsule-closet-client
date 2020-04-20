@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     marginTop: '48px',
+    position: 'absolute'
   }
 }))
 

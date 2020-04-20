@@ -42,7 +42,7 @@ export default function NavBar({ history, location }) {
 
   const handleLogout = () => {
     localStorage.clear()
-    // history.push('/login')
+    history.push('/login')
     clearState()
   }
 
