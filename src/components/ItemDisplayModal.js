@@ -6,10 +6,9 @@ import {
   Backdrop, 
   Fade, 
   Grid, 
-  GridListTile, 
-  GridList, 
-  GridListTileBar,
-  Button 
+  Typography,
+  Button,
+  Paper
 } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
@@ -20,57 +19,36 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 'auto',
+  },
+  container: {
     width: '50vw', 
     height: '70vh',
-    margin: 'auto'
-  },
-  paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    width: '50vw', 
-    height: '70vh'
+    padding: theme.spacing(2)
   },
   image: {
-    // height: '100%',
-    width: '100%'
-  },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
-  },
-  title: {
-    color: theme.palette.primary.light,
-  },
-  titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    height: '60vh',
   },
   button: {
     height: '100%',
+    width: '100%'
   },
   gridCenter: {
     overflowY: 'auto',
-    height: '100%'
+    height: '100%',
+    textAlignLast: 'center',
   }
 }));
 
 export default function ItemDisplayModal() {
   const classes = useStyles();
-  const { itemDisplayModal, modalItems } = useContext(StateContext)
-  const { setItemDisplayModal } = useContext(MethodContext)
+  const { itemDisplayModal, modalItems, items } = useContext(StateContext)
+  const { setItemDisplayModal, getItemOutfits } = useContext(MethodContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
-  const item = modalItems.current
-  
-  const currentIndex = modalItems.items.findIndex(currItem => currItem === item)
+  const item = items.filter(item => item.id === modalItems.current)[0] || {id: null}
+  const currentIndex = modalItems.items.findIndex(currItem => currItem === item.id)
+  const outfits = getItemOutfits(item.id)
 
   const handleClose = () => setItemDisplayModal(false)
 
@@ -84,9 +62,22 @@ export default function ItemDisplayModal() {
     modalItemsDispatch({type: 'SET_CURRENT', payload: prevItem})
   }
 
+  const handleEdit = () => {
+
+  }
+
+  const renderOutfits = () => {
+    if (outfits.length === 1 ){
+      return `Currently in 1 outfit`
+    } else {
+      return `Currently in ${outfits.length} outfits`
+    }
+  }
+  
+
   return (
     <div>
-      <Modal
+      {item && <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -99,31 +90,38 @@ export default function ItemDisplayModal() {
         }}
       >
         <Fade in={itemDisplayModal}>
-              <Grid container className={classes.paper}>
-
-          <div className={classes.paper}>
-            <div  className={classes.root}>
-                <Grid item xs={1}>
-                  <Button onClick={handlePrevious} className={classes.button}>
-                    <ArrowBackIosIcon />
-                  </Button>
-                </Grid>
-                <Grid className={classes.gridCenter} item xs={10}>
-                  <img className={classes.image} src={item.image} />
-                </Grid>
-                <Grid item xs={1}>
-                  <Button onClick={handleNext} className={classes.button}>
-                    <ArrowForwardIosIcon />
-                  </Button>
-                </Grid>
-              <Grid item >
-                <Button>Edit</Button>                     
-              </Grid>
-            </div>
-          </div>
+          <Paper className={classes.container}>
+          <Grid container >
+            <Grid item xs={1}>
+              <Button onClick={handlePrevious} className={classes.button}>
+                <ArrowBackIosIcon />
+              </Button>
             </Grid>
+            <Grid className={classes.gridCenter} item xs={10}>
+              <img className={classes.image} src={item.image} />
+            </Grid>
+            <Grid item xs={1}>
+              <Button onClick={handleNext} className={classes.button}>
+                <ArrowForwardIosIcon />
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>
+                {renderOutfits()}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              
+            </Grid>
+            <Grid item xs={3}>
+              <Button onClick={handleEdit} className={classes.edit}>
+                EDIT
+              </Button>
+            </Grid>
+          </Grid>
+          </Paper>
         </Fade>
-      </Modal>
+      </Modal>}
     </div>
   );
 }

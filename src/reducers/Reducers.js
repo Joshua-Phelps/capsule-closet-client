@@ -109,7 +109,7 @@ const modalItemsReducer = (state, action) => {
     case SET_ITEMS:
       return {
         current: action.payload.current, 
-        items: action.payload.items
+        items: action.payload.itemIds
       }
     case SET_CURRENT: 
       return {...state, current: action.payload}
