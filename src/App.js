@@ -64,16 +64,16 @@ const initialState = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#E33E7F',
-      light: '#ff80ab',
-      dark: '#000',
-      gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+      main: '#65a0a9',//#66b783 #a6dadc
+      light: '#96d1db', //#efefef
+      dark: '#35717a', //#29434e
+      gradient: 'linear-gradient(45deg, #09203f 0%, #537895 100%)'
+      
     },
     secondary: {
-      main:'#E33E7F',
-      light: '#ff80ab',
-      dark: '#000',
-      gradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+      main:'#546e7a',
+      light: '#819ca9',
+      dark: '#29434e'
     }
   }
 })

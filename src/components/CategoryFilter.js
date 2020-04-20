@@ -14,9 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
   counter: {
     padding: theme.spacing(1),
-  },
-  button: {
-    marginTop: '30px'
+    marginBottom: "16px"
   }
 }));
 

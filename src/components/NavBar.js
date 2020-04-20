@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { makeStyles, AppBar, Tabs, Tab, Menu, MenuItem, Grid } from "@material-ui/core/";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +41,7 @@ export default function NavBar({ history, location }) {
   }
 
   const handleLogout = () => {
-    // localStorage.clear()
+    localStorage.clear()
     // history.push('/login')
     clearState()
   }
@@ -69,7 +70,7 @@ export default function NavBar({ history, location }) {
           aria-haspopup="true"  
           className={classes.account} 
           onClick={handleClick} 
-          fontSize='large' 
+          fontSize='medium' 
           />
           <Menu
             id="simple-menu"
@@ -79,7 +80,8 @@ export default function NavBar({ history, location }) {
             onClose={handleClose}
           >
             <MenuItem onClick={handleAccount}>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout} component={Link} to="/">Logout</MenuItem>
+            
           </Menu>
           </Grid>
           </Grid>
