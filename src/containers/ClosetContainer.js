@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StateContext, MethodContext } from '../App'
 import { Grid, makeStyles } from '@material-ui/core'
 import OutfitDrawer from '../components/OutfitDrawer'
@@ -89,16 +89,41 @@ const everyItem = () => {
 
 export default function ClosetContainer(){
     const classes = useStyles()
-    const {editMode, items, selectedOutfit, categoryNavBarValue} = useContext(StateContext)
+    const {editMode, items, selectedOutfit, categoryNavBarValue } = useContext(StateContext)
     const { addItem, removeItem, closetDisplayedItems } = useContext(MethodContext)
     // const displayedItems = items.filter(item => item.category.includes(categoryNavBarValue)) 
+
+    useEffect(() => {
+      editMode 
+      ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
+      : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
+    }, [editMode])
     
     const renderItems = () => {
       return closetDisplayedItems.map(item => {
         if (!selectedOutfit.items.includes(item.id)){
-          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Add to Outfit' handleClick={addItem} /></Grid>
+          return (
+            <Grid 
+            key={item.id} 
+            item xs={3} 
+            >
+              <ItemCard 
+              item={item} 
+              buttonText='Add to Outfit' 
+              handleClick={addItem} 
+              />
+            </Grid>)
         } else {
-          return <Grid key={item.id} item xs={3} ><ItemCard item={item} buttonText='Remove from Outfit' handleClick={removeItem} /></Grid>
+          return (
+            <Grid 
+            key={item.id} 
+            item xs={3} 
+            >
+              <ItemCard 
+              item={item} 
+              buttonText='Remove from Outfit' 
+              handleClick={removeItem} />
+            </Grid>)
         }
       })
     }
@@ -113,8 +138,8 @@ export default function ClosetContainer(){
             <OutfitDrawer />
 
             <CategoryFilter/>  
-            <br></br> 
-            <SubCategoryFilter />             
+            {/* <br></br>  */}
+            {/* <SubCategoryFilter />              */}
             <Grid container spacing={4}>
               {renderItems()}
             </Grid>         

@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AddItemModal from './AddItemModal'
 import { StateContext, MethodContext } from '../App'
-import { useScrollPosition } from '../hooks/useScrollPosition'
 import clsx from 'clsx';
-import { makeStyles, Button, Toolbar } from '@material-ui/core'
+import { makeStyles, Button, Toolbar, Paper, Typography } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar';
 
 const drawerWidth = 300; 
@@ -11,6 +10,7 @@ const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
   appBar: {
     marginTop: '48px',
+    backgroundColor: theme.palette.primary.light,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -31,12 +31,11 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
   },
   buttonstyle: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: theme.palette.primary.gradient,
     border: 0,
     borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
-    height: 48,
+    height: 36,
     padding: '0 30px',
     margin: '4px'
   },
@@ -44,7 +43,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function DrawerAppBar(){
   const { editMode } = useContext(StateContext)
-  const { setEditMode, setOpenItemModal } = useContext(MethodContext)
+  const { setEditMode, setOpenItemModal, closetDisplayedItems } = useContext(MethodContext)
+  const { categoryNavBarValue } = useContext(StateContext)
   const classes = useStyles()
     
   const handleDrawerOpen = () => {
@@ -70,15 +70,20 @@ export default function DrawerAppBar(){
             Create Outfit
           </Button>
           <Button 
-          type="button" 
-          onClick={() => setOpenItemModal(true)}
-          variant="outlined" 
-          color="inherit"
-          // backgroundColor='secondary'
+            type="button" 
+            onClick={() => setOpenItemModal(true)}
+            variant="outlined" 
+            color="inherit"
+            // backgroundColor='secondary'
           >
           Add Item to Closet
           </Button>
           <AddItemModal/>
+          <Paper className={classes.counter}>
+              <Typography color='secondary'>
+                {`Total ${categoryNavBarValue ? categoryNavBarValue : 'Items'}: ${closetDisplayedItems.length}`}
+              </Typography>
+          </Paper>
         </Toolbar>
     </AppBar>
   )

@@ -54,6 +54,8 @@ export default function ItemForm(item, props) {
   const handleFileChange = (e) => {
     let formPayLoad = new FormData()
       formPayLoad.append('image', e.target.files[0])
+      // console.log(formPayLoad)
+      // console.log(formPayLoad.get('image'))
     formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: "image", value: e.target.files[0]}})
     // api.items.createItem(formPayLoad)
     // console.log(e.target.files[0])
@@ -109,7 +111,7 @@ export default function ItemForm(item, props) {
   }
 
   const select = () => {
-    console.log(subcats[`${formItem.category}`])
+    // console.log(subcats[`${formItem.category}`])
     if (formItem.category){
            return subcats[`${formItem.category}`].map( sub => {
              console.log(subcats)
