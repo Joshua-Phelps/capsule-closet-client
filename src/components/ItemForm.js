@@ -11,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
-import Dropzone from 'react-dropzone-component'
+// import Dropzone from 'react-dropzone-component'
 
 
 const useStyles = makeStyles((theme) => ({

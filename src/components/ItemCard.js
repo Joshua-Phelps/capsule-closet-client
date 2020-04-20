@@ -1,6 +1,7 @@
 
 import React, { useContext } from 'react'
 import AddItemModal from '../components/AddItemModal'
+// import { StateContext, MethodContext } from '../App'
 import { 
     makeStyles, 
     Card, 
@@ -13,7 +14,11 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: theme.spacing(3)
+    margin: theme.spacing(3),
+    // added styling below to size images and cards
+    textAlign: "center",
+    minWidth: 300,
+    minHeight: "100%"
   },
   title: {
     fontSize: 14,
@@ -28,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ItemCard({item, handleClick, buttonText, recommendedText}) {
   const classes = useStyles();
+  // const { setEditMode, setOpenItemModal } = useContext(MethodContext)
   const { image, id, category, sub_category, recommended} = item 
 
   // const choiceClick = (id) => {
@@ -45,9 +51,15 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {category}
           </Typography>
-          <CardMedia
+          {/* <CardMedia
           className={classes.media}
           image={image}
+          /> */}
+          <img
+            src={image}
+            alt="clothes"
+            className="clothes-image"
+            // onClick={() => setOpenItemModal(true)}
           />
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {sub_category}

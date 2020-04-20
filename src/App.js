@@ -12,7 +12,7 @@ import NavBar from './components/NavBar'
 import Homepage from './components/Homepage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import GuideContainer from './containers/GuideContainer'
-
+import BoardsContainer from './containers/BoardsContainer'
 
 export const StateContext = createContext()
 export const MethodContext = createContext()
@@ -308,13 +308,13 @@ function App() {
                 exact
                 path="/edit-oufit/:id"
                 render={props => <OutfitForm {...props} />}
-              />
+              /> */}
               <Route
                 exact
                 path="/boards"
                 render={props => <BoardsContainer {...props} />}
               />
-              <Route
+              {/* <Route
                 exact
                 path="/create-board"
                 render={props => <BoardForm {...props} />}
