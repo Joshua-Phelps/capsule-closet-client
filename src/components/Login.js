@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext, MethodContext } from '../App'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+// import { Link } from 'react-router-dom'
+
 import { 
   Avatar, 
   Button, 
@@ -21,7 +23,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Nicole Cabral, Josh Phelps, Alice Won
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -125,6 +127,7 @@ export default function Login(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
+              
             >
               Log In
             </Button>
