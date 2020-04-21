@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     paddingTop: '56.25%', // 16:9
+    backgroundSize: 'contain'
   },
   centered: {
     display: 'block'
