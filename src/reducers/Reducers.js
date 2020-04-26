@@ -11,6 +11,7 @@ const CREATE_OUTFIT = 'CREATE_OUTFIT'
 const UPDATE_OUTFIT = 'UPDATE_OUTFIT'
 const DELETE_OUTFIT = 'DELETE_OUTFIT'
 const SELECT_OUTFIT = 'SELECT_OUTFIT'
+const GET_BOARDS = 'GET_BOARDS'
 const EDIT_NAME = 'EDIT_NAME'
 const REMOVE_ITEM = "REMOVE_ITEM"
 const SET_ITEM = 'SET_ITEM'
@@ -104,6 +105,17 @@ const selectedOutfitReducer = (state, action) => {
   }
 }
 
+const boardsReducer = (state, action) => {
+  switch (action.type) {
+    case GET_BOARDS:
+      return action.payload
+    case CLEAR_STATE:
+      return action.payload
+    default: 
+      return state
+  }                 
+}
+
 const modalItemsReducer = (state, action) => {
   switch (action.type){
     case SET_ITEMS:
@@ -118,4 +130,4 @@ const modalItemsReducer = (state, action) => {
   }
 }
         
-export { userReducer, itemsReducer, formItemReducer, outfitsReducer, selectedOutfitReducer, modalItemsReducer }
+export { userReducer, itemsReducer, formItemReducer, outfitsReducer, boardsReducer, selectedOutfitReducer, modalItemsReducer }
