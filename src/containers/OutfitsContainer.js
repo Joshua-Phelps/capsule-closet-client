@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     marginTop: '48px',
     position: 'absolute'
+  },
+  container: {
+    marginTop: '48px',
   }
 }))
 
@@ -54,7 +57,7 @@ export default function OutfitContainer({ history }){
   const renderOufits = () => {
     return outfits.map(outfit => {
       return (
-        <Grid className={classes.root} key={outfit.id} item xs={3} >
+        <Grid className={classes.root} key={outfit.id} item xs={12} sm={3} >
           <Paper className={classes.paper}>
             <OutfitCard outfit={outfit} />
             <Fab 
@@ -88,7 +91,7 @@ export default function OutfitContainer({ history }){
           </Button>
         </Toolbar>
       </AppBar>
-      <Grid className={classes.appBar} container spacing={3}>
+      <Grid className={classes.container} container spacing={2}>
         {renderOufits()}                            
       </Grid>                       
     </div>

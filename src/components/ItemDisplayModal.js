@@ -108,6 +108,8 @@ export default function ItemDisplayModal() {
             <Grid item xs={12}>
               <Typography>
                 {renderOutfits()}
+                <br></br>
+                Category: {item.category}
               </Typography>
             </Grid>
             <Grid item xs={3}>

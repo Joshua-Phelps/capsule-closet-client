@@ -28,7 +28,7 @@ export default function CategoryFilter() {
     editMode, 
     items,
     closetBrandFilter,
-    closetSizeFilter 
+    closetSizeFilter,
   } = useContext(StateContext)
   const { 
     setCategoryNavBarValue, 
@@ -37,13 +37,14 @@ export default function CategoryFilter() {
     getSubCategories,  
     setClosetColorFilter,
     setClosetBrandFilter,
-    setClosetSizeFilter 
+    setClosetSizeFilter ,
+    closetDisplayedItems
   } = useContext(MethodContext)
   const tabsActions = useRef() 
   const subCategories = getSubCategories(categoryItems(categoryNavBarValue, items), 'sub_category') 
-  const colors = getSubCategories(categoryItems(categoryNavBarValue, items), 'color') 
-  const brands = getSubCategories(categoryItems(categoryNavBarValue, items), 'brand')
-  const sizes = getSubCategories(categoryItems(categoryNavBarValue, items), 'size')
+  const colors = getSubCategories(categoryItems(categoryNavBarValue, closetDisplayedItems), 'color') 
+  const brands = getSubCategories(categoryItems(categoryNavBarValue, closetDisplayedItems), 'brand')
+  const sizes = getSubCategories(categoryItems(categoryNavBarValue, closetDisplayedItems), 'size')
 
   const handleChange = (event, newValue) => {
     setCategoryNavBarValue(newValue)
