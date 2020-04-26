@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { StateContext, MethodContext, DispatchContext } from '../App'
-import { Grid, makeStyles, Paper, Fab, Typography } from '@material-ui/core';
-import OutfitCard from '../components/OutfitCard';
+import { Grid, makeStyles, Paper, Fab, Typography, AppBar, Button, Toolbar } from '@material-ui/core';
+import BoardCard from '../components/BoardCard';
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
@@ -24,32 +24,37 @@ const useStyles = makeStyles(theme => ({
   },
   iconText: {
     position: 'absolute'
+  },
+  appBar: {
+    marginTop: '48px',
+    position: 'absolute'
   }
 }))
 
 export default function BoardsContainer({ history }){
+  const classes = useStyles()
   const { paper, root, extendedIcon, iconText } = useStyles()
-  const { outfits } = useContext(StateContext)
+  const { boards } = useContext(StateContext)
   const { setEditMode, setNavBarValue, setEditModeAndWindow } = useContext(MethodContext)
   const { selectedOutfitDispatch } = useContext(DispatchContext)
 
-  const handleEdit = outfit => {
-    setEditMode(true)
-    // setEditModeAndWindow(true)
-    selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: outfit})
-    // window.scrollTo(0, 48)
-    history.push('/closet')
-    setNavBarValue(1)
-  }
+  // const handleEdit = outfit => {
+  //   setEditMode(true)
+  //   // setEditModeAndWindow(true)
+  //   selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: outfit})
+  //   // window.scrollTo(0, 48)
+  //   history.push('/closet')
+  //   setNavBarValue(1)
+  // }
 
-  const renderOufits = () => {
-    return outfits.map(outfit => {
+  const renderBoards = () => {
+    return boards.map(board => {
       return (
-        <Grid className={root} key={outfit.id} item xs={3} >
+        <Grid className={root} key={board.id} item xs={3} >
           <Paper className={paper}>
-            <OutfitCard outfit={outfit} />
+            <BoardCard board={board} />
             <Fab 
-            onClick={() => handleEdit(outfit)} 
+            // onClick={() => handleEdit(outfit)} 
             className={extendedIcon} 
             variant="extended" 
             color="secondary" 
@@ -64,10 +69,24 @@ export default function BoardsContainer({ history }){
   }
 
   return (
-    <div className={root}>
-        <Grid container spacing={3}>
-          {renderOufits()}                            
-        </Grid>                       
+    <div className={classes.root}>
+      {/* <ItemDisplayModal /> */}
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Button            
+                color="inherit"
+                variant="outlined" 
+                aria-label="open drawer"
+                edge="start"
+                // onClick={handleCreate}
+                >
+                Create Board
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Grid className={classes.appBar} container spacing={3}>
+        {renderBoards()}                            
+      </Grid>                       
     </div>
   )
 } 

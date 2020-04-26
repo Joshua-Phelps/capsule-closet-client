@@ -8,7 +8,8 @@ import { api } from './services/api'
 import { 
   userReducer, 
   itemsReducer, 
-  outfitsReducer, 
+  outfitsReducer,
+  boardsReducer, 
   selectedOutfitReducer, 
   formItemReducer,
   modalItemsReducer 
@@ -29,6 +30,7 @@ const GET_USER = 'GET_USER'
 const GET_ITEMS = 'GET'
 const CREATE_ITEM = 'CREATE_ITEM'
 const GET_OUTFITS = 'GET_OUTFITS'
+const GET_BOARDS = 'GET_BOARDS'
 
 
 const initialState = {
@@ -82,6 +84,7 @@ function App() {
   const [user, userDispatch] = useReducer(userReducer, initialState.user)
   const [items, itemsDispatch] = useReducer(itemsReducer, initialState.items)
   const [outfits, outfitsDispatch] = useReducer(outfitsReducer, initialState.outfits)
+  const [boards, boardsDispatch] = useReducer(boardsReducer, initialState.boards)
   const [formItem, formItemDispatch] = useReducer(formItemReducer, initialState.formItem)
   const [selectedOutfit, selectedOutfitDispatch] = useReducer(selectedOutfitReducer, initialState.selectedOutfit)
   const [modalItems, modalItemsDispatch] = useReducer(modalItemsReducer, initialState.modalItems)
@@ -106,6 +109,7 @@ function App() {
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
             outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
+            boardsDispatch({type: GET_BOARDS, payload: user.boards})
             setLoading(false)
           }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error}))
         } 
@@ -119,6 +123,7 @@ function App() {
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
+      boardsDispatch({type: GET_BOARDS, payload: data.user.boards})
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
@@ -127,7 +132,7 @@ function App() {
     userDispatch({type: 'CLEAR_STATE', payload: initialState.user})
     itemsDispatch({type: 'CLEAR_STATE', payload: initialState.items})
     outfitsDispatch({type: 'CLEAR_STATE', payload: initialState.outfits})
-    // boardsDispatch({type: 'CLEAR_STATE', payload: initialState.boards})
+    boardsDispatch({type: 'CLEAR_STATE', payload: initialState.boards})
   }
 
   // const filterItemsByOutfit = outfit => items.filter(item => outfit.items.includes(item.id))
@@ -136,6 +141,9 @@ function App() {
     return outfit.items.map(id => items.filter(item => item.id ===id)[0])
   }
 
+  const filterOutfitsByBoard = board => {
+    return board.outfits.map(id => outfits.filter(outfit => outfit.id ===id)[0])
+  }
 
   const removeItem = itemId => selectedOutfitDispatch({type: 'REMOVE_ITEM', payload: itemId})
 
@@ -232,12 +240,13 @@ function App() {
   const categories = ['Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Shoes', 'Accessories']
   // const topsSubCategories = ['Tank Shirt', 'White Top', ]
 
-  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch, modalItemsDispatch }
+  const dispatch = { userDispatch, itemsDispatch, formItemDispatch, outfitsDispatch, selectedOutfitDispatch, modalItemsDispatch, boardsDispatch }
   const state =  { 
     user, 
     items, 
     formItem,
-    outfits, 
+    outfits,
+    boards, 
     editMode, 
     loading, 
     selectedOutfit, 
@@ -255,7 +264,8 @@ function App() {
   const methods = { 
     addItem, 
     login, 
-    filterItemsByOutfit, 
+    filterItemsByOutfit,
+    filterOutfitsByBoard, 
     setEditMode, 
     removeItem, 
     setLoading, 

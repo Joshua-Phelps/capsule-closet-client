@@ -1,7 +1,7 @@
 
-import React, { useContext } from 'react'
-import AddItemModal from '../components/AddItemModal'
-// import { StateContext, MethodContext } from '../App'
+import React, { useState, useContext }from 'react'
+import { StateContext, MethodContext, DispatchContext } from '../App'
+// import AddItemModal from '../components/AddItemModal'
 import { 
     makeStyles, 
     Card, 
@@ -16,9 +16,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(3),
     // added styling below to size images and cards
-    textAlign: "center",
-    minWidth: 300,
-    minHeight: "100%"
+    // textAlign: "center",
+    // minWidth: 300,
+    // minHeight: "100%"
   },
   title: {
     fontSize: 14,
@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
 export default function ItemCard({item, handleClick, buttonText, recommendedText}) {
   const classes = useStyles();
   // const { setEditMode, setOpenItemModal } = useContext(MethodContext)
+  const { setItemDisplayModal} = useContext(MethodContext)
+  const { itemDisplayModal } = useContext(StateContext)
+  const { modalItemsDispatch } = useContext(DispatchContext)
   const { image, id, category, sub_category, recommended} = item 
 
   // const choiceClick = (id) => {
@@ -45,23 +48,29 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
   //   }
   // }
 
+  const handleClothesClick = () => {
+    setItemDisplayModal(!itemDisplayModal)
+    // modalItemsDispatch({type: 'SET_ITEMS', payload: {itemIds: item, current: item.id}})
+  }
+
   return (
     <>     
-      <Card className={classes.root} variant="outlined">
+      <Card className={classes.root} variant="outlined" onClick={handleClothesClick}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {category}
           </Typography>
-          {/* <CardMedia
+          <CardMedia
           className={classes.media}
           image={image}
-          /> */}
-          <img
+          // onClick={handleClothesClick}
+          />
+          {/* <img
             src={image}
             alt="clothes"
             className="clothes-image"
             // onClick={() => setOpenItemModal(true)}
-          />
+          /> */}
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {sub_category}
           </Typography>
