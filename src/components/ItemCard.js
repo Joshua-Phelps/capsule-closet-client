@@ -40,13 +40,6 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
   const { modalItemsDispatch } = useContext(DispatchContext)
   const { image, id, category, sub_category, recommended} = item 
 
-  // const choiceClick = (id) => {
-  //   if (buttonText === 'Add to Closet') {
-  //     return <AddItemModal />
-  //   } else {
-  //     return <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
-  //   }
-  // }
 
   const handleClothesClick = () => {
     setItemDisplayModal(!itemDisplayModal)
