@@ -115,11 +115,11 @@ export default function ItemDisplayModal() {
             <Grid item xs={3}>
               
             </Grid>
-            <Grid item xs={3}>
+            {/* <Grid item xs={3}>
               <Button onClick={handleEdit} className={classes.edit}>
                 EDIT
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
           </Paper>
         </Fade>

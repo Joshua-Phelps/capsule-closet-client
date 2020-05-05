@@ -35,20 +35,21 @@ const useStyles = makeStyles(theme => ({
 export default function ItemCard({item, handleClick, buttonText, recommendedText}) {
   const classes = useStyles();
   // const { setEditMode, setOpenItemModal } = useContext(MethodContext)
-  const { setItemDisplayModal} = useContext(MethodContext)
+  const { setItemDisplayModal, closetDisplayedItems} = useContext(MethodContext)
   const { itemDisplayModal } = useContext(StateContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
   const { image, id, category, sub_category, recommended} = item 
+  const closetItemIds = closetDisplayedItems.map(item => item.id) || []
 
 
   const handleClothesClick = () => {
     setItemDisplayModal(!itemDisplayModal)
-    // modalItemsDispatch({type: 'SET_ITEMS', payload: {itemIds: item, current: item.id}})
+    modalItemsDispatch({type: 'SET_ITEMS', payload: {itemIds: closetItemIds, current: item.id}})
   }
 
   return (
     <>     
-      <Card className={classes.root} variant="outlined" onClick={handleClothesClick}>
+      <Card className={classes.root} variant="outlined" >
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {category}
@@ -56,7 +57,7 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
           <CardMedia
           className={classes.media}
           image={image}
-          // onClick={handleClothesClick}
+          onClick={handleClothesClick}
           />
           {/* <img
             src={image}
