@@ -4,6 +4,7 @@ import { Grid, makeStyles } from '@material-ui/core'
 import OutfitDrawer from '../components/OutfitDrawer'
 import CategoryFilter from '../components/CategoryFilter'
 import ItemCard from '../components/ItemCard'
+import ItemDisplayModal from '../components/ItemDisplayModal';
 import SubCategoryFilter from '../components/SubCategoryFilter'
 import clsx from 'clsx'
 
@@ -129,7 +130,8 @@ export default function ClosetContainer(){
     }
     
     return (
-       <Grid className={classes.root} container spacing={3}>           
+       <Grid className={classes.root} container spacing={3}>
+         <ItemDisplayModal />           
           <main
             className={clsx(classes.content, {
               [classes.contentShift]: editMode,

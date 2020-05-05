@@ -37,40 +37,53 @@ export default function GuideContainer() {
   const { setOpenItemModal } = useContext(MethodContext)
   const classes = useStyles();
   const items = [
-    {id: 1, category: "Bottoms", sub_category: "Skinny Jeans", image: "https://di2ponv0v5otw.cloudfront.net/posts/2019/03/26/5c9abb21819e905c41c89d84/m_5cf5498aadb58d43afc7b01e.jpg", recommended: 2}, 
-    {id: 2, category: "Bottoms", sub_category: "Black Pants", image: "https://slimages.macysassets.com/is/image/MCY/products/9/optimized/10024439_fpx.tif?op_sharpen=1&wid=500&hei=613&fit=fit,1&$filtersm$", recommended: 1},
-    {id: 3, category: "Bottoms", sub_category: "Leggins", image: "https://target.scene7.com/is/image/Target/GUEST_60774d13-e124-458a-9116-f83ccdf9b7a2?wid=488&hei=488&fmt=pjpeg", recommended: 2},
-    {id: 4, category: "Bottoms", sub_category: "Shorts", image: "https://www.rei.com/media/product/1477670013", recommended: 2},
-    {id: 5, category: "Bottoms", sub_category: "Skirts", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRNGagze-SVbL_DPEjLe-0sTj0h-KPGJ9ZkgUXOnUe9kY-zVPVdL2HZV1MkIw3Ho97h4f8sJFqd&usqp=CAc", recommended: 1},
-    {id: 6, category: "Bottoms", sub_category: "Colored/Patterned Pants", image: "https://img.ltwebstatic.com/images3_pi/2019/11/04/157285025580cbb6ab1576ec597dc21578b68e0f70_thumbnail_600x.webp", recommended: 1},
-    {id: 7, category: "Tops", sub_category: "Tank Shirt", image: "https://images-na.ssl-images-amazon.com/images/I/71RsYRySFZL._UY606_.jpg", recommended: 3},
-    {id: 8, category: "Tops", sub_category: "White Top", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSuqJzP9U0e6_VNdXAjhBjv9J4s7J47s-4Ha-cEtls5dIuJedmY7uy5Bi7mJ0A&usqp=CAc", recommended: 2},
-    {id: 9, category: "Tops", sub_category: "Patterned Shirt", image: "https://rhalyns.com/wp-content/uploads/2018/01/YUETONGME-2017-new-Couture-Black-and-white-striped-long-sleeved-T-shirt-women-slim-fit-raglan.jpg_640x640.jpg", recommended: 1},
-    {id: 10, category: "Tops", sub_category: "Sweater", image: "https://images-na.ssl-images-amazon.com/images/I/614N4LWAUsL._AC_UX679_.jpg", recommended: 2},
-    {id: 11, category: "Tops", sub_category: "Flannel Shirt", image: "https://i5.walmartimages.com/asr/8ee5f14f-50b5-46c0-a9d3-f9b0540c7779_1.6cb83207f0db298fb237c64a75c4c8ad.jpeg?odnWidth=450&odnHeight=450&odnBg=ffffff", recommended: 1},
-    {id: 12, category: "Tops", sub_category: "Blouse", image: "https://images-na.ssl-images-amazon.com/images/I/711X%2BOJAnuL._AC_UX342_.jpg", recommended: 2},
-    {id: 13, category: "Tops", sub_category: "Button-down Chambray", image: "https://images-na.ssl-images-amazon.com/images/I/71RsYRySFZL._UY606_.jpg", recommended: 1},
-    {id: 14, category: "Tops", sub_category: "Cardigan", image: "https://cfcdn.zulily.com/images/cache/product/452x1000/393598/zu81256496_main_tm1568837476.jpg", recommended: 2},
-    {id: 15, category: "Outerwear", sub_category: "Sweatshirt", image: "https://scene7.zumiez.com/is/image/zumiez/pdp_hero/Zine-Matilda-Black-Zip-Up-Hoodie-_268035.jpg", recommended: 1},
-    {id: 16, category: "Outerwear", sub_category: "Denim Jacket", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjoDCNKzf7piZ9MrtDGZ4_QyERpMT9VUE2KpO7ZbPz6_4cUh4KryR_ovlxLoGodMREdtT4tmIF&usqp=CAcg", recommended: 1},
-    {id: 17, category: "Outerwear", sub_category: "Blazer", image: "https://images.beautifulhalo.com/images/392x588/201908/X/women-s-fashion-notched-lapel-tailored-black-blazer-coat_1566151972553.jpg", recommended: 1},
-    {id: 18, category: "Outerwear", sub_category: "Trench Coat", image: "https://img-static.tradesy.com/item/8001889/black-women-s-double-breasted-wool-jacket-belted-blazer-trench-coat-size-12-l-2-1-960-960.jpg", recommended: 1},
-    {id: 19, category: "Outerwear", sub_category: "Outerwear Coat", image: "https://simages.ericdress.com/Upload/Image/2017/47/watermark/5b250eaf-92f3-4a5e-ab32-e47b190219ba.jpg", recommended: 1},
-    {id: 20, category: "Dresses", sub_category: "Shirt Dress", image: "https://m.media-amazon.com/images/I/61UrHKAUHIL._SR500,500_.jpg", recommended: 2},
-    {id: 21, category: "Dresses", sub_category: "Sweater Dress", image: "https://www.pinkqueen.com/upload/thumb/540x540/goodsimport/2019-07/PSE2789GY_3.jpg", recommended: 1},
-    {id: 22, category: "Dresses", sub_category: "Print Dress", image: "https://www.lulus.com/images/product/xlarge/3678530_721512.jpg", recommended: 1},
-    {id: 23, category: "Shoes", sub_category: "Tall Boots", image: "https://images.timberland.com/is/image/timberland/A1ATF636-HERO?$PDP-FULL-IMAGE$", recommended: 1},
-    {id: 24, category: "Shoes", sub_category: "Short Boots", image: "https://i.pinimg.com/originals/ff/a9/83/ffa98312d51b34c64b2ceeadb941261e.jpg", recommended: 1},
-    {id: 25, category: "Shoes", sub_category: "Wedges", image: "https://cdn-img.prettylittlething.com/a/b/4/a/ab4ae07995ac1979f42b2515b0c7622678158ef7_cma7420_1.jpg", recommended: 1},
-    {id: 26, category: "Shoes", sub_category: "Flats", image: "https://i.frg.im/Qzz3o6f/122904211703-0_600.jpg?v=1515409422.027", recommended: 1},
-    {id: 27, category: "Shoes", sub_category: "Sandals", image: "https://cdn.shopify.com/s/files/1/1117/9124/files/Screenshot_8.jpg?14168670541966121986", recommended: 1},
-    {id: 28, category: "Shoes", sub_category: "Sneakers", image: "https://www.depthlog.com/images/large/womens%20nike%20sneakers-827opg.jpg", recommended: 1},
+
+    //bottoms needed id's: none
+    {id: 1, category: "Bottoms", sub_category: "Skinny Jeans", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/c45c14860f0f5508ee57d45f4ccd4f4cf1a41942.jpg", recommended: 2}, 
+    {id: 2, category: "Bottoms", sub_category: "Black Pants", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/d400a3e79f00e1b82b38b12a51a2848ac8b5aacd.jpg", recommended: 1},
+    {id: 3, category: "Bottoms", sub_category: "Leggings", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1543261934/bghovmmboe1wpje4nrg6.jpg", recommended: 2},
+    {id: 4, category: "Bottoms", sub_category: "Shorts", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1516835637/k4fzci7rzkinzkyr2emv.jpg", recommended: 2},
+    {id: 5, category: "Bottoms", sub_category: "Skirts", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1552002877/lv6rxinmxin1ucqxm88s.jpg", recommended: 1},
+    {id: 6, category: "Bottoms", sub_category: "Colored/Patterned Pants", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1539907057/gytxovkfgcgk5fcmows0.jpg", recommended: 1},
+
+
+    //tops needed: none
+    {id: 7, category: "Tops", sub_category: "Tank Shirt", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/1712660113m61q2n8vhu1futgij0iq.jpg", recommended: 3},
+    {id: 8, category: "Tops", sub_category: "White Top", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1522277051/wfw5mj3mgogy3mrgmrnk.jpg", recommended: 2},
+    {id: 9, category: "Tops", sub_category: "Patterned Shirt", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1562023879/s2fpir9reuakaq0jhwj7.jpg", recommended: 1},
+    {id: 10, category: "Tops", sub_category: "Sweater", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1536876127/ul7mjeehwocxbt7mcpvs.jpg", recommended: 2},
+    {id: 11, category: "Tops", sub_category: "Flannel Shirt", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1513801349/x7pbaa9fzotsbo0q8w4q.jpg", recommended: 1},
+    {id: 12, category: "Tops", sub_category: "Blouse", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1532648921/lbnfftnw6q3slbhmajgk.jpg", recommended: 2},
+    {id: 13, category: "Tops", sub_category: "Button-down Chambray", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1554318000/nbuslqyzsmvrljmrpuv8.jpg", recommended: 1},
+    {id: 14, category: "Tops", sub_category: "Cardigan", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1570469575/bixnkrjctrnjzqrb2jrh.jpg", recommended: 2},
+
+    //outerwear 16, 19
+    {id: 15, category: "Outerwear", sub_category: "Sweatshirt", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1569009885/sqx8lpwa6rk6jbynwpht.jpg", recommended: 1},
+    {id: 16, category: "Outerwear", sub_category: "Denim Jacket", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/2026577856fyjwv5v0rtvxurxopngr.jpg", recommended: 1},
+    {id: 17, category: "Outerwear", sub_category: "Blazer", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1552955674/yoyycjsfsol6xeexuzly.jpg", recommended: 1},
+    {id: 18, category: "Outerwear", sub_category: "Trench Coat", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1573683624/oi7wplabpsptrauh7b0a.jpg", recommended: 1},
+    {id: 19, category: "Outerwear", sub_category: "Outerwear Coat", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1575329752/atby6qeop4ocgvh1smg5.jpg", recommended: 1},
+
+    //dresses 21
+    {id: 20, category: "Dresses", sub_category: "Shirt Dress", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/1784618648bfs6b8pzwd4mtx0m3ow5.jpg", recommended: 2},
+    {id: 21, category: "Dresses", sub_category: "Sweater Dress", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/1893015359y9l8zt3ulfsphlx3oltt.jpg", recommended: 1},
+    {id: 22, category: "Dresses", sub_category: "Print Dress", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/5083f825ec3e093939eba6bb651fdca66b50446b.jpg", recommended: 1},
+
+    //shoes 23,25
+    {id: 23, category: "Shoes", sub_category: "Tall Boots", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1575671949/sbdvagkfup5n1ucpobum.jpg", recommended: 1},
+    {id: 24, category: "Shoes", sub_category: "Short Boots", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1563315888/roaw8eljgrkldldckrwc.jpg", recommended: 1},
+    {id: 25, category: "Shoes", sub_category: "Wedges", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/bc7a12d318b6e562bea00b899c0bd62567c7f108.jpg", recommended: 1},
+    {id: 26, category: "Shoes", sub_category: "Flats", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/2050236294vqswojygm1wcxzkfc9bj.jpg", recommended: 1},
+    {id: 27, category: "Shoes", sub_category: "Sandals", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/v1579294632/lwmzhwz3gqunstzquagh.jpg", recommended: 1},
+    {id: 28, category: "Shoes", sub_category: "Sneakers", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/1c7f98b03dcf60c8c01e3b3916b3fbca7d8192a2.jpg", recommended: 1},
+
+    //accessories 29,30,31,32
     {id: 29, category: "Accessories", sub_category: "Neutral Purse", image: "https://images-na.ssl-images-amazon.com/images/I/81yR367%2BfuL._AC_UX395_.jpg", recommended: 1},
     {id: 30, category: "Accessories", sub_category: "Sunhat", image: "https://ae01.alicdn.com/kf/HTB1HLhMa5zxK1RkSnaVq6xn9VXaC/2019-simple-Foldable-Wide-Brim-Floppy-Girls-Straw-Hat-Sun-Hat-Beach-Women-Summer-Hat-UV.jpg", recommended: 1},
     {id: 31, category: "Accessories", sub_category: "Winter Hat", image: "https://m.media-amazon.com/images/I/71Te6C2YDsL._SR700,525_.jpg", recommended: 1},
     {id: 32, category: "Accessories", sub_category: "Sunglasses", image: "https://www.dhresource.com/600x600/f2/albu/g7/M01/C1/21/rBVaSVvtiFmAPpetAADbs5UnPmA683.jpg", recommended: 1},
-    {id: 33, category: "Accessories", sub_category: "Scarves", image: "https://i.etsystatic.com/10585666/r/il/9df449/1913983629/il_794xN.1913983629_a7cj.jpg", recommended: 2},
-    {id: 34, category: "Accessories", sub_category: "Choice of Jewelry", image: "https://i.pinimg.com/originals/b9/da/5f/b9da5f7972f8d1eea6bb7c872c2c7f56.jpg", recommended: 2},
+    {id: 33, category: "Accessories", sub_category: "Scarves", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/6eb57b561cf6cecda355ab4c587efed8a9457c91.jpg", recommended: 2},
+    {id: 34, category: "Accessories", sub_category: "Choice of Jewelry", image: "https://res.cloudinary.com/stitch-fix-mobile/image/fetch/e_trim/b_white,c_pad,h_500,q_auto,w_500/bo_10px_solid_white/https://d1t26lkqdk7zjd.cloudfront.net/curatedquestion/2116427742owftzpluhunyo9jbekzn.jpg", recommended: 2},
   ]
 
   const categories = ["Tops", "Bottoms", "Outerwear", "Dresses", "Shoes", "Accessories"]

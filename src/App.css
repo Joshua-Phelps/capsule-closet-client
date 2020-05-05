@@ -40,3 +40,15 @@
 /* #root {
   height: 104vh;
 } */
+
+.clothes-image {
+  height: auto;
+  max-height: 250px;
+  width: auto;
+  max-width: 250px;
+}
+
+.guide-image-div {
+  max-height: 400px;
+  height: 100%;
+}
