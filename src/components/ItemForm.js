@@ -46,6 +46,11 @@ export default function ItemForm(item, props) {
   // const [brand, setBrand] = useState("")
   // const [selectedFile, setSelectedFile] = useState(null)
   // const [age, setAge] = React.useState('');
+  const {setOpenItemModal} = useContext(MethodContext)
+  
+  const handleClose = () => {
+    setOpenItemModal(false);
+  };
 
   const handleChange = (e) => {
     formItemDispatch({type: 'UPDATE_FORMITEM', payload: {name: e.target.name, value: e.target.value}})
@@ -74,6 +79,7 @@ export default function ItemForm(item, props) {
   const handleSubmit = (e) => {
     e.preventDefault()
     createItem()
+    handleClose()
     // alert(`Submitting Item: ${formItem.color} ${formItem.brand} ${formItem.category}`)
   }
 

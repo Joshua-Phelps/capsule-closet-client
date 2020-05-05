@@ -59,7 +59,9 @@ export default function SimpleModal(props) {
       <p id="simple-modal-description">
         Enter the details of your item below:
       </p>
-      <ItemForm/>
+      <ItemForm
+        onClick={handleClose}
+      ></ItemForm>
      
     </div>
   );
