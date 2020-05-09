@@ -34,6 +34,7 @@ export default function DrawerContainer(){
   return (
     <div className={itemDisplay}>
         <Grid container spacing={1}> 
+        
           {renderCategoriesAndItems()}
         </Grid>                       
     </div>
