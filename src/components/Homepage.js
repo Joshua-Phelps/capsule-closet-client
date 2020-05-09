@@ -71,7 +71,7 @@ export default function Homepage(props) {
         <Grid item xs={4} container spacing={1}>
           <Grid item xs={6}>
             <Paper className={classes.paper}>
-              <Button component={Link} to="/login">
+              <Button component={Link} name='login' to="/login">
                 Login
               </Button>
             </Paper>

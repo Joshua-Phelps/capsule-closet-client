@@ -114,8 +114,8 @@ export default function ItemForm(item, props) {
     // console.log(subcats[`${formItem.category}`])
     if (formItem.category){
            return subcats[`${formItem.category}`].map( sub => {
-             console.log(subcats)
-            return <MenuItem value={sub}>{sub}</MenuItem>
+            //  console.log(subcats)
+            return <MenuItem name={sub} value={sub}>{sub}</MenuItem>
            })
 
     }
@@ -143,7 +143,7 @@ export default function ItemForm(item, props) {
         >
 
           <MenuItem value={"Tops"}>Tops</MenuItem>
-          <MenuItem value={"Bottoms"}>Bottoms</MenuItem>
+          <MenuItem name={"Bottoms"} value={"Bottoms"}>Bottoms</MenuItem>
           <MenuItem value={"Dresses"}>Dress</MenuItem>
           <MenuItem value={"Outerwear"}>Outerwear</MenuItem>
           <MenuItem value={"Shoes"}>Shoes</MenuItem>
@@ -155,9 +155,9 @@ export default function ItemForm(item, props) {
         <InputLabel id="demo-simple-select-label">SubCategory</InputLabel>
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          id="sbselect"
           value={formItem.sub_category}
-          name={'sub_category'}
+          name={'subcategory'}
           onChange={handleSubCatSelect}
         >
           {/* <MenuItem value={"Tops"}>Tops</MenuItem>
@@ -222,6 +222,7 @@ export default function ItemForm(item, props) {
         <Button 
           variant="outlined"
           type="submit"
+          name='submit'
         >
           Add Item
         </Button>

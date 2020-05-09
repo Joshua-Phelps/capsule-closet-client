@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StateContext, DispatchContext, MethodContext } from '../App'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { api } from '../services/api'
 // import { Link } from 'react-router-dom'
 
 import { 
@@ -64,18 +65,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login(props) {
+export default function Login({ history }) {
   const classes = useStyles();
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
   const { user, items } = useContext(StateContext)
-  const { itemsDispatch } = useContext(DispatchContext)
+  const { itemsDispatch, outfitsDispatch, boardsDispatch, userDispatch } = useContext(DispatchContext)
   const { addItem, login } = useContext(MethodContext)
 
   const handleSubmit = e => {
     e.preventDefault()
-    login(username, password)
+    login(username, password).then((itemLength) => {
+      if (itemLength > 0 ) {  
+        history.push('/closet')
+      } else {
+        history.push('/guide')
+      }
+    })
   }
+
+  // useEffect(() => {
+  //   let token = localStorage.getItem('token')
+  //   if (token){
+  //     if (user.items && user.items.length > 0 ) {  
+  //       history.push('/closet')
+  //     } else {
+  //       history.push('/guide')
+  //     }
+  //   }
+  // }, [user]);
+
+
+  // const login = (username, password) => {
+  //   api.auth.login(username, password)
+  //   .then(data => {
+  //     console.log(data.user.items)
+  //     localStorage.setItem("token", data.jwt)
+  //     userDispatch({type: 'GET_USER', payload: data.user})
+  //     itemsDispatch({type: 'GET_ITEMS', payload: data.user.items})
+  //     outfitsDispatch({type: 'GET_OUTFITS', payload: data.user.outfits})
+  //     boardsDispatch({type: 'GET_BOARDS', payload: data.user.boards})
+  //     // return data.user.items.length
+  //   })
+  //   // .catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
+  // } 
+
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -126,6 +160,7 @@ export default function Login(props) {
               fullWidth
               variant="contained"
               color="primary"
+              name='submit'
               className={classes.submit}
               
             >

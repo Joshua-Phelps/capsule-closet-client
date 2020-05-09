@@ -74,6 +74,7 @@ export default function DrawerAppBar(){
             onClick={() => setOpenItemModal(true)}
             variant="outlined" 
             color="inherit"
+            name='add-item'
             // backgroundColor='secondary'
           >
           Add Item to Closet

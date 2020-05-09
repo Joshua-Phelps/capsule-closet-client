@@ -58,7 +58,7 @@ export default function NavBar({ history, location }) {
           aria-label="nav tabs example"
         >
           <Tab label="Guide" />
-          <Tab label="Closet" />
+          <Tab name='closet' label="Closet" />
           <Tab label="Outifts" />
           <Tab label="Boards" />
 

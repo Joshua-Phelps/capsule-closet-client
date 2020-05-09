@@ -103,9 +103,11 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log('test')
     if (token) {
           setLoading(true)
           api.auth.getCurrentUser().then(user => {
+            console.log(user)
             userDispatch({type: GET_USER, payload: user})
             itemsDispatch({type: GET_ITEMS, payload: user.items})
             outfitsDispatch({type: GET_OUTFITS, payload: user.outfits})
@@ -117,18 +119,18 @@ function App() {
 
 
   const login = (username, password) => {
-    api.auth.login(username, password)
+    return api.auth.login(username, password)
     .then(data => {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
       boardsDispatch({type: GET_BOARDS, payload: data.user.boards})
+      return data.user.items.length
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
   const clearState = () => {
-    console.log('hello')
     userDispatch({type: 'CLEAR_STATE', payload: initialState.user})
     itemsDispatch({type: 'CLEAR_STATE', payload: initialState.items})
     outfitsDispatch({type: 'CLEAR_STATE', payload: initialState.outfits})
