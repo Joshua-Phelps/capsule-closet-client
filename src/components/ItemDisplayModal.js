@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: '50vw', 
-    height: '70vh',
+    // height: '70vh',
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(2)
   },
@@ -32,12 +32,45 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     height: '100%',
-    width: '100%'
+    width: '100%',
+
   },
   gridCenter: {
-    overflowY: 'auto',
+    // overflowY: 'auto',
     height: '100%',
     textAlignLast: 'center',
+  },
+
+  modalHeader: {
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr auto auto',
+    gridGap: '10px',
+    borderRadius: '20px',
+    backgroundColor: 'palegoldenrod',
+    padding: '4px 12px',
+    marginBottom: '10px'
+  },
+
+  modalHeaderSubCat: {
+    gridColumnStart: '1',
+  },
+  modalHeaderCat: {
+    gridColumnStart: '3',
+    textAlign: 'right'
+  },
+  modalHeaderCount: {
+    gridColumnEnd: '-1'
+  },
+
+  modalHeaderStyles: {
+    fontSize: '0.8rem',
+    textTransform: 'uppercase'
+  },
+  rightButton: {
+    textAlign: 'right'
+  },
+  modalButton: {
+    backgroundColor: 'lightgrey'
   }
 }));
 
@@ -92,6 +125,17 @@ export default function ItemDisplayModal() {
         <Fade in={itemDisplayModal}>
           <Paper className={classes.container}>
           <Grid container >
+          <Grid className={classes.modalHeader} item xs={12}>
+              <Typography className={classes.modalHeaderSubCat, classes.modalHeaderStyles}>
+                {item.sub_category} |
+              </Typography >
+              <Typography className={classes.modalHeaderCat, classes.modalHeaderStyles}>
+                 {item.category} 
+              </Typography>
+              <Typography className={classes.modalHeaderCount, classes.modalHeaderStyles}>
+                {renderOutfits()}
+              </Typography>
+            </Grid>
             <Grid item xs={1}>
               <Button onClick={handlePrevious} className={classes.button}>
                 <ArrowBackIosIcon />
@@ -105,15 +149,14 @@ export default function ItemDisplayModal() {
                 <ArrowForwardIosIcon />
               </Button>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>
-                {renderOutfits()}
-                <br></br>
-                Category: {item.category}
-              </Typography>
+            
+            <Grid item xs={6}>
+              <Button className={classes.modalButton}>Add to Outfit</Button>
             </Grid>
-            <Grid item xs={3}>
-              
+            <Grid className={classes.rightButton}item xs={6}>
+              <Button className={classes.modalButton} onClick={handleEdit}>
+                Edit Item
+              </Button>
             </Grid>
             {/* <Grid item xs={3}>
               <Button onClick={handleEdit} className={classes.edit}>

@@ -9,12 +9,16 @@ const useStyles = makeStyles(theme => ({
     padding: '8px'
   },
   colorHeading: {
-    background: theme.palette.primary.gradient,
+    background: 'aliceblue',
   },
   leftText: {
     textAlign: 'left',
     paddingLeft: '10px'
   },
+
+  catTop: {
+    margin: '0px!important'
+  }
 }))
 
 export default function DrawerCategory({ category }){
@@ -59,7 +63,7 @@ export default function DrawerCategory({ category }){
       <Grid item xs={11}>
         <Typography className={classes.leftText}>{category}</Typography>
       </Grid>
-      <Grid item xs={1}>
+      <Grid className={classes.catTop} item xs={1}>
         <Badge color="secondary" badgeContent={items.length}></Badge>
       </Grid>
       <Divider />
