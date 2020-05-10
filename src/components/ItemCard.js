@@ -29,6 +29,27 @@ const useStyles = makeStyles(theme => ({
   },
   centered: {
     display: 'block'
+  },
+  cardActions: {
+    textAlign: 'center',
+    display: 'block',
+    backgroundColor: 'palegoldenrod',
+    width: '100%',
+    padding: '10px',
+    borderRadius: '0'
+  },
+  subcat: {
+    textAlign: 'center',
+    fontSize: '.7rem',
+    textTransform: 'uppercase',
+    letterSpacing:'2px',
+    padding: '6px',
+    margin: '10px',
+    marginTop: '4px',
+    border: 'solid 1px #cabc2f'
+  },
+  cardContent:{
+    padding: '8px'
   }
 }));
 
@@ -50,10 +71,14 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
   return (
     <>     
       <Card className={classes.root} variant="outlined" >
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <CardContent className={classes.cardContent}>
+          {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
             {category}
+          </Typography> */}
+           <Typography className={classes.title, classes.subcat} color="textSecondary" gutterBottom>
+            {sub_category}
           </Typography>
+          
           <CardMedia
           className={classes.media}
           image={image}
@@ -65,17 +90,15 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
             className="clothes-image"
             // onClick={() => setOpenItemModal(true)}
           /> */}
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {sub_category}
-          </Typography>
+         
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {recommendedText}{recommended}
           </Typography>
         </CardContent>
-        <CardActions className={classes.centered}>
-          <Button onClick={() => handleClick(id)} size="small">{buttonText}</Button>
+        {/* <CardActions className={classes.centered, classes.cardActions}> */}
+          <Button  className={classes.centered, classes.cardActions} onClick={() => handleClick(id)} size="small">{buttonText}</Button>
           {/* {choiceClick(id)} */}
-        </CardActions>
+        {/* </CardActions> */}
       </Card>    
     </>
   );
