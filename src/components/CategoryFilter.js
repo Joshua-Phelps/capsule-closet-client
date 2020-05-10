@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import SubCategoryFilter from '../components/SubCategoryFilter'
-import { makeStyles, Button } from '@material-ui/core';
+import { makeStyles, Button, Container } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -15,6 +15,35 @@ const useStyles = makeStyles(theme => ({
   counter: {
     padding: theme.spacing(1),
     marginBottom: "16px"
+  },
+
+  tabs: {
+    // backgroundColor: '#a4d7e3'
+    backgroundColor: 'palegoldenrod'
+  },
+
+  filterButton: {
+    backgroundColor: '#e0e0e0'
+  },
+
+  subFilterGridStyles: {
+    display: 'grid',
+    gridGap:'10px',
+    gridTemplateColumns:'repeat(5, 1fr)',
+    gridTemplateRows: '1fr',
+  },
+  clearFilterDiv: {
+    alignItems: 'center'
+  },
+  clearFilterButton: {
+    marginTop: '1.5rem',
+    marginLeft: '3rem',
+    border: 'solid 2px #a4d7e3',
+    color: '#607d8b'
+  },
+  catSection: {
+    marginRight: '25px',
+    marginLeft: '25px'
   }
 }));
 
@@ -80,8 +109,8 @@ export default function CategoryFilter() {
           <Grid item xs={1}></Grid>
       </Grid> */}
 
-      <Paper className={classes.root}>
-        <Button onClick={handleOpenFilters}>+ Filters</Button>      
+      <Paper className={classes.root, classes.catSection}>
+           
         <Tabs
           action={tabsActions}
           value={categoryNavBarValue}
@@ -101,35 +130,42 @@ export default function CategoryFilter() {
           <Tab value='Shoes' label="Shoes" />
           <Tab value='Accessories' label="Accessories" />    
         </Tabs>
+        <Container className={classes.filterButton}>
+          <Button onClick={handleOpenFilters}>+ Filters</Button>  
+        </Container> 
         { openFilters && (
           <>
-            <SubCategoryFilter 
-              selections={subCategories} 
-              handleSelection={setSubCategoryFilter} 
-              selectionValue={subCategoryFilter}
-              formText={'Sub Category'}
-            />
-            <SubCategoryFilter 
-              selections={colors} 
-              handleSelection={setClosetColorFilter} 
-              selectionValue={closetColorFilter}
-              formText={'Color'}
-            />
-            <SubCategoryFilter 
-              selections={brands} 
-              handleSelection={setClosetBrandFilter} 
-              selectionValue={closetBrandFilter}
-              formText={'Brand'}
-            />
-            <SubCategoryFilter 
-              selections={sizes} 
-              handleSelection={setClosetSizeFilter} 
-              selectionValue={closetSizeFilter}
-              formText={'Size'}
-            />
-            <Button onClick={clearFilters} className={classes.button}>
-              Clear Filters
-            </Button>
+          <Container className={classes.subFilterGridStyles}>
+              <SubCategoryFilter 
+                selections={subCategories} 
+                handleSelection={setSubCategoryFilter} 
+                selectionValue={subCategoryFilter}
+                formText={'Sub Category'}
+              />
+              <SubCategoryFilter 
+                selections={colors} 
+                handleSelection={setClosetColorFilter} 
+                selectionValue={closetColorFilter}
+                formText={'Color'}
+              />
+              <SubCategoryFilter 
+                selections={brands} 
+                handleSelection={setClosetBrandFilter} 
+                selectionValue={closetBrandFilter}
+                formText={'Brand'}
+              />
+              <SubCategoryFilter 
+                selections={sizes} 
+                handleSelection={setClosetSizeFilter} 
+                selectionValue={closetSizeFilter}
+                formText={'Size'}
+              />
+              <div className={classes.clearFilterDiv}>
+                <Button variant="outlined" onClick={clearFilters} className={classes.button, classes.clearFilterButton}>
+                  Clear
+                </Button>
+              </div>
+            </Container>
           </>
         )}
       </Paper>

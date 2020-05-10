@@ -43,12 +43,12 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     textAlign: 'center',
-    marginTop: '200px',
-    fontSize: '70px',
+    marginTop: '150px',
+    fontSize: '3rem',
     textTransform: 'uppercase',
     color: '#fff',
     fontWeight: '100',
-    letterSpacing: '14px'
+    letterSpacing: '14px',
   }
 }));
 
@@ -62,7 +62,7 @@ export default function Homepage(props) {
         <Grid item xs={2}>
         </Grid>
         <Grid className={classes.title}item xs={8}>
-         Capsule <br></br> Closet
+         <h3>Capsule <br></br> Closet</h3>
         </Grid>
         <Grid item xs={2}>
         </Grid>

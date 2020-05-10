@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
     },
     itemDisplay: {
       flexGrow: 1,
-      paddingTop: theme.spacing(3),
+      // paddingTop: theme.spacing(3),
       width: '300px',
       overflowX: 'hidden',
       height: '100%'
-    }, 
+    }
 }))
 
 export default function DrawerContainer(){
@@ -34,6 +34,7 @@ export default function DrawerContainer(){
   return (
     <div className={itemDisplay}>
         <Grid container spacing={1}> 
+        
           {renderCategoriesAndItems()}
         </Grid>                       
     </div>
