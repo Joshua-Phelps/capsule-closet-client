@@ -99,6 +99,10 @@ export default function ClosetContainer(){
       ? setTimeout(() => window.scrollTo({top: 48, behavior: 'smooth'}), 50)
       : setTimeout(() => window.scrollTo({top: 0, behavior: 'smooth'}), 50)
     }, [editMode])
+
+    useEffect(() => {
+      console.log(items)
+    }, [items])
     
     const renderItems = () => {
       return closetDisplayedItems.map(item => {
