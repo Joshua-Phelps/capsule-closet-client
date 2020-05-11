@@ -35,7 +35,7 @@ export default function ItemForm(item, props) {
   // const [name, setName] = React.useState('Placeholder');
   const { formItem } = useContext(StateContext)
   const { formItemDispatch } = useContext(DispatchContext)
-  const { createItemMode, createItem} = useContext(MethodContext)
+  const { createItemMode, createItem, editItem} = useContext(MethodContext)
   const [ subCatDisplay, setSubCatDisplay ] = useState(false)
   const classes = useStyles();
   //form states:
@@ -78,7 +78,11 @@ export default function ItemForm(item, props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createItem()
+
+    if (formItem.id ) {
+      editItem()
+    } else createItem()
+
     handleClose()
     // alert(`Submitting Item: ${formItem.color} ${formItem.brand} ${formItem.category}`)
   }

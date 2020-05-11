@@ -59,7 +59,7 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
   const { setItemDisplayModal, closetDisplayedItems} = useContext(MethodContext)
   const { itemDisplayModal } = useContext(StateContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
-  const { image, id, category, sub_category, recommended} = item 
+  const { image, avatar, id, category, sub_category, recommended} = item 
   const closetItemIds = closetDisplayedItems.map(item => item.id) || []
 
 
@@ -81,7 +81,7 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
           
           <CardMedia
           className={classes.media}
-          image={image}
+          image={avatar.url}
           onClick={handleClothesClick}
           />
           {/* <img

@@ -172,6 +172,22 @@ function App() {
     .then(item => itemsDispatch({type: 'CREATE_ITEM', payload: item}))
   }
 
+  const editItem = () => {
+    let data = new FormData()
+    data.append('item[category]', formItem.category)
+    data.append('item[sub_category]', formItem.sub_category)
+    data.append('item[color]', formItem.color)
+    data.append('item[brand]', formItem.brand)
+    data.append('item[size]', formItem.size)
+    data.append('item[user_id]', user.id)
+    data.append('item[id]', formItem.id)
+    if ( formItem.image) data.append('item[avatar]', formItem.image) 
+
+    api.items.editItem(data)
+    //.then(item => console.log(item))
+    .then(item => itemsDispatch({type: 'EDIT_ITEM', payload: item}))
+  }
+
   const clearSelectedOutfit = () => {
     selectedOutfitDispatch({type: 'SELECT_OUTFIT', payload: initialState.selectedOutfit})
   }
@@ -263,6 +279,7 @@ function App() {
   }
   const methods = { 
     addItem, 
+    editItem, 
     login, 
     filterItemsByOutfit,
     filterOutfitsByBoard, 

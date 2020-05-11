@@ -77,8 +77,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemDisplayModal() {
   const classes = useStyles();
   const { itemDisplayModal, modalItems, items } = useContext(StateContext)
-  const { setItemDisplayModal, getItemOutfits } = useContext(MethodContext)
-  const { modalItemsDispatch } = useContext(DispatchContext)
+  const { setItemDisplayModal, getItemOutfits, setOpenItemModal  } = useContext(MethodContext)
+  const { modalItemsDispatch, formItemDispatch } = useContext(DispatchContext)
   const item = items.filter(item => item.id === modalItems.current)[0] || {id: null}
   const currentIndex = modalItems.items.findIndex(currItem => currItem === item.id)
   const outfits = getItemOutfits(item.id)
@@ -96,8 +96,11 @@ export default function ItemDisplayModal() {
   }
 
   const handleEdit = () => {
-
+    formItemDispatch({type: 'SET_EDIT_ITEM', payload: item})
+    setOpenItemModal(true)
   }
+
+  console.log(item)
 
   const renderOutfits = () => {
     if (outfits.length === 1 ){
@@ -142,7 +145,7 @@ export default function ItemDisplayModal() {
               </Button>
             </Grid>
             <Grid className={classes.gridCenter} item xs={10}>
-              <img className={classes.image} src={item.image} />
+              <img className={classes.image} src={item.avatar ? item.avatar.url : item.image } />
             </Grid>
             <Grid item xs={1}>
               <Button onClick={handleNext} className={classes.button}>
