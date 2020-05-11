@@ -120,13 +120,17 @@ function App() {
 
   const login = (username, password) => {
     return api.auth.login(username, password)
-    .then(data => {
+    .then(data => { 
+      if (data.error) {
+        alert('Incorrect Information')
+      }  else {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
       boardsDispatch({type: GET_BOARDS, payload: data.user.boards})
       return data.user.items.length
+    }
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
