@@ -91,7 +91,7 @@ export default function GuideContainer() {
   const renderItems = (category) => {
     return items.map(item => {
       if (item.category === category) {       
-      return <GridListTile ><ItemCard item={item} handleClick={addToCloset} buttonText={'Add to Closet'} recommendedText={'Recommended: '}/></GridListTile>
+      return <GridListTile><ItemCard item={item} handleClick={addToCloset} buttonText={'Add to Closet'} recommendedText={'Recommended: '}/></GridListTile>
       }
     })
   }

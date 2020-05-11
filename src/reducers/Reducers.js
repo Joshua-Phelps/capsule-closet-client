@@ -18,6 +18,7 @@ const SET_ITEM = 'SET_ITEM'
 const CLEAR_STATE = "CLEAR_STATE"
 const SET_ITEMS = 'SET_ITEMS'
 const SET_CURRENT = 'SET_CURRENT'
+const SET_EDIT_ITEM = 'SET_EDIT_ITEM'
 
 const userReducer = (state, action) => {
   const { id, username, email } = action.payload  
@@ -47,9 +48,19 @@ const userReducer = (state, action) => {
       case CREATE_ITEM:
         return [...state, action.payload]
       case EDIT_ITEM:
-        return {
-      // not finished 
-    }
+        let editFunction =  [...state.map(item => {
+          if (item.id === action.payload.id) {
+            console.log("if", action.payload)
+            return action.payload
+          } else {
+            console.log("else", item)
+            return item
+          }
+        })]
+        console.log("edit function console log", editFunction)
+        return editFunction
+        
+  
     case DESTROY_ITEM: 
       return {
       // not finished
@@ -66,7 +77,9 @@ const formItemReducer = (state, action) => {
     case UPDATE_FORMITEM:
       return {...state, [action.payload.name]: action.payload.value}
     case SET_ITEM:
-      return {...state, category: action.payload.category, sub_category: action.payload.sub_category, image: action.payload.image}
+      return {...state, category: action.payload.category, sub_category: action.payload.sub_category, image: action.payload.image }
+    case SET_EDIT_ITEM:
+      return {category: action.payload.category, sub_category: action.payload.sub_category, color: action.payload.color, size:action.payload.size, brand: action.payload.brand, id: action.payload.id}
     default: 
       return state   
   }

@@ -43,6 +43,17 @@ const createItem = item => {
   }).then(res => res.json())
 }
 
+const editItem = item => {
+  return fetch(`${API_ROOT}/items/${item.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      Authorization: token(),
+    },
+    body: item
+  }).then(res => res.json())
+}
+
 const sendImageToController = formPayLoad => {
   return fetch(`${API_ROOT}/items`, {
     credentials: 'same-origin',
@@ -84,6 +95,7 @@ export const api = {
   },
   items: {
     createItem,
+    editItem, 
     sendImageToController
   },
   outfits: {

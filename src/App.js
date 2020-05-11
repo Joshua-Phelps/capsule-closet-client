@@ -120,13 +120,17 @@ function App() {
 
   const login = (username, password) => {
     return api.auth.login(username, password)
-    .then(data => {
+    .then(data => { 
+      if (data.error) {
+        alert('Incorrect Information')
+      }  else {
       localStorage.setItem("token", data.jwt)
       userDispatch({type: GET_USER, payload: data.user})
       itemsDispatch({type: GET_ITEMS, payload: data.user.items})
       outfitsDispatch({type: GET_OUTFITS, payload: data.user.outfits})
       boardsDispatch({type: GET_BOARDS, payload: data.user.boards})
       return data.user.items.length
+    }
     }).catch(error => userDispatch({type: 'FETCH_ERROR', payload: error})) 
   } 
 
@@ -172,6 +176,22 @@ function App() {
     data.append('item[user_id]', user.id)
     api.items.createItem(data)
     .then(item => itemsDispatch({type: 'CREATE_ITEM', payload: item}))
+  }
+
+  const editItem = () => {
+    let data = new FormData()
+    data.append('item[category]', formItem.category)
+    data.append('item[sub_category]', formItem.sub_category)
+    data.append('item[color]', formItem.color)
+    data.append('item[brand]', formItem.brand)
+    data.append('item[size]', formItem.size)
+    data.append('item[user_id]', user.id)
+    data.append('item[id]', formItem.id)
+    if ( formItem.image) data.append('item[avatar]', formItem.image) 
+
+    api.items.editItem(data)
+    //.then(item => console.log(item))
+    .then(item => itemsDispatch({type: 'EDIT_ITEM', payload: item}))
   }
 
   const clearSelectedOutfit = () => {
@@ -265,6 +285,7 @@ function App() {
   }
   const methods = { 
     addItem, 
+    editItem, 
     login, 
     filterItemsByOutfit,
     filterOutfitsByBoard, 
