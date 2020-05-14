@@ -234,7 +234,7 @@ export default function ItemForm(item, props) {
           type="submit"
           name='submit'
         >
-          Add Item
+          Save
         </Button>
       </FormControl>
     </form>

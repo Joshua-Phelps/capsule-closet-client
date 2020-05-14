@@ -15,11 +15,16 @@ import {
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(3),
+    border: 'solid 2px #e0e0e0',
+    '&:hover': {
+      border: 'solid 2px #d6e286'
+    }
     // added styling below to size images and cards
     // textAlign: "center",
     // minWidth: 300,
     // minHeight: "100%"
   },
+
   title: {
     fontSize: 14,
   },
@@ -81,7 +86,7 @@ export default function ItemCard({item, handleClick, buttonText, recommendedText
           
           <CardMedia
           className={classes.media}
-          image={avatar.url}
+          image={avatar ? avatar.url : image}
           onClick={handleClothesClick}
           />
           {/* <img
