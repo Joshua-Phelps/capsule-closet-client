@@ -68,13 +68,13 @@ const theme = createMuiTheme({
     primary: {
       main: '#607d8b',//#66b783 #a6dadc
       light: '#e0e0e0', //#efefef
-      dark: '#35717a', //#29434e
+      dark: '#accacc', //#29434e
       gradient: 'linear-gradient(45deg, #09203f 0%, #537895 100%)'
       
     },
     secondary: {
-      main:'#546e7a',
-      light: '#819ca9',
+      main:'#eee8aa', //palegoldenrod
+      light: '#d6e286', //lime green
       dark: '#29434e'
     }
   }

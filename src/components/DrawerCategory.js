@@ -9,15 +9,28 @@ const useStyles = makeStyles(theme => ({
     padding: '8px'
   },
   colorHeading: {
-    background: 'aliceblue',
+    background: '#accacc',
   },
   leftText: {
     textAlign: 'left',
     paddingLeft: '10px'
   },
 
+  catGroup: {
+    marginTop: '8px',
+    marginBottom: '2px'
+  },
   catTop: {
-    margin: '0px!important'
+    // margin: '10px!important'
+  },
+  badge: {
+    marginTop: '12px!important'
+  },
+  outfitDrawerCard: {
+    //border: 'solid 2px #e0e0e0!important',
+    '&:hover': {
+      border: 'solid 1px #d6e286!important'
+    }
   }
 }))
 
@@ -42,7 +55,7 @@ export default function DrawerCategory({ category }){
   const renderItems = () => {
     if (items.length > 0){
       return items.map(item => {       
-        return <Grid key={item.id} item xs={12}><ItemCard buttonText={'Remove From Outfit'} handleClick={removeItem} item={item} /><Divider /></Grid>
+        return <Grid key={item.id} item xs={12}><ItemCard className={classes.outfitDrawerCard} buttonText={'Remove From Outfit'} handleClick={removeItem} item={item} /><Divider /></Grid>
       })
     } 
   }
@@ -60,11 +73,11 @@ export default function DrawerCategory({ category }){
       ref={myRef}
       onClick={toggleOpen} 
     >
-      <Grid item xs={11}>
+      <Grid className={classes.catGroup} item xs={11}>
         <Typography className={classes.leftText}>{category}</Typography>
       </Grid>
       <Grid className={classes.catTop} item xs={1}>
-        <Badge color="secondary" badgeContent={items.length}></Badge>
+        <Badge className={classes.badge} color="secondary" badgeContent={items.length}></Badge>
       </Grid>
       <Divider />
       {open && renderItems() }

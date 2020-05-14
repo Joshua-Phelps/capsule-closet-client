@@ -22,7 +22,7 @@ export default function OutfitCardItem({ item, outfit }) {
   const { itemDisplayModal } = useContext(StateContext)
   const { modalItemsDispatch } = useContext(DispatchContext)
   const classes = useStyles()
-  const { image, sub_category, id, category } = item 
+  const { image, sub_category, id, category, avatar } = item 
   const showHover = () => setHover(true) 
   const hideHover = () => setHover(false)
 
@@ -39,7 +39,7 @@ export default function OutfitCardItem({ item, outfit }) {
     key={id}
     style={{height: '180px'}}
     >
-    <img src={image} alt={category} />
+    <img src={avatar ? avatar.url : image} alt={category} />
 
       <GridListTileBar
         title={sub_category}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { StateContext, MethodContext, DispatchContext } from '../App'
-import { Grid, makeStyles, Paper, Fab, Typography, AppBar, Button, Toolbar } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Fab, Typography, AppBar, Button, Toolbar, Container } from '@material-ui/core';
 import BoardCard from '../components/BoardCard';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -20,7 +20,10 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {
     marginTop: theme.spacing(1),
     width: '100%',
-    height: '3vh'
+    height: '5vh',
+    '&:hover': {
+      backgroundColor: '#cbc478'
+    }
   },
   iconText: {
     position: 'absolute'
@@ -28,7 +31,30 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     marginTop: '48px',
     position: 'absolute'
+  },
+
+  boardTitle: {
+    gridColumn: '6',
+    textAlign: 'center',
+    fontSize: '28px',
+    textTransform: 'uppercase',
+    marginTop: '0px',
+    marginBottom: '0px',
+    alignSelf: 'center'
+  },
+
+  gridStyles: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(12, auto)',
+    gridTemplateRows: 'repeat(2, 40px)',
+    gridGap: '20px',
+    marginTop: '20px',
+    position: 'fixed'
+  },
+  outfitContainer: {
+    marginTop: '100px'
   }
+
 }))
 
 export default function BoardsContainer({ history }){
@@ -50,7 +76,7 @@ export default function BoardsContainer({ history }){
   const renderBoards = () => {
     return boards.map(board => {
       return (
-        <Grid className={root} key={board.id} item xs={3} >
+        <Grid className={root, classes.outfitContainer} key={board.id} item xs={3} >
           <Paper className={paper}>
             <BoardCard board={board} />
             <Fab 
@@ -71,19 +97,25 @@ export default function BoardsContainer({ history }){
   return (
     <div className={classes.root}>
       {/* <ItemDisplayModal /> */}
-      <AppBar className={classes.appBar}>
+      {/* <AppBar className={classes.appBar}>
         <Toolbar>
-          <Button            
-                color="inherit"
-                variant="outlined" 
-                aria-label="open drawer"
-                edge="start"
-                // onClick={handleCreate}
-                >
-                Create Board
-          </Button>
+          
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
+
+      <Container className={classes.gridStyles}>
+        <Button            
+          color="inherit"
+          variant="outlined" 
+          aria-label="open drawer"
+          edge="start"
+          // onClick={handleCreate}
+          >
+          Create Board
+        </Button>
+        <h3 className={classes.boardTitle}>My Boards</h3>
+      </Container>
+
       <Grid className={classes.appBar} container spacing={3}>
         {renderBoards()}                            
       </Grid>                       

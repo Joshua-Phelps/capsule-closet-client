@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   image: {
-    background: 'linear-gradient(0deg, rgba(107, 54, 34, 0.75), rgba(75, 164, 179, 0.69)), url(https://images.unsplash.com/photo-1585914924626-15adac1e6402?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80)',
+    background: 'linear-gradient(0deg, rgba(224, 175, 158, 0.64), rgba(178, 209, 216, 0.47)), url(https://images.unsplash.com/photo-1585914924626-15adac1e6402?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],

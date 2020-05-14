@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
-    padding: '30px'
+    padding: '30px',
+    textAlign: "center"
   },
   gridList: {
     flexWrap: 'nowrap',
@@ -29,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
     background:
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
+  guideCard: {
+    width: "30%!important"
+  },
+  catBlock: {
+    marginBottom: "20px"
+  },
+  catTitle: {
+    textAlign: "center"
+  },
+  // recText: {
+  //   textAlign: "center"
+  // }
 }));
 
 
@@ -91,7 +104,7 @@ export default function GuideContainer() {
   const renderItems = (category) => {
     return items.map(item => {
       if (item.category === category) {       
-      return <GridListTile><ItemCard item={item} handleClick={addToCloset} buttonText={'Add to Closet'} recommendedText={'Recommended: '}/></GridListTile>
+      return <GridListTile className={classes.guideCard}><ItemCard item={item} handleClick={addToCloset} buttonText={'Add to Closet'} recommendedText={'Recommended: '} className={classes.recText}/></GridListTile>
       }
     })
   }
@@ -104,9 +117,9 @@ export default function GuideContainer() {
 
   const renderCategoriesBlock = () => {
     return categories.map(category => {
-      return <Container>
-        <div style={{textAlign: 'left'}}><h2>{category}</h2></div>
-        <GridList className={classes.gridList} cellHeight={450} cols={2.5}>
+      return <Container className={classes.catBlock}>
+        <div style={{textAlign: 'left'}}><h2 className={classes.catTitle}>{category}</h2></div>
+        <GridList className={classes.gridList} cellHeight={360} cols={2.5}>
           {renderItems(category)}
         </GridList>
       </Container>

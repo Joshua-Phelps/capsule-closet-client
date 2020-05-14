@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { StateContext, MethodContext, DispatchContext } from '../App'
-import { Grid, makeStyles, Paper, Fab, Typography, AppBar, Button, Toolbar } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Fab, Typography, AppBar, Button, Toolbar, Container } from '@material-ui/core';
 import OutfitCard from '../components/OutfitCard';
 import EditIcon from '@material-ui/icons/Edit';
 import ItemDisplayModal from '../components/ItemDisplayModal';
@@ -21,7 +21,10 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {
     marginTop: theme.spacing(1),
     width: '100%',
-    height: '3vh'
+    height: '5vh',
+    '&:hover': {
+      backgroundColor: '#cbc478'
+    }
   },
   iconText: {
     position: 'absolute'
@@ -32,6 +35,22 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     marginTop: '48px',
+  },
+  outfitTitle: {
+    gridColumn: '6',
+    textAlign: 'center',
+    fontSize: '28px',
+    textTransform: 'uppercase',
+    marginTop: '0px',
+    marginBottom: '0px',
+    alignSelf: 'center'
+  },
+  gridStyles: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(12, auto)',
+    gridTemplateRows: 'repeat(2, 40px)',
+    gridGap: '20px',
+    marginTop: '20px',
   }
 }))
 
@@ -78,19 +97,24 @@ export default function OutfitContainer({ history }){
   return (
     <div className={classes.root}>
       <ItemDisplayModal />
-      <AppBar className={classes.appBar}>
+      {/* <AppBar className={classes.appBar}>
         <Toolbar>
-          <Button            
-                color="inherit"
-                variant="outlined" 
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleCreate}
-                >
-                Create Outfit
-          </Button>
+          
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
+      <Container className={classes.gridStyles}>
+
+          <Button            
+            color="inherit"
+            variant="outlined" 
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleCreate}
+            >
+            Create Outfit
+          </Button>
+          <h3 className={classes.outfitTitle}>My Outfits</h3>
+      </Container>
       <Grid className={classes.container} container spacing={2}>
         {renderOufits()}                            
       </Grid>                       
