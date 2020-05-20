@@ -167,7 +167,7 @@ export default function ItemForm(item, props) {
           labelId="demo-simple-select-label"
           id="sbselect"
           value={formItem.sub_category}
-          name={'subcategory'}
+          name={'sub_category'}
           onChange={handleSubCatSelect}
         >
           {/* <MenuItem value={"Tops"}>Tops</MenuItem>
