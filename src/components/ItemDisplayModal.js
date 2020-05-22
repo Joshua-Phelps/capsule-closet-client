@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemDisplayModal() {
   const classes = useStyles();
   const { itemDisplayModal, modalItems, items } = useContext(StateContext)
-  const { setItemDisplayModal, getItemOutfits, setOpenItemModal  } = useContext(MethodContext)
+  const { setItemDisplayModal, getItemOutfits, setOpenItemModal, addItem  } = useContext(MethodContext)
   const { modalItemsDispatch, formItemDispatch } = useContext(DispatchContext)
   const item = items.filter(item => item.id === modalItems.current)[0] || {id: null}
   const currentIndex = modalItems.items.findIndex(currItem => currItem === item.id)
@@ -100,7 +100,10 @@ export default function ItemDisplayModal() {
     setOpenItemModal(true)
   }
 
-  console.log(item)
+  const handleAddToOutfit = () => {
+    addItem(item.id)
+  }
+
 
   const renderOutfits = () => {
     if (outfits.length === 1 ){
@@ -154,7 +157,7 @@ export default function ItemDisplayModal() {
             </Grid>
             
             <Grid item xs={6}>
-              <Button className={classes.modalButton}>Add to Outfit</Button>
+              <Button onClick={handleAddToOutfit} className={classes.modalButton}>Add to Outfit</Button>
             </Grid>
             <Grid className={classes.rightButton}item xs={6}>
               <Button className={classes.modalButton} onClick={handleEdit}>
