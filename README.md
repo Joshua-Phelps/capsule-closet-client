@@ -47,5 +47,5 @@ If you'd like to contribute please send an email to Josh at jugtuttle@gmail.com
 ## Credits
 - [Josh Phelps](https://joshua-phelps.netlify.app/)
 - [Nicole Cabral](https://github.com/NicoleLC16)
-- [Alice](https://github.com/alicewon)
+- [Alice Won](https://github.com/alicewon)
 
