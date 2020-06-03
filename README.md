@@ -11,6 +11,20 @@ The main goal of this project was to familiarize ourseleves with
 
 ## Screenshots
 
+![landing-page](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/landing-page.png "Landing Page")
+
+![closet-outfit-drawer](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/closet-outfit-drawer.png "Closet Outfit Drawer")
+
+![closet-filters](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/closet-filters.png "Closet Filters")
+
+![closet-modal](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/closet-modal.png "Closet Modal")
+
+![guide](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/guide.png "Guide")
+
+![outfits](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/outfits.png "Outfits")
+
+![outfit-modal](https://github.com/Joshua-Phelps/capsule-closet-client/blob/master/public/screenshots/outfit-modal.png "Outfit Modal")
+
 
 ## Tech/framework used
 
